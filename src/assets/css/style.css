@@ -1,3 +1,15 @@
+:root {
+  --cafe-color-white: #ffffff;
+  --cafe--color-bisque: #fef8ea;
+  --cafe--color-brown: #7f252e;
+  --cafe-radius-xxs: 0.5rem;
+  --cafe-radius-xs: 0.8rem;
+  --cafe-radius-sm: 1rem;
+  --cafe-radius-md: 1.5rem;
+  --cafe-radius-lg: 2rem;
+  --cafe-radius-xl: 3rem;
+}
+
 *,
 *::before,
 *::after {
@@ -11,8 +23,7 @@ html {
   width: 100vw;
   overflow: hidden;
   line-height: 1.5;
-  font-family: "Poppins", "Noto Sans TC", Inter, Avenir, Helvetica, Arial,
-    sans-serif;
+  font-family: "Poppins", "Noto Sans TC", Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 62.5%;
   font-weight: 500;
   font-synthesis: none;
@@ -83,4 +94,4 @@ a {
 
 img {
   display: block;
-} /*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */
