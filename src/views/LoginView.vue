@@ -4,7 +4,7 @@
   <div>
     <!-- 這裡是視圖的內容 -->
     <h1>Login</h1>
-    <h2>test</h2>
+    <h2>!!!!!!</h2>
   </div>
 </template>
 
