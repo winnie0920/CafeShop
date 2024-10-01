@@ -7,10 +7,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    DropDown: typeof import('./src/components/DropDown.vue')['default']
     LoginView: typeof import('./src/views/LoginView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchBar: typeof import('./src/components/SearchBar.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
+    TitleBar: typeof import('./src/layout/TitleBar.vue')['default']
+    UserAbout: typeof import('./src/views/user/UserAbout.vue')['default']
     UserHome: typeof import('./src/views/user/UserHome.vue')['default']
     UserLayout: typeof import('./src/layout/user/UserLayout.vue')['default']
     UserSide: typeof import('./src/layout/user/UserSide.vue')['default']

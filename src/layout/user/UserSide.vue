@@ -1,28 +1,23 @@
-<script></script>
+<script setup>
+import homeJson from "@/json/UserHome.json";
+const home = homeJson;
+</script>
 
 <template>
   <nav class="sidebar__container">
     <div class="sidebar__head">
-      <img src="@/assets/icons/Logo-coffee.png" alt="" />
+      <router-link to="home">
+        <img src="@/assets/icons/Logo-coffee.png" alt="" />
+      </router-link>
       <ul>
-        <li>
+        <li v-for="(item, index) in home" :key="index">
           <router-link
-            to="Home"
+            :to="item.to"
             class="sidebar__item"
             active-class="sidebar__item-active"
           >
-            <SvgIcon icon-name="Common-Home" />
-            <h3>HOME</h3>
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            to="Home"
-            class="sidebar__item"
-            active-class="sidebar__item-active"
-          >
-            <SvgIcon icon-name="Common-Home" />
-            <h3>HOME</h3>
+            <SvgIcon :icon-name="item.iconName" />
+            <h3>{{ item.label }}</h3>
           </router-link>
         </li>
       </ul>
@@ -71,7 +66,7 @@
 
     svg,
     h3 {
-      color: var(--cafe--color-brown);
+      color: var(--cafe-color-brown);
       transition: all 0.35s ease-in-out;
     }
     svg {
@@ -90,8 +85,8 @@
       h3 {
         color: var(--cafe-color-white);
       }
-      background-color: var(--cafe--color-brown);
-      border: var(--cafe--color-brown);
+      background-color: var(--cafe-color-brown);
+      border: var(--cafe-color-brown);
     }
   }
 }

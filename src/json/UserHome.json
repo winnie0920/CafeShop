@@ -1,0 +1,12 @@
+[
+  {
+    "to": "home",
+    "iconName": "Common-Home",
+    "label": "HOME"
+  },
+  {
+    "to": "about",
+    "iconName": "Common-About",
+    "label": "ABOUT"
+  }
+]
