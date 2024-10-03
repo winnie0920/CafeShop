@@ -14,4 +14,4 @@ app.use(pinia);
 app.use(router);
 app.component("svg-icon", SvgIcon);
 
-app.mount("#app");
+router.isReady().then(() => app.mount("#app"));

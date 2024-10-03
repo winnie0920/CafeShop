@@ -42,6 +42,7 @@ const search = computed({
     width: 100%;
     padding-right: 1rem;
     border-radius: var(--cafe-radius-md);
+    border: 0.1rem solid var(--cafe-color-brown);
     background-color: var(--cafe-color-white);
   }
   &__input {

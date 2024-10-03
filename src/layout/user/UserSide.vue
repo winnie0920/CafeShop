@@ -1,6 +1,5 @@
 <script setup>
-import homeJson from "@/json/UserHome.json";
-const home = homeJson;
+import { homeSide } from "@/json/UserHome";
 </script>
 
 <template>
@@ -10,7 +9,7 @@ const home = homeJson;
         <img src="@/assets/icons/Logo-coffee.png" alt="" />
       </router-link>
       <ul>
-        <li v-for="(item, index) in home" :key="index">
+        <li v-for="(item, index) in homeSide" :key="index">
           <router-link
             :to="item.to"
             class="sidebar__item"

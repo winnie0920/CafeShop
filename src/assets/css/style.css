@@ -6,11 +6,43 @@
   --cafe-radius-xxs: 0.5rem;
   --cafe-radius-xs: 0.8rem;
   --cafe-radius-sm: 1rem;
-  --cafe-radius-md: 1.5rem;
+  --cafe-radius-md: 1.3rem;
   --cafe-radius-lg: 2rem;
   --cafe-radius-xl: 3rem;
   --cafe--font-xs: 0.8rem;
   --cafe--font-sm: 1.2rem;
+}
+
+.opacity-enter-from,
+.opacity-leave-to {
+  opacity: 0;
+}
+
+.opacity-enter-active,
+.opacity-leave-active {
+  transition: opacity 0.35s ease-out;
+}
+
+.opacity-enter-to,
+.opacity-leave-from {
+  opacity: 1;
+}
+
+.move-in-enter-from,
+.move-in-leave-to {
+  opacity: 0;
+  transform: translateY(-1rem);
+}
+
+.move-in-enter-active,
+.move-in-leave-active {
+  transition: opacity 0.35s cubic-bezier(0.5, 0, 0.5, 1), transform 0.35s cubic-bezier(0.5, 0, 0.5, 1);
+}
+
+.move-in-enter-to,
+.move-in-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 *,
