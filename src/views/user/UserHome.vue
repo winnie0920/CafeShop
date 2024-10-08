@@ -28,8 +28,8 @@ const ScrollArrow = (num) => {
         <SearchBar :value="queryParams.search" @send-search="sendSearch" />
       </div>
     </TitleBar>
-    <section class="row sticky-top">
-      <div class="User__side col-12 col-lg-8">
+    <section>
+      <div class="User__side">
         <button class="User__side-left" @click="ScrollArrow(-320)">
           <SvgIcon icon-name="Common-Arrow-Circle"></SvgIcon>
         </button>
@@ -104,8 +104,7 @@ const ScrollArrow = (num) => {
   &__side {
     position: relative;
     &-label {
-      display: grid;
-      grid-auto-columns: 20rem;
+      display: flex;
       margin: 0 4rem;
       overflow-x: auto;
       scrollbar-width: none;
