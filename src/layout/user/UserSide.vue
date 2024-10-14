@@ -33,7 +33,7 @@ import { homeSide } from "@/json/UserHome";
     display: flex;
     flex-direction: column;
     width: 12rem;
-    padding: 4rem 3rem;
+    padding: 3rem;
     border-top-right-radius: 3rem;
     border-bottom-right-radius: 3rem;
     background-color: var(--cafe-color-white);
@@ -49,7 +49,7 @@ import { homeSide } from "@/json/UserHome";
       display: block;
       height: 6rem;
       width: 6rem;
-      margin-bottom: 6rem;
+      margin-bottom: 3rem;
     }
   }
   &__item {
@@ -74,7 +74,7 @@ import { homeSide } from "@/json/UserHome";
       object-fit: contain;
     }
     h3 {
-      font-size: 0.9rem;
+      font-size: var(--cafe--font-xs);
       font-weight: 400;
       letter-spacing: 0.2rem;
     }

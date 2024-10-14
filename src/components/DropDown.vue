@@ -87,17 +87,17 @@ onBeforeUnmount(() => {
 
 .list {
   &__container {
+    @extend %base-btn-setting;
     position: relative;
     display: grid;
     padding: 1rem;
     color: var(--cafe-color-brown);
     border: 0.1rem solid var(--cafe-color-brown);
     background-color: var(--cafe-color-white);
-    border-radius: var(--cafe-radius-md);
     grid-template-rows: repeat(2, max-content);
     grid-template-columns: max-content 1rem;
     cursor: pointer;
-    transition: all 0.5s ease-in-out;
+    z-index: 10;
     svg {
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -112,22 +112,21 @@ onBeforeUnmount(() => {
     grid-column: 1/-1;
   }
   &__drop {
+    @extend %base-btn-setting;
     position: absolute;
     top: calc(100% + 0.75rem);
-    display: flex;
     flex-direction: column;
     max-height: 22rem;
     width: 100%;
     padding: 0.75rem 0.75rem;
     gap: 0.5rem;
     background-color: var(--cafe-color-white);
-    border: 0.1rem solid var(--cafe-color-brown);
     border-radius: inherit;
     z-index: 10;
   }
   &__drop-item {
     padding: 0.5rem 0.75rem;
-    font-size: 1.1rem;
+    font-size: var(--cafe--font-sm);
     transition: all 0.35s ease-in-out;
     overflow-x: hidden;
     white-space: nowrap;

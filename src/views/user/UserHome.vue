@@ -13,18 +13,11 @@ const LabelRef = ref(null);
 const maxScroll = ref(0);
 //滾輪假資料
 const items = [
-  "義大利麵1",
-  "義大利麵2",
-  "義大利麵3",
-  "義大利麵4",
-  "義大利麵5",
-  "義大利麵6",
-  "義大利麵7",
-  "義大利麵8",
-  "義大利麵9",
-  "義大利麵10",
-  "義大利麵11",
-  "義大利麵12",
+  {
+    id: 1,
+    name: "義大利麵",
+    path: "Food__Pescatora.png",
+  },
 ];
 
 // side左右移動
@@ -49,11 +42,17 @@ const ScrollArrow = (direction) => {
     });
   }
 };
+
+const ShowArrow = () => {
+  return this.items.length > 5;
+};
+
 const ClickScroll = (index, items) => {
   if (LabelRef.value) {
     const liWidth = LabelRef.value.querySelector("li").offsetWidth; // 每個 li 的寬度
     const visibleWidth = LabelRef.value.clientWidth; // 可見的寬度
-    let newPosition = (liWidth + 32) * index - visibleWidth / 2 + liWidth / 2; // 計算新的滾動位置
+    let newPosition =
+      (liWidth + 8) * index - visibleWidth / 2 + liWidth / 2 + 16; // 計算新的滾動位置
 
     // 確保最後幾個元素正確處理
     if (index >= items.length - 2) {
@@ -70,11 +69,14 @@ const ClickScroll = (index, items) => {
     ScrollArrow(adjustedPosition);
   }
 };
+const getImageUrl = (id) => {
+  return new URL(`../../assets/image/${id}`, import.meta.url).href;
+};
 </script>
 
 <template>
   <div class="User__container">
-    <TitleBar>
+    <TitleBar class="sticky-top">
       <div class="col-12 col-sm-7 col-md-6 col-lg-4 me-auto d-flex">
         <SearchBar :value="queryParams.search" @send-search="sendSearch" />
       </div>
@@ -82,25 +84,42 @@ const ClickScroll = (index, items) => {
 
     <section class="row">
       <!-- 滾輪軸 -->
-      <div class="User__side col-12 col-lg-8">
-        <button class="User__side-left" @click="ScrollArrow('left')">
-          <SvgIcon icon-name="Common-Arrow-Circle"></SvgIcon>
-        </button>
-        <button class="User__side-right" @click="ScrollArrow('right')">
-          <SvgIcon icon-name="Common-Arrow-Circle"></SvgIcon>
-        </button>
-        <ul class="User__side-label" ref="LabelRef">
-          <li
-            v-for="(item, index) in items"
-            :key="index"
-            @click="ClickScroll(index, items)"
+      <div class="col-12 col-lg-8">
+        <div class="User__side sticky-top">
+          <button
+            v-if="ShowArrow"
+            class="User__side-left"
+            @click="ScrollArrow('left')"
           >
-            <img src="@/assets/image/Food__Pescatora.png" alt="" />
-            <h5>{{ item }} <span>(10)</span></h5>
-          </li>
-        </ul>
+            <SvgIcon icon-name="Common-Arrow-Circle"></SvgIcon>
+          </button>
+          <button
+            v-if="ShowArrow"
+            class="User__side-right"
+            @click="ScrollArrow('right')"
+          >
+            <SvgIcon icon-name="Common-Arrow-Circle"></SvgIcon>
+          </button>
+          <ul class="User__side-label" ref="LabelRef">
+            <li
+              v-for="i in items"
+              :key="i.id"
+              @click="ClickScroll(i.id, items)"
+            >
+              <img :src="getImageUrl(i.path)" alt="" />
+              <h5>{{ i.name }} <span>(10)</span></h5>
+            </li>
+          </ul>
+        </div>
+        <div class="menu__content">
+          <p>滾動菜單</p>
+        </div>
       </div>
-      <div class="col-4">123</div>
+      <div class="col-4">
+        <div class="User__side sticky-top">
+          <p>計算價錢</p>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -113,30 +132,28 @@ const ClickScroll = (index, items) => {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: 5rem 3rem 0;
-    gap: 2rem;
-    overflow: hidden;
+    padding: 3rem 3rem 0;
+    gap: 1rem;
+    overflow-x: hidden;
   }
 
   &__side {
-    position: relative;
+    top: 8.5rem;
+    z-index: 1;
     &-label {
       display: flex;
-      gap: 2rem;
+      gap: 0.5rem;
       margin: 0 3rem;
       padding: 0.5rem 1rem;
       overflow-x: auto;
       scrollbar-width: none;
       li {
-        display: flex;
+        @extend %base-btn-setting;
         flex-direction: column;
         align-items: center;
-        padding: 1rem 0.9rem 1rem 1.1rem;
+        padding: 0.8rem;
         color: var(--cafe-color-brown-lighter);
         background-color: var(--cafe-color-transparent);
-        border-radius: var(--cafe-radius-md);
-        border: 0.1rem solid var(--cafe-color-brown-lighter);
-        transition: all 0.35s ease-in-out;
         cursor: pointer;
         &:active,
         &:hover {
@@ -146,28 +163,25 @@ const ClickScroll = (index, items) => {
         }
         img {
           max-width: 100%; /* 確保圖片不會超出父容器 */
-          height: 5rem; /* 維持圖片比例 */
+          height: 4rem; /* 維持圖片比例 */
           margin-bottom: 0.5rem;
         }
         h5 {
-          font-size: 1rem;
+          font-size: var(--cafe--font-xs);
           white-space: nowrap;
         }
       }
     }
     &-left,
     &-right {
-      display: flex;
-      align-items: center;
+      @extend %base-btn-setting;
       position: absolute;
       top: 50%;
       padding: 0.7rem;
       border: 0.1rem solid var(--cafe-color-brown);
-      border-radius: var(--cafe-radius-xl);
       background-color: var(--cafe-color-white);
       color: var(--cafe-color-brown);
       transform: translateY(-50%);
-      transition: all 0.1s ease-in-out;
       cursor: pointer;
       z-index: 10;
       &:hover {
@@ -175,8 +189,8 @@ const ClickScroll = (index, items) => {
         background-color: var(--cafe-color-brown);
       }
       svg {
-        width: 1.3rem;
-        height: 1.3rem;
+        width: 1rem;
+        height: 1rem;
       }
     }
 
@@ -187,6 +201,17 @@ const ClickScroll = (index, items) => {
 
     &-right {
       right: 0;
+    }
+  }
+}
+.menu {
+  &__content {
+    overflow-y: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 20rem);
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      width: 0; /* 隱藏滾動條寬度 */
     }
   }
 }

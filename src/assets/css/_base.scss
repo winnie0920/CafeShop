@@ -13,14 +13,29 @@ html {
   line-height: 1.5;
   font-family: "Poppins", "Noto Sans TC", Inter, Avenir, Helvetica, Arial,
     sans-serif;
-  font-size: calc(10 / 16 * 100%); // 1rem = 10px
   font-weight: 500;
   font-synthesis: none;
   font-optical-sizing: auto;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1366px) {
+    font-size: calc(10 / 16 * 100%);// 1rem = 10px
+  }
+  @media (max-width: 575.98px) {
+    font-size: calc(8 / 16 * 100%);
+  }
+  @media (max-width: 375px) {
+    font-size: calc(6 / 16 * 100%);
+  }
+  @media (min-width: 1367px) {
+    font-size: calc(12 / 16 * 100%);
+  }
+  
 }
+
+
 
 body,
 #app {
