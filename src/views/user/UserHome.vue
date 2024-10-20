@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
       </div>
     </TitleBar>
 
-    <section class="row">
+    <section class="row" style="overflow-y: hidden">
       <!-- 滾輪軸 -->
       <div class="col-12 col-lg-8 sticky-top" style="z-index: 0 !important">
         <div class="User__side">
@@ -148,12 +148,14 @@ onBeforeUnmount(() => {
           <p>計算價錢</p>
         </div>
       </div>
+      <div class="col-12 col-lg-8">
+        <UserMenuSelect
+          :menuSelect="menuSelect"
+          @menuSelect="updateMenuSelect"
+          :menu="homeMenu"
+        />
+      </div>
     </section>
-    <UserMenuSelect
-      :menuSelect="menuSelect"
-      @menuSelect="updateMenuSelect"
-      :menu="homeMenu"
-    />
   </div>
 </template>
 
