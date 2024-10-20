@@ -1,5 +1,5 @@
 <script setup>
-import { homeItem, homeMenu } from "@/json/UserHome";
+import { homeItem, homeMenu, Menu } from "@/json/UserHome";
 
 const queryParams = reactive({
   search: "",
@@ -8,6 +8,13 @@ const queryParams = reactive({
 // AdminSearch 的 emit
 const sendSearch = (val) => {
   queryParams.search = val;
+};
+
+let menuSelect = reactive([]);
+
+// 更新菜單選擇的處理函數
+const updateMenuSelect = (newMenuSelect) => {
+  menuSelect = newMenuSelect;
 };
 
 const labelRef = ref(null);
@@ -104,8 +111,8 @@ onBeforeUnmount(() => {
 
     <section class="row">
       <!-- 滾輪軸 -->
-      <div class="col-12 col-lg-8">
-        <div class="User__side sticky-top">
+      <div class="col-12 col-lg-8 sticky-top" style="z-index: 0 !important">
+        <div class="User__side">
           <button
             v-if="showArrow"
             class="User__side-left"
@@ -135,9 +142,6 @@ onBeforeUnmount(() => {
             </li>
           </ul>
         </div>
-        <div class="menu__content">
-          <p>滾動菜單</p>
-        </div>
       </div>
       <div class="col-4">
         <div class="User__side sticky-top">
@@ -145,6 +149,11 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </section>
+    <UserMenuSelect
+      :menuSelect="menuSelect"
+      @menuSelect="updateMenuSelect"
+      :menu="Menu"
+    />
   </div>
 </template>
 

@@ -1,96 +1,193 @@
-
 .User {
-    &__container {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 3rem 3rem 0;
+    gap: 1rem;
+    overflow-x: hidden;
+  }
+
+  &__side {
+    position: relative;
+    z-index: 1;
+    &-label {
       display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      padding: 3rem 3rem 0;
       gap: 1rem;
-      overflow-x: hidden;
-    }
-  
-    &__side {
-      top: 8.5rem;
-      z-index: 1;
-      &-label {
-        display: flex;
-        gap: 1rem;
-        padding: 0.5rem 1rem;
-        overflow-x: auto;
-        scrollbar-width: none;
-        li {
-          @extend %base-btn-setting;
-          flex-direction: column;
-          align-items: center;
-          padding: 0.8rem;
-          color: var(--cafe-color-brown-lighter);
-          background-color: var(--cafe-color-transparent);
-          cursor: pointer;
-          &:active,
-          &:hover {
-            color: var(--cafe-color-brown);
-            border: 0.1rem solid var(--cafe-color-brown);
-            background-color: var(--cafe-color-white);
-          }
-          img {
-            max-width: 100%;
-            height: 4rem;
-            width: 5rem;
-            margin-bottom: 0.5rem;
-            object-fit: contain;
-          }
-          h5 {
-            font-size: var(--cafe--font-xs);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 7ch;
-          }
-        }
-      }
-      &-label-margin {
-        margin: 0 3rem;
-      }
-      &-left,
-      &-right {
-        @extend %base-btn-setting;
-        position: absolute;
-        top: 50%;
-        padding: 0.7rem;
-        border: 0.1rem solid var(--cafe-color-brown);
-        background-color: var(--cafe-color-white);
-        color: var(--cafe-color-brown);
-        transform: translateY(-50%);
-        cursor: pointer;
-        z-index: 10;
-        &:hover {
-          color: var(--cafe-color-white);
-          background-color: var(--cafe-color-brown);
-        }
-        svg {
-          width: 1rem;
-          height: 1rem;
-        }
-      }
-  
-      &-left {
-        transform: rotate(180deg) translateY(50%);
-        left: 0;
-      }
-  
-      &-right {
-        right: 0;
-      }
-    }
-  }
-  .menu {
-    &__content {
-      overflow-y: auto;
-      max-width: 100%;
-      max-height: calc(100vh - 20rem);
+      padding: 0.5rem 1rem;
+      overflow-x: auto;
       scrollbar-width: none;
-      &::-webkit-scrollbar {
-        width: 0; /* 隱藏滾動條寬度 */
+      li {
+        @extend %base-btn-setting;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.8rem;
+        color: var(--cafe-color-brown-lighter);
+        background-color: var(--cafe-color-transparent);
+        cursor: pointer;
+        z-index: 1;
+        &:active,
+        &:hover {
+          color: var(--cafe-color-brown);
+          border: 0.1rem solid var(--cafe-color-brown);
+          background-color: var(--cafe-color-white);
+        }
+        img {
+          max-width: 100%;
+          height: 4rem;
+          width: 5rem;
+          margin-bottom: 0.5rem;
+          object-fit: contain;
+        }
+        h5 {
+          font-size: var(--cafe--font-xs);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 7ch;
+        }
       }
     }
+    &-label-margin {
+      margin: 0 3rem;
+    }
+    &-left,
+    &-right {
+      @extend %base-btn-setting;
+      position: absolute;
+      top: 50%;
+      padding: 0.7rem;
+      border: 0.1rem solid var(--cafe-color-brown);
+      background-color: var(--cafe-color-white);
+      color: var(--cafe-color-brown);
+      transform: translateY(-50%);
+      cursor: pointer;
+      &:hover {
+        color: var(--cafe-color-white);
+        background-color: var(--cafe-color-brown);
+      }
+      svg {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+
+    &-left {
+      transform: rotate(180deg) translateY(50%);
+      left: 0;
+    }
+
+    &-right {
+      right: 0;
+    }
   }
+}
+
+.menu {
+  &__content {
+    color: var(--cafe-color-brown);
+    margin: 2rem 0;
+    max-width: 100%;
+    max-height: calc(100vh - 20rem);
+    scrollbar-width: none;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 0; /* 隱藏滾動條寬度 */
+    }
+    h1 {
+      font-size: 1.8rem;
+      line-height: 1.5;
+    }
+    ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    li {
+      @extend %base-btn-setting;
+      background-color: var(--cafe-color-white);
+      cursor: pointer;
+      overflow: hidden;
+
+      div:first-child {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin: 1rem;
+        line-height: 2;
+        p,
+        span {
+          font-size: 1.1rem;
+        }
+        span {
+          color: var(--cafe-color-brown-lighter);
+        }
+      }
+      div:nth-of-type(2) {
+        position: relative;
+        display: grid;
+        margin: 1rem;
+        border-radius: 1rem;
+        overflow: hidden;
+        img {
+          height: 10rem;
+          width: 10rem;
+          object-fit: cover;
+        }
+      }
+    }
+    svg {
+      position: relative;
+      height: 2rem;
+      width: 2rem;
+      color: var(--cafe-color-brown);
+    }
+    button {
+      width: 2.5rem;
+      height: 2.5rem;
+      transition: all 0.1s ease-in-out;
+      background-color: var(--cafe-color-white);
+      border-radius: var(--cafe-radius-lg);
+    }
+  }
+  &__btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    bottom: 5%;
+    right: 5%;
+    overflow: hidden;
+    border-radius: var(--cafe-radius-lg);
+    background-color: var(--cafe-color-white);
+    transition: all 0.1s ease-in-out;
+    &-content {
+      flex-direction: row !important;
+      margin: 0 !important;
+    }
+    &-num {
+      height: 1.5rem;
+      width: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--cafe-color-brown);
+    }
+    &-trash {
+      svg {
+        height: 1.5rem;
+      }
+    }
+    &-add {
+      position: relative;
+      z-index: 2;
+    }
+    &-circle {
+      position: absolute;
+      top: 7rem;
+      left: 70%;
+      width: 2.5rem;
+      bottom: -6%;
+      right: -60%;
+    }
+  }
+}

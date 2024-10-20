@@ -5,7 +5,7 @@ const useStore = userStore();
 </script>
 
 <template>
-  <header class="row justify-content-end d-flex mb-5 gap-3">
+  <header class="row justify-content-end d-flex gap-4">
     <slot />
     <div class="col-auto d-flex">
       <DropDown

@@ -24,6 +24,7 @@ const toggleShow = () => {
 };
 
 const model = defineModel({ default: { id: -1, name: "請選擇" } });
+
 const changeSelected = (item) => {
   model.value = item;
 };
@@ -97,7 +98,6 @@ onBeforeUnmount(() => {
     grid-template-rows: repeat(2, max-content);
     grid-template-columns: max-content 1rem;
     cursor: pointer;
-    z-index: 10;
     svg {
       width: 100%;
       aspect-ratio: 1 / 1;

@@ -14,10 +14,11 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SearchBar: typeof import('./src/components/SearchBar.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
-    TitleBar: typeof import('./src/layout/TitleBar.vue')['default']
+    TitleBar: typeof import('./src/layout/user/TitleBar.vue')['default']
     UserAbout: typeof import('./src/views/user/UserAbout.vue')['default']
     UserHome: typeof import('./src/views/user/UserHome.vue')['default']
     UserLayout: typeof import('./src/layout/user/UserLayout.vue')['default']
+    UserMenuSelect: typeof import('./src/layout/user/UserMenuSelect.vue')['default']
     UserSide: typeof import('./src/layout/user/UserSide.vue')['default']
   }
 }

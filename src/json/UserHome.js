@@ -127,3 +127,69 @@ export const homeMenu = [
     content: "三明治的詳細信息",
   },
 ];
+
+export const Menu = [
+  {
+    id: 1,
+    title: "輕食",
+    subtitle: "使用產品",
+    Child: [
+      {
+        id: 1,
+        title: "標題1",
+        description: "內文1",
+        remark: ["台灣豬肉"],
+        image: "Image-pasta.jpg",
+      },
+      {
+        id: 2,
+        title: "標題2",
+        description: "內文2",
+        remark: ["雞肉"],
+        image: "Image-pasta.jpg",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "熱食",
+    subtitle: "使用產品",
+    Child: [
+      {
+        id: 3,
+        title: "標題3",
+        description: "內文3",
+        remark: ["牛肉"],
+        image: "Image-pasta.jpg",
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "熱食",
+    subtitle: "使用產品",
+    Child: [
+      {
+        id: 3,
+        title: "標題3",
+        description: "內文3",
+        remark: ["牛肉"],
+        image: "Image-pasta.jpg",
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "熱食",
+    subtitle: "使用產品",
+    Child: [
+      {
+        id: 3,
+        title: "標題3",
+        description: "內文3",
+        remark: ["牛肉"],
+        image: "Image-pasta.jpg",
+      },
+    ],
+  },
+];
