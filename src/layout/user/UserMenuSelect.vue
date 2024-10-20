@@ -67,7 +67,7 @@ const getImageUrl = (id) => {
           <div>
             <h3>{{ c.name }}</h3>
             <p>${{ c.price }}</p>
-            <span v-if="c.remark">{{ c.remark.join(", ") }}</span>
+            <span v-if="c.description">{{ c.description }}</span>
           </div>
           <div>
             <img :src="getImageUrl(c.image)" alt="" />
