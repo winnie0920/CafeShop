@@ -200,7 +200,7 @@ img {
 .User__side-label {
   display: flex;
   gap: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0rem;
   overflow-x: auto;
   scrollbar-width: none;
 }

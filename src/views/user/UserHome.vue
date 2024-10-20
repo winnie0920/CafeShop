@@ -60,7 +60,7 @@ const clickScroll = (id, items) => {
   if (labelRef.value) {
     const liWidth = labelRef.value.querySelector("li").offsetWidth; // 每個 li 的寬度
     const visibleWidth = labelRef.value.clientWidth; // 可見的寬度
-    let newPosition = (liWidth + 8) * id - visibleWidth / 2 + liWidth / 2 + 16; // 計算新的滾動位置
+    let newPosition = (liWidth + 8) * id - visibleWidth / 2 + liWidth / 2; // 計算新的滾動位置
 
     // 確保最後幾個元素正確處理
     if (id >= items.length - 2) {
