@@ -60,14 +60,14 @@ const getImageUrl = (id) => {
 <template>
   <div class="menu__content">
     <div v-for="m in props.menu" :key="m.id">
-      <h1>{{ m.title }}</h1>
-      <span>{{ m.subtitle }}</span>
+      <h1>{{ m.name }}</h1>
+      <span>{{ m.content }}</span>
       <ul class="menu__background">
-        <li v-for="c in m.Child" :key="c.id">
+        <li v-for="c in m.children" :key="c.id">
           <div>
-            <h3>{{ c.title }}</h3>
-            <p>{{ c.description }}</p>
-            <span>{{ c.remark.join(", ") }}</span>
+            <h3>{{ c.name }}</h3>
+            <p>{{ c.dollar }}</p>
+            <span v-if="c.remark">{{ c.remark.join(", ") }}</span>
           </div>
           <div>
             <img :src="getImageUrl(c.image)" alt="" />

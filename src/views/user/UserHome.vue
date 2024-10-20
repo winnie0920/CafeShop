@@ -1,5 +1,5 @@
 <script setup>
-import { homeItem, homeMenu, Menu } from "@/json/UserHome";
+import { homeItem, homeMenu } from "@/json/UserHome";
 
 const queryParams = reactive({
   search: "",
@@ -152,7 +152,7 @@ onBeforeUnmount(() => {
     <UserMenuSelect
       :menuSelect="menuSelect"
       @menuSelect="updateMenuSelect"
-      :menu="Menu"
+      :menu="homeMenu"
     />
   </div>
 </template>

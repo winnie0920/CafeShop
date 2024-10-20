@@ -83,113 +83,53 @@ export const homeMenu = [
         id: 1,
         name: "波隆那肉醬義大利麵",
         dollar: "$140",
-        remark: "台灣豬肉",
+        remark: ["台灣豬肉"],
+        image: "Image-pasta.jpg",
       },
       {
         id: 2,
         name: "茄汁嫩雞義大利麵",
         dollar: "$160",
-        remark: "台灣雞肉",
+        remark: ["台灣雞肉"],
+        image: "Image-pasta.jpg",
       },
       {
         id: 3,
         name: "茄汁季節時蔬義大利麵",
         dollar: "$160",
-        remark: "台灣牛肉",
+        remark: ["台灣牛肉"],
+        image: "Image-pasta.jpg",
       },
       {
         id: 4,
         name: "茄汁牛肉義大利麵",
         dollar: "$170",
+        image: "Image-pasta.jpg",
       },
       {
         id: 5,
         name: "茄汁蛤蠣義大利麵",
         dollar: "$180",
+        image: "Image-pasta.jpg",
       },
       {
         id: 6,
         name: "蒜味嫩雞胸義大利麵",
         dollar: "$150",
-        remark: "台灣雞肉",
+        remark: ["台灣雞肉"],
+        image: "Image-pasta.jpg",
       },
       {
         id: 7,
         name: "蒜味季節時蔬義大利麵",
         dollar: "$150",
+        image: "Image-pasta.jpg",
       },
     ],
   },
   {
     id: 2,
     name: "三明治",
-    path: "path/to/image2.jpg",
     content: "三明治的詳細信息",
-  },
-];
-
-export const Menu = [
-  {
-    id: 1,
-    title: "輕食",
-    subtitle: "使用產品",
-    Child: [
-      {
-        id: 1,
-        title: "標題1",
-        description: "內文1",
-        remark: ["台灣豬肉"],
-        image: "Image-pasta.jpg",
-      },
-      {
-        id: 2,
-        title: "標題2",
-        description: "內文2",
-        remark: ["雞肉"],
-        image: "Image-pasta.jpg",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "熱食",
-    subtitle: "使用產品",
-    Child: [
-      {
-        id: 3,
-        title: "標題3",
-        description: "內文3",
-        remark: ["牛肉"],
-        image: "Image-pasta.jpg",
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "熱食",
-    subtitle: "使用產品",
-    Child: [
-      {
-        id: 3,
-        title: "標題3",
-        description: "內文3",
-        remark: ["牛肉"],
-        image: "Image-pasta.jpg",
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "熱食",
-    subtitle: "使用產品",
-    Child: [
-      {
-        id: 3,
-        title: "標題3",
-        description: "內文3",
-        remark: ["牛肉"],
-        image: "Image-pasta.jpg",
-      },
-    ],
   },
 ];
