@@ -78,7 +78,6 @@ export const homeMenu = [
     id: 1,
     name: "輕食",
     content: "肉品源產地：台灣雞肉、豬肉、牛肉",
-    count: 7,
     children: [
       {
         id: 1,
@@ -86,6 +85,7 @@ export const homeMenu = [
         price: 140,
         remark: ["台灣豬肉"],
         image: "Image-pasta.jpg",
+        count: 30,
       },
       {
         id: 2,
@@ -93,6 +93,7 @@ export const homeMenu = [
         price: 160,
         remark: ["台灣雞肉"],
         image: "Image-pasta.jpg",
+        count: 40,
       },
       {
         id: 3,
@@ -100,18 +101,21 @@ export const homeMenu = [
         price: 160,
         remark: ["台灣牛肉"],
         image: "Image-pasta.jpg",
+        count: 50,
       },
       {
         id: 4,
         name: "茄汁牛肉義大利麵",
         price: 170,
         image: "Image-pasta.jpg",
+        count: 50,
       },
       {
         id: 5,
         name: "茄汁蛤蠣義大利麵",
         price: 180,
         image: "Image-pasta.jpg",
+        count: 40,
       },
       {
         id: 6,
@@ -119,12 +123,14 @@ export const homeMenu = [
         price: 150,
         remark: ["台灣雞肉"],
         image: "Image-pasta.jpg",
+        count: 50,
       },
       {
         id: 7,
         name: "蒜味季節時蔬義大利麵",
         price: 150,
         image: "Image-pasta.jpg",
+        count: 20,
       },
     ],
   },
