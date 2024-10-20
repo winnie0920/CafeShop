@@ -137,8 +137,10 @@ onBeforeUnmount(() => {
               :key="i.id"
               @click="clickScroll(i.id, homeItem)"
             >
-              <img :src="getImageUrl(i.path)" alt="" />
-              <h5>{{ i.name }} <span>(10)</span></h5>
+              <img :src="getImageUrl(i.image)" alt="" />
+              <h5>
+                {{ i.name }}<span>({{ i.count }})</span>
+              </h5>
             </li>
           </ul>
         </div>

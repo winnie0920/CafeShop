@@ -66,7 +66,7 @@ const getImageUrl = (id) => {
         <li v-for="c in m.children" :key="c.id">
           <div>
             <h3>{{ c.name }}</h3>
-            <p>{{ c.dollar }}</p>
+            <p>${{ c.price }}</p>
             <span v-if="c.remark">{{ c.remark.join(", ") }}</span>
           </div>
           <div>
