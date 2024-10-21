@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   menu: {
-    type: Array, // 假設 menu 是一個數組
+    type: Array,
     required: true,
   },
   menuSelect: {
@@ -23,32 +23,53 @@ watch(
   }
 );
 
-const addMenuSelect = (menuId, childId) => {
-  const existingMenu = localSelect.find(
+//找到相對應 MenuSelect 的菜單品項
+const findMenuItem = (menuId, childId) => {
+  return localSelect.find(
     (item) => item.menuId === menuId && item.childId === childId
   );
+};
 
+//新增、添加 MenuSelect 的菜單品項及數量
+const addMenuSelect = (menuId, childId, maxCount) => {
+  console.log(menuId, childId, maxCount);
+  const existingMenu = findMenuItem(menuId, childId);
   if (existingMenu) {
     // 增加數量
-    existingMenu.amount++;
+
+    if (existingMenu.count < maxCount) existingMenu.count++;
   } else {
     // 新增一個新項目
-    const newItem = { menuId, childId, amount: 1 };
+    const newItem = { menuId, childId, count: 1 };
     localSelect.push(newItem);
-    console.log(existingMenu);
   }
 
   // 通知父層更新
   emit("menuSelect", localSelect);
 };
 
-// 獲取該項目的數量
-const getAmount = (menuId, childId) => {
-  const existingMenu = localSelect.find(
-    (item) => item.menuId === menuId && item.childId === childId
-  );
+//減少、刪除 MenuSelect 的菜單品項及數量
+const removeMenuSelect = (menuId, childId) => {
+  const existingMenu = findMenuItem(menuId, childId);
+  if (existingMenu) {
+    // 減少數量
+    if (existingMenu.count > 1) {
+      existingMenu.count--;
+    } else {
+      // 找到該項目的索引，並刪除它
+      const index = localSelect.indexOf(existingMenu);
+      if (index !== -1) {
+        localSelect.splice(index, 1);
+      }
+    }
+  }
+  emit("menuSelect", localSelect);
+};
 
-  return existingMenu ? existingMenu.amount : 0;
+// 獲取菜單品項的數量
+const getCount = (menuId, childId) => {
+  const existingMenu = findMenuItem(menuId, childId);
+  return existingMenu ? existingMenu.count : 0;
 };
 
 //圖片路徑
@@ -71,30 +92,34 @@ const getImageUrl = (id) => {
           </div>
           <div>
             <img :src="getImageUrl(c.image)" alt="" />
-            <div class="menu__btn">
-              <transition name="fade">
-                <div class="menu__btn-content" v-if="getAmount(m.id, c.id) > 0">
-                  <button class="menu__btn-trash">
-                    <SvgIcon icon-name="Common-Trash"></SvgIcon>
-                  </button>
-                  <button class="menu__btn-num">
-                    <p>{{ getAmount(m.id, c.id) }}</p>
-                    <!-- 顯示數量 -->
-                  </button>
-                  <button class="menu__btn-add">
+            <transition name="opacity">
+              <div class="menu__btn" v-if="getCount(m.id, c.id) > 0">
+                <div class="menu__btn-content">
+                  <button
+                    class="menu__btn-trash"
+                    @click="removeMenuSelect(m.id, c.id)"
+                  >
                     <SvgIcon
-                      icon-name="Common-Add"
-                      @click="addMenuSelect(m.id, c.id)"
+                      v-if="getCount(m.id, c.id) == 1"
+                      icon-name="Common-Trash"
+                    ></SvgIcon>
+                    <SvgIcon
+                      v-if="getCount(m.id, c.id) > 1"
+                      icon-name="Common-Minus"
                     ></SvgIcon>
                   </button>
+                  <div>
+                    <p>{{ getCount(m.id, c.id) }}</p>
+                  </div>
+                  <button class="menu__btn-add"></button>
                 </div>
-              </transition>
-            </div>
+              </div>
+            </transition>
             <span class="menu__btn-circle">
               <button class="menu__btn-add">
                 <SvgIcon
                   icon-name="Common-Add"
-                  @click="addMenuSelect(m.id, c.id)"
+                  @click="addMenuSelect(m.id, c.id, c.count)"
                 ></SvgIcon>
               </button>
             </span>

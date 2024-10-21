@@ -167,6 +167,13 @@
     &-content {
       flex-direction: row !important;
       margin: 0 !important;
+      div{
+      display: flex;
+      width: 1.5rem;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      }
     }
     &-num {
       height: 1.5rem;
@@ -175,8 +182,10 @@
       color: var(--cafe-color-brown);
     }
     &-trash {
+      padding-top: 0.1rem;
+      text-align: center;
       svg {
-        height: 1.5rem;
+        width: 1.2rem;
       }
     }
     &-add {

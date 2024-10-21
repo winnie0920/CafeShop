@@ -15,6 +15,7 @@ let menuSelect = reactive([]);
 // 更新菜單選擇的處理函數
 const updateMenuSelect = (newMenuSelect) => {
   menuSelect = newMenuSelect;
+  console.log(menuSelect);
 };
 
 const labelRef = ref(null);
