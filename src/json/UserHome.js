@@ -26,7 +26,7 @@ export const homeItem = [
   {
     id: 1,
     name: "輕食",
-    image: "food__Pescatora.png",
+    image: "food_Pescatora.png",
     count: 7,
   },
   {
