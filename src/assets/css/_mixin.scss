@@ -5,3 +5,9 @@
     transition: all 0.35s ease-in-out;
   }
   
+
+  %Popup-base-setting{
+    display: flex;
+    border-radius: var(--cafe-radius-sm);
+    background: var(--cafe-color-white);
+  }

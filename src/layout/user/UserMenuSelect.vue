@@ -30,9 +30,24 @@ const findMenuItem = (menuId, childId) => {
   );
 };
 
+//目前用來保存選中的菜品
+const selectedMenu = ref(null);
+//控管菜單的開關
+const show = ref(false);
+
+//打開每個菜單明細
+const toggleMenu = (menuId, childId) => {
+  selectedMenu.value = props.menu
+    .find((m) => m.id === menuId)
+    ?.children.find((c) => c.id === childId);
+  show.value = true;
+};
+
+const closeShow = (val) => {
+  show.value = val;
+};
 //新增、添加 MenuSelect 的菜單品項及數量
 const addMenuSelect = (menuId, childId, maxCount) => {
-  console.log(menuId, childId, maxCount);
   const existingMenu = findMenuItem(menuId, childId);
   if (existingMenu) {
     // 增加數量
@@ -84,7 +99,7 @@ const getImageUrl = (id) => {
       <h1>{{ m.name }}</h1>
       <span>{{ m.content }}</span>
       <ul class="menu__background">
-        <li v-for="c in m.children" :key="c.id">
+        <li v-for="c in m.children" :key="c.id" @click="toggleMenu(m.id, c.id)">
           <div>
             <h3>{{ c.name }}</h3>
             <p>${{ c.price }}</p>
@@ -97,7 +112,7 @@ const getImageUrl = (id) => {
                 <div class="menu__btn-content">
                   <button
                     class="menu__btn-trash"
-                    @click="removeMenuSelect(m.id, c.id)"
+                    @click.stop="removeMenuSelect(m.id, c.id)"
                   >
                     <SvgIcon
                       v-if="getCount(m.id, c.id) == 1"
@@ -119,7 +134,7 @@ const getImageUrl = (id) => {
               <button class="menu__btn-add">
                 <SvgIcon
                   icon-name="Common-Add"
-                  @click="addMenuSelect(m.id, c.id, c.count)"
+                  @click.stop="addMenuSelect(m.id, c.id, c.count)"
                 ></SvgIcon>
               </button>
             </span>
@@ -128,8 +143,27 @@ const getImageUrl = (id) => {
       </ul>
     </div>
   </div>
+  <UserPopup :show="show" @close-show="closeShow">
+    <template #main>
+      <img class="Popup__img" :src="getImageUrl(selectedMenu.image)" alt="" />
+      <div>
+        <h2></h2>
+      </div>
+    </template>
+  </UserPopup>
 </template>
 
 <style lang="scss" scoped>
 @import "@/assets/css/mixin";
+
+.Popup__img {
+  height: 205px;
+  width: 100%;
+  object-fit: cover;
+}
+@media (min-width: 768px) {
+  .Popup__img {
+    height: 317px;
+  }
+}
 </style>

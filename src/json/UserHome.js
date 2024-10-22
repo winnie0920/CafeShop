@@ -134,6 +134,32 @@ export const homeMenu = [
         count: 20,
       },
     ],
+    options: [
+      {
+        type: "份量",
+        children: [
+          { id: 1, name: "小", selected: true },
+          { id: 2, name: "中", price: 10 },
+          { id: 3, name: "大", price: 15 },
+        ],
+      },
+      {
+        type: "麵體",
+        children: [
+          { id: 1, name: "細麵" },
+          { id: 2, name: "筆管麵", price: 10 },
+          { id: 3, name: "螺旋麵", price: 10 },
+        ],
+      },
+      {
+        type: "辣度",
+        children: [
+          { id: 1, name: "小辣" },
+          { id: 2, name: "中辣" },
+          { id: 3, name: "大辣" },
+        ],
+      },
+    ],
   },
   {
     id: 2,

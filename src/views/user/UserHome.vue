@@ -15,7 +15,6 @@ let menuSelect = reactive([]);
 // 更新菜單選擇的處理函數
 const updateMenuSelect = (newMenuSelect) => {
   menuSelect = newMenuSelect;
-  console.log(menuSelect);
 };
 
 const labelRef = ref(null);
@@ -78,7 +77,6 @@ const clickScroll = (id, items) => {
     scrollArrow(adjustedPosition);
     //找到homeMenu中id對應的項目
     selectMenu.value = homeMenu.find((item) => item.id === id);
-    console.log(selectMenu.value);
   }
 };
 
