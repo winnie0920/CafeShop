@@ -86,7 +86,7 @@ export const homeMenu = [
         description: "台灣豬肉",
         image: "image-Pasta.jpg",
         count: 30,
-        option: [1, 2, 3],
+        option: ["size", "noddle", "spicy"],
       },
       {
         id: 2,
@@ -95,7 +95,7 @@ export const homeMenu = [
         description: "台灣豬肉、牛肉",
         image: "image-Pasta-2.jpg",
         count: 40,
-        option: [1, 2, 3],
+        option: ["size", "noddle", "spicy"],
       },
       {
         id: 3,
@@ -104,7 +104,7 @@ export const homeMenu = [
         description: "台灣豬肉、牛肉",
         image: "image-Pasta-3.jpg",
         count: 50,
-        option: [1, 2],
+        option: ["size", "noddle"],
       },
       {
         id: 4,
@@ -112,7 +112,7 @@ export const homeMenu = [
         price: 170,
         image: "image-Pasta-4.jpg",
         count: 50,
-        option: [1, 2],
+        option: ["size", "noddle"],
       },
       {
         id: 5,
@@ -136,38 +136,6 @@ export const homeMenu = [
         price: 150,
         image: "image-Pasta-7.jpg",
         count: 20,
-      },
-    ],
-    options: [
-      {
-        id: 1,
-        type: "份量",
-        isSingleChoice: true,
-        children: [
-          { id: 1, name: "小", selected: true },
-          { id: 2, name: "中", price: 10 },
-          { id: 3, name: "大", price: 15 },
-        ],
-      },
-      {
-        id: 2,
-        type: "麵體",
-        isSingleChoice: false,
-        children: [
-          { id: 1, name: "細麵" },
-          { id: 2, name: "筆管麵", price: 10 },
-          { id: 3, name: "螺旋麵", price: 10 },
-        ],
-      },
-      {
-        id: 3,
-        type: "辣度",
-        isSingleChoice: true,
-        children: [
-          { id: 1, name: "小辣" },
-          { id: 2, name: "中辣" },
-          { id: 3, name: "大辣" },
-        ],
       },
     ],
   },
@@ -509,6 +477,39 @@ export const homeMenu = [
         image: "image-Milk-2.jpg",
         count: 120,
       },
+    ],
+  },
+];
+
+export const option = [
+  {
+    type: "size",
+    name: "份量",
+    isSingleChoice: true,
+    children: [
+      { id: 1, name: "小", selected: true },
+      { id: 2, name: "中", price: 10 },
+      { id: 3, name: "大", price: 15 },
+    ],
+  },
+  {
+    type: "noddle",
+    name: "麵體",
+    isSingleChoice: false,
+    children: [
+      { id: 1, name: "細麵" },
+      { id: 2, name: "筆管麵", price: 10 },
+      { id: 3, name: "螺旋麵", price: 10 },
+    ],
+  },
+  {
+    type: "spicy",
+    name: "辣度",
+    isSingleChoice: true,
+    children: [
+      { id: 1, name: "小辣" },
+      { id: 2, name: "中辣" },
+      { id: 3, name: "大辣" },
     ],
   },
 ];

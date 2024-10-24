@@ -10,10 +10,15 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["closeShow"]);
+const emit = defineEmits(["closeShow", "confirmPopup"]);
 
 const closePopup = () => {
   emit("closeShow", false);
+};
+
+const confirmPopup = () => {
+  emit("confirmPopup");
+  closePopup();
 };
 </script>
 
@@ -30,7 +35,7 @@ const closePopup = () => {
           <slot name="main" :title="title"></slot>
         </div>
         <footer class="popup__footer d-flex justify-content-end">
-          <button>取消</button>
+          <button @click="confirmPopup">確認</button>
           <slot name="footer"></slot>
         </footer>
       </div>
@@ -40,6 +45,4 @@ const closePopup = () => {
 
 <style lang="scss" scoped>
 @import "@/assets/css/mixin";
-
-
 </style>
