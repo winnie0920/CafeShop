@@ -86,6 +86,7 @@ export const homeMenu = [
         description: "台灣豬肉",
         image: "image-Pasta.jpg",
         count: 30,
+        option: [1, 2, 3],
       },
       {
         id: 2,
@@ -94,6 +95,7 @@ export const homeMenu = [
         description: "台灣豬肉、牛肉",
         image: "image-Pasta-2.jpg",
         count: 40,
+        option: [1, 2, 3],
       },
       {
         id: 3,
@@ -102,6 +104,7 @@ export const homeMenu = [
         description: "台灣豬肉、牛肉",
         image: "image-Pasta-3.jpg",
         count: 50,
+        option: [1, 2],
       },
       {
         id: 4,
@@ -109,6 +112,7 @@ export const homeMenu = [
         price: 170,
         image: "image-Pasta-4.jpg",
         count: 50,
+        option: [1, 2],
       },
       {
         id: 5,
@@ -136,7 +140,9 @@ export const homeMenu = [
     ],
     options: [
       {
+        id: 1,
         type: "份量",
+        isSingleChoice: true,
         children: [
           { id: 1, name: "小", selected: true },
           { id: 2, name: "中", price: 10 },
@@ -144,7 +150,9 @@ export const homeMenu = [
         ],
       },
       {
+        id: 2,
         type: "麵體",
+        isSingleChoice: false,
         children: [
           { id: 1, name: "細麵" },
           { id: 2, name: "筆管麵", price: 10 },
@@ -152,7 +160,9 @@ export const homeMenu = [
         ],
       },
       {
+        id: 3,
         type: "辣度",
+        isSingleChoice: true,
         children: [
           { id: 1, name: "小辣" },
           { id: 2, name: "中辣" },
@@ -498,6 +508,75 @@ export const homeMenu = [
         price: 130,
         image: "image-Milk-2.jpg",
         count: 120,
+      },
+    ],
+  },
+];
+
+// id(pk) | orderNum | orderDate | orderStatus | PayStatus | table | allAmount | payMethod | remark | menuId | childId | foodName | foodCount | foodPrice | foodAmount | foodDescription | foodImage | optId | optKey | optVal |
+
+// 1 | 20240001 | '2024-01-01' | '已完成' | '已付款' | 1 | 795 | '信用卡' | '' | 1 | 1 | '波隆那肉醬義大利麵' | 4 | 140 | 560 | '台灣豬肉' | "image-Pasta.jpg" | 1 | 'noodle' | 1 |
+
+// 2 | 20240001 | '2024-01-01' | '已完成' | '已付款' | 1 | 795 | '信用卡' | '' | 1 | 1 | '波隆那肉醬義大利麵' | 4 | 140 | 560 | '台灣豬肉' | "image-Pasta.jpg" | 1 | 'spicy' | 2 |
+
+// 3 | 20240001 | '2024-01-01' | '已完成' | '已付款' | 1 | 795 | '信用卡' | '' | 8 | 1 | '草莓巴西莓檸檬風味冰沙' | 2 | 85 | 170 | '' | "image-Smoothies.jpg" | 2 | null | null |
+
+// 4 | 20240001 | '2024-01-01' | '已完成' | '已付款' | 1 | 795 | '信用卡' | '' | 1 | 7 | '香蒜白酒蛤蜊細麵' | 1 | 150 | 150 | '' | "image-Pasta-7.jpg" | 3 | 'noodle' | 3 |
+
+// 5 | 20240001 | '2024-01-01' | '已完成' | '已付款' | 1 | 795 | '信用卡' | '' | 1 | 7 | '香蒜白酒蛤蜊細麵' | 1 | 150 | 150 | '' | "image-Pasta-7.jpg" | 3 | 'spicy' | 3 |
+
+const data = [
+  {
+    id: 1,
+    orderNum: 20240001,
+    orderDate: "2024-01-01",
+    orderStatus: "已完成",
+    PayStatus: "已付款",
+    table: 1,
+    allAmount: 795,
+    payMethod: "信用卡",
+    remark: "無",
+    menuList: [
+      {
+        id: 1,
+        menuId: 1,
+        childId: 1,
+        name: "波隆那肉醬義大利麵",
+        price: 140,
+        amount: 560,
+        description: "台灣豬肉",
+        image: "image-Pasta.jpg",
+        count: 4,
+        option: {
+          noodle: 1,
+          spicy: 2,
+        },
+      },
+      {
+        id: 2,
+        menuId: 8,
+        childId: 1,
+        name: "草莓巴西莓檸檬風味冰沙",
+        price: 85,
+        amount: 170,
+        description: "",
+        image: "image-Smoothies.jpg",
+        count: 2,
+      },
+      {
+        id: 1,
+        menuId: 1,
+        childId: 7,
+        name: "香蒜白酒蛤蜊細麵",
+        price: 150,
+        amount: 150,
+        description: "",
+        image: "image-Pasta-7.jpg",
+        count: 1,
+        option: {
+          noodle: 3,
+          spicy: 3,
+        },
       },
     ],
   },

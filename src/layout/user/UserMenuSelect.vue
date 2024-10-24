@@ -12,73 +12,75 @@ const props = defineProps({
 
 const emit = defineEmits(["menuSelect"]);
 
-// 使用 localSelect 存儲選擇的菜單
-const localSelect = reactive([...props.menuSelect]);
+// 使用 childInformation 存儲選擇的菜單
+const childInformation = reactive([...props.menuSelect]);
 
 //監聽 menuSelect 變化 如父層有變化，子層也會變化
 watch(
   () => props.menuSelect,
   (newVal) => {
-    localSelect = [...newVal];
+    childInformation = [...newVal];
   }
 );
 
-//找到相對應 MenuSelect 的菜單品項
-const findMenuItem = (menuId, childId) => {
-  return localSelect.find(
-    (item) => item.menuId === menuId && item.childId === childId
-  );
-};
-
-//目前用來保存選中的菜品
+//保存打開菜單內容名稱、價錢
 const selectedMenu = ref(null);
+// 保存打開菜單顯示的選項
+const selectedOptions = ref([]);
 //控管菜單的開關
 const show = ref(false);
 
 //打開每個菜單明細
 const toggleMenu = (menuId, childId) => {
-  selectedMenu.value = props.menu
-    .find((m) => m.id === menuId)
-    ?.children.find((c) => c.id === childId);
+  const menu = props.menu.find((m) => m.id === menuId);
+  selectedMenu.value = menu?.children.find((c) => c.id === childId);
+
+  // 根據 selectedMenu 的選項來過濾
+  selectedOptions.value = selectedMenu.value?.option?.length
+    ? menu.options.filter((option) =>
+        selectedMenu.value.option.includes(option.id)
+      )
+    : menu.options;
+
   show.value = true;
 };
 
 const closeShow = (val) => {
   show.value = val;
 };
+
+//找到相對應 MenuSelect 的菜單品項
+const findMenuItem = (menuId, childId) => {
+  return childInformation.find(
+    (item) => item.menuId === menuId && item.childId === childId
+  );
+};
+
+const makeMenuItem = (menuId, childId) => {
+  let existed = findMenuItem(menuId, childId);
+  if (!existed) {
+    childInformation.push({ menuId, childId, count: 0 });
+    existed = findMenuItem(menuId, childId);
+  }
+  return existed;
+};
+
 //新增、添加 MenuSelect 的菜單品項及數量
 const addMenuSelect = (menuId, childId, maxCount) => {
-  const existingMenu = findMenuItem(menuId, childId);
-  if (existingMenu) {
-    // 增加數量
+  const existingMenu = makeMenuItem(menuId, childId);
+  if (existingMenu.count < maxCount) existingMenu.count++;
 
-    if (existingMenu.count < maxCount) existingMenu.count++;
-  } else {
-    // 新增一個新項目
-    const newItem = { menuId, childId, count: 1 };
-    localSelect.push(newItem);
-  }
-
-  // 通知父層更新
-  emit("menuSelect", localSelect);
+  emit("menuSelect", childInformation);
 };
 
 //減少、刪除 MenuSelect 的菜單品項及數量
 const removeMenuSelect = (menuId, childId) => {
   const existingMenu = findMenuItem(menuId, childId);
-  if (existingMenu) {
-    // 減少數量
-    if (existingMenu.count > 1) {
-      existingMenu.count--;
-    } else {
-      // 找到該項目的索引，並刪除它
-      const index = localSelect.indexOf(existingMenu);
-      if (index !== -1) {
-        localSelect.splice(index, 1);
-      }
-    }
-  }
-  emit("menuSelect", localSelect);
+  // 減少數量
+  existingMenu.count > 1
+    ? existingMenu.count--
+    : childInformation.splice(childInformation.indexOf(existingMenu), 1);
+  emit("menuSelect", childInformation);
 };
 
 // 獲取菜單品項的數量
@@ -87,6 +89,30 @@ const getCount = (menuId, childId) => {
   return existingMenu ? existingMenu.count : 0;
 };
 
+// 用來存儲每組的選中選項
+const selectedOption = reactive([]);
+
+// 處理單選邏輯 (radio)
+const RadioChange = (groupId, childId) => {
+  // 單選情況下只能選擇一個
+  selectedOption[groupId] = childId;
+};
+
+// 處理多選邏輯 (checkbox)
+const CheckboxChange = (groupId, childId) => {
+  if (!Array.isArray(selectedOption[groupId])) {
+    selectedOption[groupId] = [];
+  }
+  const index = selectedOption[groupId].indexOf(childId);
+
+  if (index > -1) {
+    // 如果已經選中，則取消選中
+    selectedOption[groupId].splice(index, 1);
+  } else {
+    // 如果未選中，則添加到選項中
+    selectedOption[groupId].push(childId);
+  }
+};
 //圖片路徑
 const getImageUrl = (id) => {
   return new URL(`../../assets/image/${id}`, import.meta.url).href;
@@ -143,11 +169,44 @@ const getImageUrl = (id) => {
       </ul>
     </div>
   </div>
+
   <UserPopup :show="show" @close-show="closeShow">
-    <template #main>
-      <img class="Popup__img" :src="getImageUrl(selectedMenu.image)" alt="" />
-      <div>
-        <h2></h2>
+    <template #main="{ title }">
+      <img
+        :class="['popup__img', { 'popup__img-rounded': !title }]"
+        :src="getImageUrl(selectedMenu.image)"
+      />
+      <div class="popup__text-content">
+        <h3>{{ selectedMenu.name }}</h3>
+        <span>{{ selectedMenu.description }}</span>
+        <p>${{ selectedMenu.count }}</p>
+        <hr />
+      </div>
+      <div v-if="selectedOptions">
+        <ul v-for="o in selectedOptions" :key="o.id">
+          <h3>{{ o.type }}</h3>
+          <li v-for="c in o.children" :key="c.id">
+            <label>
+              <input
+                v-if="o.isSingleChoice"
+                type="radio"
+                :value="c.id"
+                v-model="selectedOption[o.id]"
+              />
+              <input
+                v-else
+                type="checkbox"
+                :id="c.id"
+                :value="c.id"
+                v-model="selectedOption"
+              />
+              {{ c }}
+            </label>
+          </li>
+          {{
+            selectedOption
+          }}
+        </ul>
       </div>
     </template>
   </UserPopup>
@@ -155,15 +214,4 @@ const getImageUrl = (id) => {
 
 <style lang="scss" scoped>
 @import "@/assets/css/mixin";
-
-.Popup__img {
-  height: 205px;
-  width: 100%;
-  object-fit: cover;
-}
-@media (min-width: 768px) {
-  .Popup__img {
-    height: 317px;
-  }
-}
 </style>

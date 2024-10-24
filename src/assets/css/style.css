@@ -155,11 +155,17 @@ img {
   display: block;
 }
 
-.menu__content li, .User__side-left, .User__side-right, .User__side-label li {
+.popup__wrapper svg, .menu__content li, .User__side-left, .User__side-right, .User__side-label li {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
   transition: all 0.35s ease-in-out;
+}
+
+.popup__footer, .popup__header, .popup__container {
+  display: flex;
+  border-radius: var(--cafe-radius-sm);
+  background: var(--cafe-color-white);
 }
 
 .User__container {
@@ -354,4 +360,107 @@ img {
   width: 2.5rem;
   bottom: -6%;
   right: -60%;
+}
+
+.popup__wrapper {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+  z-index: 2000;
+  background-color: var(--cafe-color-background);
+}
+.popup__wrapper svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: rotate(45deg);
+  color: var(--cafe-color-brown);
+  background: var(--cafe-color-white);
+  cursor: pointer;
+}
+.popup__container {
+  position: relative;
+  flex-direction: column;
+  width: 60rem;
+  height: 80vh;
+  overflow: hidden;
+}
+.popup__container svg {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+.popup__header {
+  justify-content: space-between;
+  padding: 1rem;
+  z-index: 2;
+}
+.popup__header h2 {
+  font-size: 1.6rem;
+  color: var(--eip-color-gray);
+  margin: 0; /* 移除 margin */
+}
+.popup__content {
+  flex: 1;
+  overflow-y: auto;
+}
+.popup__content::-webkit-scrollbar {
+  display: none;
+}
+.popup__footer {
+  padding: 1.5rem 2rem;
+  gap: 1rem;
+  z-index: 2;
+}
+.popup__footer button {
+  color: var(--eip-color-text);
+  background-color: var(--eip-color-bg);
+}
+
+.popup__img {
+  height: 205px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.popup__img-rounded {
+  border-top-right-radius: var(--cafe-radius-sm);
+  border-top-left-radius: var(--cafe-radius-sm);
+}
+.popup__text-content {
+  display: grid;
+  padding: 2rem;
+  gap: 1rem;
+  color: var(--cafe-color-brown);
+}
+.popup__text-content span {
+  font-size: 1.4rem;
+  color: var(--cafe-color-brown-lighter);
+}
+.popup__text-content p {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .popup__img {
+    height: 317px;
+  }
+}
+@media (max-width: 768px) {
+  .popup__container {
+    max-width: 400px;
+  }
+}
+@media (max-width: 400px) {
+  .popup__wrapper {
+    position: fixed;
+    display: block;
+  }
+  .popup__container {
+    height: 100%;
+  }
+  .popup__header, .popup__footer {
+    border-radius: 0px;
+  }
 }/*# sourceMappingURL=style.css.map */
