@@ -4,7 +4,7 @@ import { homeItem, homeMenu } from "@/json/UserHome";
 const queryParams = reactive({
   search: "",
 });
-
+const childRef = ref(null);
 // AdminSearch 的 emit
 const sendSearch = (val) => {
   queryParams.search = val;
@@ -15,7 +15,6 @@ let menuSelect = reactive([]);
 // 更新菜單選擇的處理函數
 const updateMenuSelect = (newMenuSelect) => {
   menuSelect = newMenuSelect;
-  console.log(menuSelect);
 };
 
 const labelRef = ref(null);
@@ -79,18 +78,7 @@ const clickScroll = (id, items) => {
     //找到homeMenu中id對應的項目
     selectMenu.value = homeMenu.find((item) => item.id === id);
   }
-  scrollPosition(id);
-};
-
-const scrollPosition = (id) => {
-  const target = document.querySelector(`h1[menu-id='${id}']`);
-  const container = document.querySelector(".menu__content");
-  const targetPosition =
-    target.getBoundingClientRect().top + container.scrollTop - 220;
-  container.scrollTo({
-    top: targetPosition,
-    behavior: "smooth",
-  });
+  childRef.value.scrollTo(id);
 };
 
 //判斷箭頭顯示
@@ -123,7 +111,10 @@ onBeforeUnmount(() => {
 
     <section class="row" style="overflow-y: hidden">
       <!-- 滾輪軸 -->
-      <div class="col-12 col-lg-8 sticky-top" style="z-index: 0 !important">
+      <div
+        class="col-12 col-lg-8 sticky-top"
+        style="z-index: 2000__content !important"
+      >
         <div class="User__side">
           <button
             v-if="showArrow"
@@ -164,6 +155,7 @@ onBeforeUnmount(() => {
       </div>
       <div class="col-12 col-lg-8">
         <UserMenuSelect
+          ref="childRef"
           :menuSelect="menuSelect"
           @menuSelect="updateMenuSelect"
           :menu="homeMenu"

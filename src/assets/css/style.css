@@ -178,6 +178,7 @@ img {
 }
 .User__side {
   position: relative;
+  background-color: var(--cafe-color-bisque);
   z-index: 1;
 }
 .User__side-label {
@@ -362,6 +363,11 @@ img {
   right: -60%;
 }
 
+@media (max-width: 640px) {
+  .menu__content {
+    max-height: calc(100vh - 26rem);
+  }
+}
 .popup__wrapper {
   position: fixed;
   display: flex;

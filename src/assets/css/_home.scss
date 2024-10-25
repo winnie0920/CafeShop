@@ -10,6 +10,7 @@
 
   &__side {
     position: relative;
+    background-color: var(--cafe-color-bisque);
     z-index: 1;
     &-label {
       display: flex;
@@ -167,12 +168,12 @@
     &-content {
       flex-direction: row !important;
       margin: 0 !important;
-      div{
-      display: flex;
-      width: 1.5rem;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
+      div {
+        display: flex;
+        width: 1.5rem;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
       }
     }
     &-num {
@@ -199,6 +200,14 @@
       width: 2.5rem;
       bottom: -6%;
       right: -60%;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .menu {
+    &__content {
+      max-height: calc(100vh - 26rem);
     }
   }
 }

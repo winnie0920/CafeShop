@@ -73,9 +73,7 @@ const findMenu = (menuId, childId) => {
 // 點擊外框，打開每個菜單明細
 const toggleMenu = (menuId, childId, price) => {
   findMenu(menuId, childId);
-
   occupy.value = { menuId, childId, count: 0, price };
-
   show.value = true;
 };
 
@@ -176,6 +174,20 @@ const pluralOption = (type, id) => {
     occupy.value.option[type].splice(index, 1);
   }
 };
+
+//父層滾動至指定h1
+const scrollTo = (id) => {
+  const targetElement = document.getElementById(id);
+  console.log(id);
+
+  if (targetElement) {
+    targetElement.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
+//暴露給父層
+defineExpose({ scrollTo });
+
 // 圖片路徑
 const getImageUrl = (id) => {
   return new URL(`../../assets/image/${id}`, import.meta.url).href;
@@ -185,7 +197,7 @@ const getImageUrl = (id) => {
 <template>
   <div class="menu__content">
     <div v-for="m in props.menu" :key="m.id">
-      <h1 :menu-id="m.id">{{ m.name }}</h1>
+      <h1 :id="m.id">{{ m.name }}</h1>
       <span>{{ m.content }}</span>
       <ul class="menu__background">
         <li
