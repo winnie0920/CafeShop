@@ -15,6 +15,7 @@ let menuSelect = reactive([]);
 // 更新菜單選擇的處理函數
 const updateMenuSelect = (newMenuSelect) => {
   menuSelect = newMenuSelect;
+  console.log(menuSelect);
 };
 
 const labelRef = ref(null);
@@ -58,7 +59,7 @@ const scrollArrow = (direction) => {
 
 const clickScroll = (id, items) => {
   if (labelRef.value) {
-    const liWidth = labelRef.value.querySelector("li").offsetWidth; // 每個 li 的寬度
+    const liWidth = labelRef.value.querySelector("li").offsetWidth;
     const visibleWidth = labelRef.value.clientWidth; // 可見的寬度
     let newPosition = (liWidth + 8) * id - visibleWidth / 2 + liWidth / 2; // 計算新的滾動位置
 
@@ -84,7 +85,7 @@ const clickScroll = (id, items) => {
 //判斷箭頭顯示
 const checkScrollWidth = () => {
   const label = labelRef.value;
-  if (label.scrollWidth > label.clientWidth) {
+  if (labelRef.value.scrollWidth > label.clientWidth) {
     showArrow.value = true;
   } else {
     showArrow.value = false;

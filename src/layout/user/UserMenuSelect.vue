@@ -14,7 +14,7 @@ const props = defineProps({
 const emit = defineEmits(["menuSelect"]);
 
 // 使用 childInformation 存儲選擇的菜單
-const childInformation = reactive([...props.menuSelect]);
+let childInformation = reactive([...props.menuSelect]);
 
 // 監聽 menuSelect 變化 如父層有變化，子層也會變化
 watch(
@@ -178,8 +178,6 @@ const pluralOption = (type, id) => {
 //父層滾動至指定h1
 const scrollTo = (id) => {
   const targetElement = document.getElementById(id);
-  console.log(id);
-
   if (targetElement) {
     targetElement.scrollIntoView({ behavior: "smooth" });
   }
