@@ -41,10 +41,20 @@ const closeShow = (val) => {
 };
 
 const confirmPopup = () => {
-  console.log(occupy.value);
+  let existingMenu = makeMenuItem(
+    occupy.value.menuId,
+    occupy.value.childId,
+    occupy.value.option
+  );
+
+  if (existingMenu.count < selectedMenu.value.count) {
+    existingMenu.count++;
+    existingMenu.price = existingMenu.count * occupy.value.price;
+  }
+  emit("menuSelect", childInformation);
 };
 
-// 找到相對應的 selectedMenu 的菜單品項及客製化選項
+// 找到相對應的 MenuSelect 的菜單品項及客製化選項
 const findMenu = (menuId, childId) => {
   selectedOptions.value = {};
   // 菜單內容名稱、價錢
@@ -63,7 +73,9 @@ const findMenu = (menuId, childId) => {
 // 點擊外框，打開每個菜單明細
 const toggleMenu = (menuId, childId, price) => {
   findMenu(menuId, childId);
-  occupy.value = { menuId, childId, count: 1, price };
+
+  occupy.value = { menuId, childId, count: 0, price };
+
   show.value = true;
 };
 
@@ -73,26 +85,44 @@ const addMenuSelect = (menuId, c) => {
   if (selectedOptions.value.length > 0) {
     toggleMenu(menuId, c.id, c.price);
   } else {
-    const existingMenu = makeMenuItem(menuId, c.id);
+    const existingMenu = makeMenuItem(menuId, c.id, c.option);
+
     if (existingMenu.count < c.count) existingMenu.count++;
     existingMenu.price = existingMenu.count * c.price;
   }
   emit("menuSelect", childInformation);
 };
 
-// 點擊+號，新增菜單品項
-const makeMenuItem = (menuId, childId) => {
-  let existed = findMenuItem(menuId, childId);
-  if (!existed) {
+// 點擊+號或送出，新增菜單品項
+const makeMenuItem = (menuId, childId, option) => {
+  let existed = findMenuItem(menuId, childId, option);
+  if (!existed && !option) {
     childInformation.push({ menuId, childId, count: 0, price: 0 });
     existed = findMenuItem(menuId, childId);
-    console.log(childInformation);
+  }
+  if (!existed && option) {
+    childInformation.push(occupy.value);
+    existed = findMenuItem(menuId, childId, option);
   }
   return existed;
 };
 
 // 找到相對應 MenuSelect 的菜單品項
-const findMenuItem = (menuId, childId) => {
+const findMenuItem = (menuId, childId, option) => {
+  if (option) {
+    return childInformation.find((item) => {
+      const hasSameKeys =
+        item.option &&
+        Object.keys(item.option).length === Object.keys(option).length;
+
+      return (
+        item.menuId === menuId &&
+        item.childId === childId &&
+        hasSameKeys &&
+        Object.keys(option).every((key) => item.option[key] === option[key])
+      );
+    });
+  }
   return childInformation.find(
     (item) => item.menuId === menuId && item.childId === childId
   );
@@ -111,27 +141,41 @@ const removeMenuSelect = (menuId, childId) => {
 // 獲取菜單品項的數量
 const getCount = (menuId, childId) => {
   const existingMenu = findMenuItem(menuId, childId);
-  return existingMenu ? existingMenu.count : 0;
+  const totalCount = childInformation
+    .filter((item) => item.menuId === menuId && item.childId === childId)
+    .reduce((sum, item) => sum + item.count, 0);
+  return existingMenu ? totalCount : 0;
+};
+
+//創建option空字串塞入選項
+const createOption = () => {
+  if (!occupy.value.option) {
+    occupy.value = {
+      ...occupy.value,
+      option: {},
+    };
+  }
 };
 
 // 用來更新單選的選項
 const singleOption = (type, id) => {
-  occupy.value[type] = id;
+  createOption();
+  occupy.value.option[type] = id;
 };
 
 // 用來更新多選的選項
 const pluralOption = (type, id) => {
-  if (!occupy.value[type]) {
-    occupy.value[type] = [];
+  createOption();
+  if (!occupy.value.option[type]) {
+    occupy.value.option[type] = [];
   }
-  const index = occupy.value[type].indexOf(id);
+  const index = occupy.value.option[type].indexOf(id);
   if (index === -1) {
-    occupy.value[type].push(id);
+    occupy.value.option[type].push(id);
   } else {
-    occupy.value[type].splice(index, 1);
+    occupy.value.option[type].splice(index, 1);
   }
 };
-
 // 圖片路徑
 const getImageUrl = (id) => {
   return new URL(`../../assets/image/${id}`, import.meta.url).href;
@@ -141,7 +185,7 @@ const getImageUrl = (id) => {
 <template>
   <div class="menu__content">
     <div v-for="m in props.menu" :key="m.id">
-      <h1>{{ m.name }}</h1>
+      <h1 :menu-id="m.id">{{ m.name }}</h1>
       <span>{{ m.content }}</span>
       <ul class="menu__background">
         <li

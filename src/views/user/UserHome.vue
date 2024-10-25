@@ -15,6 +15,7 @@ let menuSelect = reactive([]);
 // 更新菜單選擇的處理函數
 const updateMenuSelect = (newMenuSelect) => {
   menuSelect = newMenuSelect;
+  console.log(menuSelect);
 };
 
 const labelRef = ref(null);
@@ -78,6 +79,18 @@ const clickScroll = (id, items) => {
     //找到homeMenu中id對應的項目
     selectMenu.value = homeMenu.find((item) => item.id === id);
   }
+  scrollPosition(id);
+};
+
+const scrollPosition = (id) => {
+  const target = document.querySelector(`h1[menu-id='${id}']`);
+  const container = document.querySelector(".menu__content");
+  const targetPosition =
+    target.getBoundingClientRect().top + container.scrollTop - 220;
+  container.scrollTo({
+    top: targetPosition,
+    behavior: "smooth",
+  });
 };
 
 //判斷箭頭顯示
