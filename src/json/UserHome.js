@@ -1,11 +1,11 @@
 export const homeSide = [
   {
-    to: "home",
+    to: { name: "UserHome" },
     iconName: "Common-Home",
     label: "HOME",
   },
   {
-    to: "about",
+    to: { name: "UserAbout" },
     iconName: "Common-About",
     label: "ABOUT",
   },

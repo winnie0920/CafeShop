@@ -16,6 +16,9 @@
   --cafe--font-xs: 0.9rem;
   --cafe--font-sm: 1rem;
   --cafe--font-md: 1.2rem;
+  --cafe--font-lg: 1.4rem;
+  --cafe--padding-xs: 1rem;
+  --cafe--padding-sm: 2rem;
 }
 
 .opacity-enter-from,
@@ -168,6 +171,65 @@ img {
   background: var(--cafe-color-white);
 }
 
+.check__and-radio {
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 0.2rem solid var(--cafe-color-brown);
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.check__and-radio::after {
+  content: "";
+  display: block;
+  height: 0.7rem;
+  width: 0.7rem;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--cafe-color-brown);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+input[type=radio]:checked + label .check__and-radio::after,
+input[type=checkbox]:checked + label .check__and-radio::after {
+  animation: pop-in 0.3s ease-out forwards;
+  opacity: 1;
+}
+
+input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
+  animation: pop-out 0.3s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes pop-in {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes pop-out {
+  0% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+}
 .User__container {
   display: flex;
   flex-direction: column;
@@ -322,6 +384,7 @@ img {
   bottom: 5%;
   right: 5%;
   overflow: hidden;
+  color: var(--cafe-color-brown);
   border-radius: var(--cafe-radius-lg);
   background-color: var(--cafe-color-white);
   transition: all 0.1s ease-in-out;
@@ -341,7 +404,6 @@ img {
   height: 1.5rem;
   width: 1.5rem;
   font-size: 1.5rem;
-  color: var(--cafe-color-brown);
 }
 .menu__btn-trash {
   padding-top: 0.1rem;
@@ -353,6 +415,7 @@ img {
 .menu__btn-add {
   position: relative;
   z-index: 2;
+  color: inherit;
 }
 .menu__btn-circle {
   position: absolute;
@@ -446,6 +509,35 @@ img {
 }
 .popup__text-content p {
   font-size: 1.5rem;
+}
+.popup__text-option {
+  padding: 0 var(--cafe--padding-sm);
+  color: var(--cafe-color-brown);
+  line-height: 1.7;
+}
+.popup__text-option h3, .popup__text-option h5, .popup__text-option li {
+  line-height: inherit;
+}
+.popup__text-option h5 {
+  font-size: var(--cafe--font-sm);
+}
+.popup__text-option li {
+  font-size: var(--cafe--font-md);
+}
+.popup__text-option input {
+  width: 0;
+  visibility: hidden;
+}
+.popup__text-option label {
+  font-size: 1.6rem;
+  cursor: pointer;
+  position: relative;
+  padding-left: 3rem;
+}
+
+input[type=radio]:checked + label .check__and-radio::after,
+input[type=checkbox]:checked + label .check__and-radio::after {
+  opacity: 1;
 }
 
 @media (min-width: 768px) {

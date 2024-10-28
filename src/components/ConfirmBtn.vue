@@ -25,7 +25,7 @@ const props = defineProps({
   &__btn {
     display: flex;
     align-items: center;
-    padding: 1rem 1.25rem;
+    padding: var(--cafe--padding-xs) 1.25rem;
     gap: 0.5rem;
     color: var(--cafe-color-brown);
     border: 0.1rem solid var(--cafe-color-brown);

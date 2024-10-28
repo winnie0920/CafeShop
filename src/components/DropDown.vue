@@ -91,7 +91,7 @@ onBeforeUnmount(() => {
     @extend %base-btn-setting;
     position: relative;
     display: grid;
-    padding: 1rem;
+    padding: var(--cafe--padding-xs);
     color: var(--cafe-color-brown);
     border: 0.1rem solid var(--cafe-color-brown);
     background-color: var(--cafe-color-white);
@@ -118,7 +118,7 @@ onBeforeUnmount(() => {
     flex-direction: column;
     max-height: 22rem;
     width: 100%;
-    padding: 0.75rem 0.75rem;
+    padding: 0.75rem;
     gap: 0.5rem;
     background-color: var(--cafe-color-white);
     border-radius: inherit;

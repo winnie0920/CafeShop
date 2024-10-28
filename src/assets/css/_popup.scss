@@ -89,7 +89,42 @@
             font-size: 1.5rem;
         }
     }
+    &__text{
+      &-option{
+        padding: 0 var(--cafe--padding-sm) ;
+        color: var(--cafe-color-brown);
+        line-height: 1.7;
+        h3,h5,li{
+          line-height: inherit;
+        }
+        h5{
+          font-size: var(--cafe--font-sm);
+        }
+        li{
+          font-size: var(--cafe--font-md);
+        }
+        input{
+        width: 0;
+        visibility: hidden;
+        }
+        label{
+          font-size: 1.6rem;
+          cursor: pointer;
+          position: relative;
+          padding-left: 3rem;
+        }
+      }
+    }
   }
+
+  
+
+  input[type="radio"]:checked + label .check__and-radio::after,
+  input[type="checkbox"]:checked + label .check__and-radio::after
+  {
+    opacity: 1;
+  }
+  
 
   @media (min-width: 768px) {
     .popup__img {

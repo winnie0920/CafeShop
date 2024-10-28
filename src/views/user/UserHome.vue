@@ -1,6 +1,6 @@
 <script setup>
 import { homeItem, homeMenu } from "@/json/UserHome";
-
+const useStore = userStore();
 const queryParams = reactive({
   search: "",
 });
@@ -28,11 +28,6 @@ const selectMenu = ref(homeMenu[0]);
 
 //箭頭顯示
 const showArrow = ref(false);
-
-//圖片路徑
-const getImageUrl = (id) => {
-  return new URL(`../../assets/image/${id}`, import.meta.url).href;
-};
 
 // side左右移動
 const scrollArrow = (direction) => {
@@ -141,7 +136,7 @@ onBeforeUnmount(() => {
               :key="i.id"
               @click="clickScroll(i.id, homeItem)"
             >
-              <img :src="getImageUrl(i.image)" alt="" />
+              <img :src="useStore.getImageUrl(i.image)" alt="" />
               <h5>
                 {{ i.name }}<span>({{ i.count }})</span>
               </h5>

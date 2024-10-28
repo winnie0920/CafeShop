@@ -9,7 +9,7 @@ import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === "production" ? "/cafe-shop/" : "./",
+  base: process.env.NODE_ENV === "production" ? "/CafeShop/" : "./",
   plugins: [
     vue(),
     vueDevTools(),

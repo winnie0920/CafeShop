@@ -1,5 +1,6 @@
 <script setup>
 import { option } from "@/json/UserHome";
+const useStore = userStore();
 const props = defineProps({
   menu: {
     type: Array,
@@ -15,14 +16,6 @@ const emit = defineEmits(["menuSelect"]);
 
 // 使用 childInformation 存儲選擇的菜單
 let childInformation = reactive([...props.menuSelect]);
-
-// 監聽 menuSelect 變化 如父層有變化，子層也會變化
-watch(
-  () => props.menuSelect,
-  (newVal) => {
-    childInformation = [...newVal];
-  }
-);
 
 // 保存打開菜單內容名稱、價錢
 const selectedMenu = ref(null);
@@ -40,6 +33,15 @@ const closeShow = (val) => {
   show.value = val;
 };
 
+// 監聽 menuSelect 變化 如父層有變化，子層也會變化
+watch(
+  () => props.menuSelect,
+  (newVal) => {
+    childInformation = [...newVal];
+  }
+);
+
+//確認菜單明細
 const confirmPopup = () => {
   let existingMenu = makeMenuItem(
     occupy.value.menuId,
@@ -155,6 +157,23 @@ const createOption = () => {
   }
 };
 
+//監聽childInformation 是否有option
+const checkoutOption = (m, c) => {
+  return computed(() => {
+    if (Array.isArray(childInformation)) {
+      return childInformation.some((child) => {
+        return (
+          child.menuId === m &&
+          child.childId === c &&
+          child.option &&
+          Object.keys(child.option).length > 0
+        );
+      });
+    }
+    return false;
+  });
+};
+
 // 用來更新單選的選項
 const singleOption = (type, id) => {
   createOption();
@@ -185,11 +204,6 @@ const scrollTo = (id) => {
 
 //暴露給父層
 defineExpose({ scrollTo });
-
-// 圖片路徑
-const getImageUrl = (id) => {
-  return new URL(`../../assets/image/${id}`, import.meta.url).href;
-};
 </script>
 
 <template>
@@ -209,9 +223,14 @@ const getImageUrl = (id) => {
             <span v-if="c.description">{{ c.description }}</span>
           </div>
           <div>
-            <img :src="getImageUrl(c.image)" alt="" />
+            <img :src="useStore.getImageUrl(c.image)" alt="" />
             <transition name="opacity">
-              <div class="menu__btn" v-if="getCount(m.id, c.id) > 0">
+              <div
+                class="menu__btn"
+                v-if="
+                  getCount(m.id, c.id) > 0 && !checkoutOption(m.id, c.id).value
+                "
+              >
                 <div class="menu__btn-content">
                   <button
                     class="menu__btn-trash"
@@ -236,9 +255,13 @@ const getImageUrl = (id) => {
             <span class="menu__btn-circle">
               <button class="menu__btn-add">
                 <SvgIcon
+                  v-if="!checkoutOption(m.id, c.id).value"
                   icon-name="Common-Add"
                   @click.stop="addMenuSelect(m.id, c)"
                 ></SvgIcon>
+                <p v-else>
+                  {{ getCount(m.id, c.id) }}
+                </p>
               </button>
             </span>
           </div>
@@ -251,7 +274,7 @@ const getImageUrl = (id) => {
     <template #main="{ title }">
       <img
         :class="['popup__img', { 'popup__img-rounded': !title }]"
-        :src="getImageUrl(selectedMenu.image)"
+        :src="useStore.getImageUrl(selectedMenu.image)"
       />
       <div class="popup__text-content">
         <h3>{{ selectedMenu.name }}</h3>
@@ -259,27 +282,35 @@ const getImageUrl = (id) => {
         <p>${{ selectedMenu.price }}</p>
         <hr />
       </div>
-      <div v-if="selectedOptions">
+      <div class="popup__text-option" v-if="selectedOptions">
         <ul v-for="o in selectedOptions" :key="o.id">
           <h3>{{ o.name }}</h3>
+          <h5 v-if="o.isSingleChoice">請擇一選擇</h5>
           <li v-for="c in o.children" :key="c.id">
-            <label>
-              <input
-                v-if="o.isSingleChoice"
-                type="radio"
-                :name="o.type"
-                :value="c.id"
-                @change="singleOption(o.type, c.id)"
-              />
-              <input
-                v-else
-                type="checkbox"
-                :id="c.id"
-                :value="c.id"
-                @change="pluralOption(o.type, c.id)"
-              />
+            <input
+              v-if="o.isSingleChoice"
+              type="radio"
+              :name="o.type"
+              :id="`radio-${o.type}-${c.id}`"
+              :value="c.id"
+              @change="singleOption(o.type, c.id)"
+            />
+            <label v-if="o.isSingleChoice" :for="`radio-${o.type}-${c.id}`">
+              <span class="check__and-radio"></span>
+              {{ c.name }}
             </label>
-            {{ c.name }}
+
+            <input
+              v-else
+              type="checkbox"
+              :id="`checkbox-${o.type}-${c.id}`"
+              :value="c.id"
+              @change="pluralOption(o.type, c.id)"
+            />
+            <label v-if="!o.isSingleChoice" :for="`checkbox-${o.type}-${c.id}`">
+              <span class="check__and-radio"></span>
+              {{ c.name }}
+            </label>
           </li>
         </ul>
       </div>

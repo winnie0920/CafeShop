@@ -10,11 +10,7 @@ import { homeSide } from "@/json/UserHome";
       </router-link>
       <ul>
         <li v-for="(item, index) in homeSide" :key="index">
-          <router-link
-            :to="item.to"
-            class="sidebar__item"
-            active-class="sidebar__item-active"
-          >
+          <router-link :to="item.to" class="sidebar__item">
             <SvgIcon :icon-name="item.iconName" />
             <h3>{{ item.label }}</h3>
           </router-link>
@@ -57,7 +53,7 @@ import { homeSide } from "@/json/UserHome";
     flex-direction: column;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem var(--cafe--padding-xs);
     border-radius: var(--cafe-radius-md);
     background-color: var(--cafe--color-white);
     transition: all 0.35s ease-in-out;
@@ -78,8 +74,7 @@ import { homeSide } from "@/json/UserHome";
       font-weight: 400;
       letter-spacing: 0.2rem;
     }
-    &:hover,
-    &:active {
+    &:hover {
       svg,
       h3 {
         color: var(--cafe-color-white);
@@ -87,6 +82,13 @@ import { homeSide } from "@/json/UserHome";
       background-color: var(--cafe-color-brown);
       border: var(--cafe-color-brown);
     }
+  }
+}
+.router-link-active {
+  background-color: var(--cafe-color-brown);
+  svg,
+  h3 {
+    color: var(--cafe-color-white);
   }
 }
 </style>

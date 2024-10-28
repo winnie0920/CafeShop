@@ -162,6 +162,7 @@
     bottom: 5%;
     right: 5%;
     overflow: hidden;
+    color: var(--cafe-color-brown);
     border-radius: var(--cafe-radius-lg);
     background-color: var(--cafe-color-white);
     transition: all 0.1s ease-in-out;
@@ -180,7 +181,6 @@
       height: 1.5rem;
       width: 1.5rem;
       font-size: 1.5rem;
-      color: var(--cafe-color-brown);
     }
     &-trash {
       padding-top: 0.1rem;
@@ -192,6 +192,7 @@
     &-add {
       position: relative;
       z-index: 2;
+      color: inherit
     }
     &-circle {
       position: absolute;

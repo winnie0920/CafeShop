@@ -1,0 +1,62 @@
+.check__and-radio {
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 0.2rem solid var(--cafe-color-brown);
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    &::after{
+      content: "";
+      display: block;
+      height: 0.7rem;
+      width: 0.7rem;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: var(--cafe-color-brown);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+}
+
+input[type="radio"]:checked + label .check__and-radio::after,
+input[type="checkbox"]:checked + label .check__and-radio::after
+{
+    animation: pop-in 0.3s ease-out forwards;
+    opacity: 1;
+}
+
+input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
+  animation: pop-out 0.3s ease-out forwards;
+  opacity: 0;
+}
+
+
+@keyframes pop-in {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @keyframes pop-out {
+    0% {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(0);
+    }
+  }

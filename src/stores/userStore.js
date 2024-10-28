@@ -21,5 +21,8 @@ export const userStore = defineStore("web", {
         this.show[params] = !this.show[params];
       }
     },
+    getImageUrl(id) {
+      return new URL(`../assets/image/${id}`, import.meta.url).href;
+    },
   },
 });

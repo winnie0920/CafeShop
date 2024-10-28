@@ -41,11 +41,11 @@ const search = computed({
     @extend %base-btn-setting;
     align-items: center;
     width: 100%;
-    padding-right: 1rem;
+    padding-right: var(--cafe--padding-xs);
     background-color: var(--cafe-color-white);
   }
   &__input {
-    padding: 1rem 1.5rem;
+    padding: var(--cafe--padding-xs) 1.5rem;
     flex-grow: 1;
     line-height: 1.8;
     color: var(--cafe-color-brown);
