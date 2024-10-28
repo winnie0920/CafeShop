@@ -1,0 +1,1 @@
+import{_ as o,c as n,a,o as t}from"./index-DAucyrX3.js";const r={};function s(c,e){return t(),n("div",null,e[0]||(e[0]=[a("h1",null,"Login",-1)]))}const d=o(r,[["render",s],["__scopeId","data-v-18fadb23"]]);export{d as default};
