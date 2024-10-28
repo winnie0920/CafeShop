@@ -1,0 +1,1 @@
+import{_ as o,c as t,a as r,o as s}from"./index-BaFmYe-n.js";const a={};function n(c,e){return s(),t("div",null,e[0]||(e[0]=[r("h1",null,"About",-1)]))}const l=o(a,[["render",n],["__scopeId","data-v-2730f5be"]]);export{l as default};
