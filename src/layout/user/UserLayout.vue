@@ -8,7 +8,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/assets/css/mixin";
+@use "@/assets/css/mixin" as *;
 div {
   height: 100%;
   width: 100%;

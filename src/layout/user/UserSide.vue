@@ -21,7 +21,7 @@ import { homeSide } from "@/json/UserHome";
 </template>
 
 <style lang="scss" scoped>
-@import "@/assets/css/mixin";
+@use "@/assets/css/mixin" as *;
 .sidebar {
   &__container {
     flex-shrink: 0;

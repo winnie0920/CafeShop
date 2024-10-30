@@ -18,7 +18,6 @@ const closePopup = () => {
 
 const confirmPopup = () => {
   emit("confirmPopup");
-  closePopup();
 };
 </script>
 
@@ -34,9 +33,9 @@ const confirmPopup = () => {
         <div class="popup__content">
           <slot name="main" :title="title"></slot>
         </div>
-        <footer class="popup__footer d-flex justify-content-end">
-          <button @click="confirmPopup">確認</button>
+        <footer class="popup__footer d-flex">
           <slot name="footer"></slot>
+          <button class="ms-auto" @click="confirmPopup">確認</button>
         </footer>
       </div>
     </div>
@@ -44,5 +43,5 @@ const confirmPopup = () => {
 </template>
 
 <style lang="scss" scoped>
-@import "@/assets/css/mixin";
+@use "@/assets/css/mixin" as *;
 </style>

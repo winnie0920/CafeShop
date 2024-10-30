@@ -35,7 +35,7 @@ const search = computed({
 </template>
 
 <style lang="scss" scoped>
-@import "@/assets/css/mixin";
+@use "@/assets/css/mixin" as *;
 .search {
   &__container {
     @extend %base-btn-setting;

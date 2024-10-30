@@ -1,6 +1,7 @@
 <script setup>
 import { option } from "@/json/UserHome";
 const useStore = userStore();
+const userSelected = userSelectedStore();
 const props = defineProps({
   menu: {
     type: Array,
@@ -23,14 +24,11 @@ const selectedMenu = ref(null);
 // 保存打開菜單顯示的選項
 const selectedOptions = ref([]);
 
-// 控管菜單明細的開關
-const show = ref(false);
-
 // 用來存儲菜單明細的暫存選項
 const occupy = ref({});
 
 const closeShow = (val) => {
-  show.value = val;
+  useStore.togglePopupShow("menu", val);
 };
 
 // 監聽 menuSelect 變化 如父層有變化，子層也會變化
@@ -43,17 +41,23 @@ watch(
 
 //確認菜單明細
 const confirmPopup = () => {
+  occupy.value.option = { ...userSelected.choice };
+  if (!userSelected.validateOption(selectedOptions.value)) {
+    return;
+  }
   let existingMenu = makeMenuItem(
     occupy.value.menuId,
     occupy.value.childId,
     occupy.value.option
   );
+  console.log(existingMenu.count, selectedMenu.value.count);
 
   if (existingMenu.count < selectedMenu.value.count) {
     existingMenu.count++;
     existingMenu.price = existingMenu.count * occupy.value.price;
   }
   emit("menuSelect", childInformation);
+  useStore.togglePopupShow("menu", false);
 };
 
 // 找到相對應的 MenuSelect 的菜單品項及客製化選項
@@ -74,9 +78,10 @@ const findMenu = (menuId, childId) => {
 
 // 點擊外框，打開每個菜單明細
 const toggleMenu = (menuId, childId, price) => {
+  userSelected.clearChoice();
   findMenu(menuId, childId);
   occupy.value = { menuId, childId, count: 0, price };
-  show.value = true;
+  useStore.togglePopupShow("menu", true);
 };
 
 // 點擊+號，添加 MenuSelect 數量及金額
@@ -86,6 +91,7 @@ const addMenuSelect = (menuId, c) => {
     toggleMenu(menuId, c.id, c.price);
   } else {
     const existingMenu = makeMenuItem(menuId, c.id, c.option);
+    console.log(existingMenu);
 
     if (existingMenu.count < c.count) existingMenu.count++;
     existingMenu.price = existingMenu.count * c.price;
@@ -141,20 +147,11 @@ const removeMenuSelect = (menuId, childId) => {
 // 獲取菜單品項的數量
 const getCount = (menuId, childId) => {
   const existingMenu = findMenuItem(menuId, childId);
+
   const totalCount = childInformation
     .filter((item) => item.menuId === menuId && item.childId === childId)
     .reduce((sum, item) => sum + item.count, 0);
   return existingMenu ? totalCount : 0;
-};
-
-//創建option空字串塞入選項
-const createOption = () => {
-  if (!occupy.value.option) {
-    occupy.value = {
-      ...occupy.value,
-      option: {},
-    };
-  }
 };
 
 //監聽childInformation 是否有option
@@ -172,26 +169,6 @@ const checkoutOption = (m, c) => {
     }
     return false;
   });
-};
-
-// 用來更新單選的選項
-const singleOption = (type, id) => {
-  createOption();
-  occupy.value.option[type] = id;
-};
-
-// 用來更新多選的選項
-const pluralOption = (type, id) => {
-  createOption();
-  if (!occupy.value.option[type]) {
-    occupy.value.option[type] = [];
-  }
-  const index = occupy.value.option[type].indexOf(id);
-  if (index === -1) {
-    occupy.value.option[type].push(id);
-  } else {
-    occupy.value.option[type].splice(index, 1);
-  }
 };
 
 //父層滾動至指定h1
@@ -270,7 +247,11 @@ defineExpose({ scrollTo });
     </div>
   </div>
 
-  <UserPopup :show="show" @close-show="closeShow" @confirm-Popup="confirmPopup">
+  <UserPopup
+    :show="useStore.popupShow.menu"
+    @close-show="closeShow"
+    @confirm-Popup="confirmPopup"
+  >
     <template #main="{ title }">
       <img
         :class="['popup__img', { 'popup__img-rounded': !title }]"
@@ -278,14 +259,24 @@ defineExpose({ scrollTo });
       />
       <div class="popup__text-content">
         <h3>{{ selectedMenu.name }}</h3>
-        <span>{{ selectedMenu.description }}</span>
         <p>${{ selectedMenu.price }}</p>
+        <span>{{ selectedMenu.description }}</span>
         <hr />
       </div>
       <div class="popup__text-option" v-if="selectedOptions">
         <ul v-for="o in selectedOptions" :key="o.id">
-          <h3>{{ o.name }}</h3>
+          <div>
+            <h3>{{ o.name }}選擇</h3>
+            <div
+              :class="{
+                'popup__message-error': userSelected.errorMessages[o.type],
+              }"
+            >
+              必填
+            </div>
+          </div>
           <h5 v-if="o.isSingleChoice">請擇一選擇</h5>
+          <h5 v-else>可多選擇</h5>
           <li v-for="c in o.children" :key="c.id">
             <input
               v-if="o.isSingleChoice"
@@ -293,31 +284,40 @@ defineExpose({ scrollTo });
               :name="o.type"
               :id="`radio-${o.type}-${c.id}`"
               :value="c.id"
-              @change="singleOption(o.type, c.id)"
+              @change="userSelected.singleOption(o.type, c.id)"
             />
             <label v-if="o.isSingleChoice" :for="`radio-${o.type}-${c.id}`">
               <span class="check__and-radio"></span>
               {{ c.name }}
             </label>
-
             <input
               v-else
               type="checkbox"
               :id="`checkbox-${o.type}-${c.id}`"
               :value="c.id"
-              @change="pluralOption(o.type, c.id)"
+              @change="userSelected.pluralOption(o.type, c.id)"
             />
             <label v-if="!o.isSingleChoice" :for="`checkbox-${o.type}-${c.id}`">
-              <span class="check__and-radio"></span>
+              <span class="check__and-mark"></span>
               {{ c.name }}
             </label>
+            <p v-if="c.price">${{ c.price }}</p>
+            <p v-else>免費</p>
           </li>
+          <hr />
         </ul>
+      </div>
+    </template>
+    <template #footer>
+      <div>
+        <button>
+          <SvgIcon icon-name="Common-Add"></SvgIcon>
+        </button>
       </div>
     </template>
   </UserPopup>
 </template>
 
 <style lang="scss" scoped>
-@import "@/assets/css/mixin";
+@use "@/assets/css/mixin" as *;
 </style>

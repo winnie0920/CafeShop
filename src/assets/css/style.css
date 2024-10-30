@@ -4,9 +4,14 @@
   --cafe-color-transparent:#FFFDF9;
   --cafe-color-bisque: #fef8ea;
   --cafe-color-gray: #f2f2f2;
+  --cafe-color-gray-darken: #959595;
   --cafe-color-brown: #7f252e;
   --cafe-color-brown-lighter: rgba(98, 27, 34, 0.21);
   --cafe-color-background: rgba(0, 0, 0, 0.3);
+  --cafe-color-red: rgb(255, 240, 238);
+  --cafe-color-red-darken:rgb(222, 17, 53);
+  --cafe-color-green: rgb(234, 246, 237);
+  --cafe-color-green-darken: #0E8345;
   --cafe-radius-xxs: 0.5rem;
   --cafe-radius-xs: 0.8rem;
   --cafe-radius-sm: 1rem;
@@ -17,8 +22,11 @@
   --cafe--font-sm: 1rem;
   --cafe--font-md: 1.2rem;
   --cafe--font-lg: 1.4rem;
+  --cafe--font-xl: 1.5rem;
   --cafe--padding-xs: 1rem;
   --cafe--padding-sm: 2rem;
+  --cafe--margin-xxs:0.5rem;
+  --cafe--margin-xs: 1rem;
 }
 
 .opacity-enter-from,
@@ -158,76 +166,97 @@ img {
   display: block;
 }
 
-.popup__wrapper svg, .menu__content li, .User__side-left, .User__side-right, .User__side-label li {
+hr {
+  height: 0.5px !important;
+}
+
+.popup__wrapper svg, .User__side-label li, .User__side-left, .User__side-right, .menu__content li {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
   transition: all 0.35s ease-in-out;
 }
 
-.popup__footer, .popup__header, .popup__container {
+.popup__container, .popup__header, .popup__footer {
   display: flex;
   border-radius: var(--cafe-radius-sm);
   background: var(--cafe-color-white);
 }
 
-.check__and-radio {
-  height: 1.5rem;
-  width: 1.5rem;
-  border: 0.2rem solid var(--cafe-color-brown);
+.check__and-radio::after, .check__and-mark::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.check__and-radio,
+.check__and-mark {
+  height: 1.7rem;
+  width: 1.7rem;
+  border: 0.15rem solid var(--cafe-color-brown);
   border-radius: 50%;
   display: inline-block;
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+.check__and-radio:hover,
+.check__and-mark:hover {
+  box-shadow: inset 0 0 0 0.1rem var(--cafe-color-brown);
+}
+
 .check__and-radio::after {
-  content: "";
-  display: block;
   height: 0.7rem;
   width: 0.7rem;
   border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: var(--cafe-color-brown);
-  opacity: 0;
-  transition: opacity 0.2s;
+}
+
+.check__and-mark {
+  border-radius: 10%;
+}
+.check__and-mark::after {
+  height: 0.7rem;
+  width: 0.3rem;
+  border: solid var(--cafe-color-brown);
+  border-width: 0 0.15rem 0.15rem 0;
 }
 
 input[type=radio]:checked + label .check__and-radio::after,
-input[type=checkbox]:checked + label .check__and-radio::after {
-  animation: pop-in 0.3s ease-out forwards;
+input[type=checkbox]:checked + label .check__and-mark::after {
+  animation: pop-in 0.2s ease-out forwards;
   opacity: 1;
 }
 
 input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
-  animation: pop-out 0.3s ease-out forwards;
+  animation: pop-out 0.2s ease-out forwards;
   opacity: 0;
 }
 
 @keyframes pop-in {
   0% {
-    transform: translate(-50%, -50%) scale(0);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: translate(-50%, -50%) scale(0) rotate(45deg);
+    opacity: 0;
   }
   100% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1) rotate(45deg);
+    opacity: 1;
   }
 }
 @keyframes pop-out {
   0% {
-    transform: translate(-50%, -50%) scale(1.2);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1) rotate(45deg);
+    opacity: 1;
   }
   100% {
-    transform: translate(-50%, -50%) scale(0);
+    transform: translate(-50%, -50%) scale(0) rotate(45deg);
+    opacity: 0;
   }
 }
 .User__container {
@@ -466,9 +495,9 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   z-index: 2;
 }
 .popup__header h2 {
-  font-size: 1.6rem;
+  font-size: var(--cafe--font-xl);
   color: var(--eip-color-gray);
-  margin: 0; /* 移除 margin */
+  margin: 0;
 }
 .popup__content {
   flex: 1;
@@ -499,45 +528,71 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 .popup__text-content {
   display: grid;
-  padding: 2rem;
-  gap: 1rem;
+  padding: 2rem 2rem 0rem 2rem;
+  gap: 0.5rem;
   color: var(--cafe-color-brown);
 }
 .popup__text-content span {
-  font-size: 1.4rem;
+  font-size: var(--cafe--font-md);
   color: var(--cafe-color-brown-lighter);
 }
 .popup__text-content p {
-  font-size: 1.5rem;
+  font-size: var(--cafe--font-xl);
+}
+.popup__text-content h3 {
+  font-weight: 700;
 }
 .popup__text-option {
   padding: 0 var(--cafe--padding-sm);
   color: var(--cafe-color-brown);
   line-height: 1.7;
 }
+.popup__text-option div {
+  display: flex;
+  justify-content: space-between;
+}
+.popup__text-option div div {
+  font: var(--cafe--font-lg);
+  background-color: var(--cafe-color-gray);
+  color: var(--cafe-color-gray-darken);
+  letter-spacing: 0.1rem;
+  height: 100%;
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
 .popup__text-option h3, .popup__text-option h5, .popup__text-option li {
   line-height: inherit;
 }
+.popup__text-option li {
+  display: flex;
+  font-size: var(--cafe--font-md);
+  margin-bottom: var(--cafe--margin-xs);
+}
+.popup__text-option h3 {
+  font-weight: 700;
+}
 .popup__text-option h5 {
   font-size: var(--cafe--font-sm);
+  color: var(--cafe-color-brown-lighter);
+  margin-bottom: var(--cafe--margin-xxs);
 }
-.popup__text-option li {
-  font-size: var(--cafe--font-md);
+.popup__text-option p {
+  margin-left: auto;
+  color: var(--cafe-color-gray-darken);
 }
 .popup__text-option input {
   width: 0;
   visibility: hidden;
 }
 .popup__text-option label {
-  font-size: 1.6rem;
+  font-size: var(--cafe--font-lg);
   cursor: pointer;
   position: relative;
   padding-left: 3rem;
 }
-
-input[type=radio]:checked + label .check__and-radio::after,
-input[type=checkbox]:checked + label .check__and-radio::after {
-  opacity: 1;
+.popup__message-error {
+  color: var(--cafe-color-red-darken) !important;
+  background-color: var(--cafe-color-red) !important;
 }
 
 @media (min-width: 768px) {

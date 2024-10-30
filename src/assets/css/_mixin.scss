@@ -6,8 +6,18 @@
   }
   
 
-  %Popup-base-setting{
-    display: flex;
-    border-radius: var(--cafe-radius-sm);
-    background: var(--cafe-color-white);
-  }
+%popup-base-setting{
+  display: flex;
+  border-radius: var(--cafe-radius-sm);
+  background: var(--cafe-color-white);
+}
+
+%check_and-setting{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}

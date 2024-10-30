@@ -21,6 +21,7 @@ const props = defineProps({
 </template>
 
 <style lang="scss" scoped>
+@use "@/assets/css/mixin" as *;
 .drop {
   &__btn {
     display: flex;
@@ -51,5 +52,4 @@ const props = defineProps({
     }
   }
 }
-@import "@/assets/css/mixin";
 </style>

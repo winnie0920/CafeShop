@@ -3,9 +3,14 @@
   --cafe-color-transparent:#FFFDF9;
   --cafe-color-bisque: #fef8ea;
   --cafe-color-gray: #f2f2f2;
+  --cafe-color-gray-darken: #959595;
   --cafe-color-brown: #7f252e;
   --cafe-color-brown-lighter: rgba(98, 27, 34, 0.21);
   --cafe-color-background: rgba(0, 0, 0, 0.3);
+  --cafe-color-red: rgb(255, 240, 238);
+  --cafe-color-red-darken:rgb(222, 17, 53);
+  --cafe-color-green: rgb(234, 246, 237);
+  --cafe-color-green-darken: #0E8345;
 
   --cafe-radius-xxs: 0.5rem;
   --cafe-radius-xs: 0.8rem;
@@ -18,7 +23,11 @@
   --cafe--font-sm: 1rem;
   --cafe--font-md: 1.2rem;
   --cafe--font-lg: 1.4rem;
+  --cafe--font-xl: 1.5rem;
 
   --cafe--padding-xs: 1rem;
   --cafe--padding-sm: 2rem;
+
+  --cafe--margin-xxs:0.5rem;
+  --cafe--margin-xs: 1rem;
 }

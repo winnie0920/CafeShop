@@ -1,62 +1,73 @@
-.check__and-radio {
-    height: 1.5rem;
-    width: 1.5rem;
-    border: 0.2rem solid var(--cafe-color-brown);
+@use "mixin" as *;
+
+.check__and-radio,
+.check__and-mark  {
+    height: 1.7rem;
+    width: 1.7rem;
+    border: 0.15rem solid var(--cafe-color-brown);
     border-radius: 50%;
     display: inline-block;
     position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    &::after{
-      content: "";
-      display: block;
-      height: 0.7rem;
-      width: 0.7rem;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: var(--cafe-color-brown);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;       
+    &:hover{
+      box-shadow: inset 0 0 0 0.1rem var(--cafe-color-brown);
+    }                   
 }
 
+.check__and-radio{
+  &::after{
+    @extend %check_and-setting;
+    height: 0.7rem;
+    width: 0.7rem;
+    border-radius: 50%;
+    background-color: var(--cafe-color-brown);
+  }
+}
+
+.check__and-mark { 
+  border-radius: 10%;                        
+  &::after{
+    @extend %check_and-setting;
+    height: 0.7rem; 
+    width: 0.3rem;
+    border: solid var(--cafe-color-brown);
+    border-width: 0 0.15rem 0.15rem 0; 
+  }
+}
+
+
 input[type="radio"]:checked + label .check__and-radio::after,
-input[type="checkbox"]:checked + label .check__and-radio::after
-{
-    animation: pop-in 0.3s ease-out forwards;
+input[type="checkbox"]:checked + label .check__and-mark::after{
+    animation: pop-in 0.2s ease-out forwards;
     opacity: 1;
 }
 
 input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
-  animation: pop-out 0.3s ease-out forwards;
+  animation: pop-out 0.2s ease-out forwards;
   opacity: 0;
 }
 
-
 @keyframes pop-in {
-    0% {
-      transform: translate(-50%, -50%) scale(0);
-    }
-    50% {
-      transform: translate(-50%, -50%) scale(1.2);
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(1);
-    }
+  0% {
+      transform: translate(-50%, -50%) scale(0) rotate(45deg); 
+      opacity: 0;
   }
+  100% {
+      transform: translate(-50%, -50%) scale(1) rotate(45deg); 
+      opacity: 1; 
+  }
+}
 
-  @keyframes pop-out {
-    0% {
-      transform: translate(-50%, -50%) scale(1.2);
-    }
-    50% {
-      transform: translate(-50%, -50%) scale(1);
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(0);
-    }
+@keyframes pop-out {
+  0% {
+      transform: translate(-50%, -50%) scale(1) rotate(45deg); 
+      opacity: 1;
   }
+  100% {
+      transform: translate(-50%, -50%) scale(0) rotate(45deg); 
+      opacity: 0;
+  }
+}

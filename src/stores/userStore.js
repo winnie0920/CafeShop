@@ -1,14 +1,16 @@
 import { defineStore } from "pinia";
 
 export const userStore = defineStore("web", {
-  // 定义状态
   state: () => ({
     sLanguage: { id: -1, name: "請選擇" },
+    //dropdown
     show: [
       {
         language: false,
       },
     ],
+    //popup
+    popupShow: { menu: false },
   }),
 
   // 定义 getters
@@ -20,6 +22,9 @@ export const userStore = defineStore("web", {
       if (params) {
         this.show[params] = !this.show[params];
       }
+    },
+    togglePopupShow(type, val) {
+      this.popupShow[type] = val;
     },
     getImageUrl(id) {
       return new URL(`../assets/image/${id}`, import.meta.url).href;
