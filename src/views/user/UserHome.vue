@@ -1,95 +1,70 @@
 <script setup>
 import { homeItem, homeMenu } from "@/json/UserHome";
+
 const useStore = userStore();
-const queryParams = reactive({
-  search: "",
-});
-const childRef = ref(null);
-// AdminSearch 的 emit
-const sendSearch = (val) => {
-  queryParams.search = val;
-};
+const queryParams = reactive({ search: "" });
+const chooseRef = ref(null);
+const menuSelect = ref([]);
 
-let menuSelect = reactive([]);
-
-// 更新菜單選擇的處理函數
-const updateMenuSelect = (newMenuSelect) => {
-  menuSelect = newMenuSelect;
-  console.log(menuSelect);
-};
-
+// 當前選擇的 ID
+const chooseId = ref(1);
+const showArrow = ref(false);
 const labelRef = ref(null);
-
-// 當前滾動最大寬度
 const maxScroll = ref(0);
 
-// 預設選中的菜單項目
-const selectMenu = ref(homeMenu[0]);
+// 更新搜尋
+const sendSearch = (val) => (queryParams.search = val);
 
-//箭頭顯示
-const showArrow = ref(false);
-
-// side左右移動
-const scrollArrow = (direction) => {
-  if (labelRef.value) {
-    const scrollContainer = labelRef.value;
-    const currentScroll = scrollContainer.scrollLeft;
-    maxScroll.value = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-    // 滾動值
-    const scrollAmount = scrollContainer.clientWidth / 2;
-
-    const scroll =
-      typeof direction === "number"
-        ? Math.max(0, Math.min(direction, maxScroll.value)) // 如果是數字，直接滾動到指定位置
-        : direction === "left"
-        ? Math.max(0, currentScroll - scrollAmount) // 向左滾動
-        : Math.min(maxScroll.value, currentScroll + scrollAmount); // 向右滾動
-
-    scrollContainer.scrollTo({
-      left: scroll,
-      behavior: "smooth",
-    });
-  }
+// 檢查箭頭顯示
+const checkScrollWidth = () => {
+  showArrow.value = labelRef.value.scrollWidth > labelRef.value.clientWidth;
 };
 
+// 滾動箭頭
+const scrollArrow = (direction) => {
+  const scrollContainer = labelRef.value;
+  if (!scrollContainer) return;
+
+  const currentScroll = scrollContainer.scrollLeft;
+  maxScroll.value = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+  const scrollAmount = scrollContainer.clientWidth / 2;
+
+  const scroll =
+    typeof direction === "number"
+      ? Math.max(0, Math.min(direction, maxScroll.value))
+      : direction === "left"
+      ? Math.max(0, currentScroll - scrollAmount)
+      : Math.min(maxScroll.value, currentScroll + scrollAmount);
+
+  scrollContainer.scrollTo({ left: scroll, behavior: "smooth" });
+};
+
+// 點擊滾動
 const clickScroll = (id, items) => {
+  chooseId.value = id;
   if (labelRef.value) {
     const liWidth = labelRef.value.querySelector("li").offsetWidth;
-    const visibleWidth = labelRef.value.clientWidth; // 可見的寬度
-    let newPosition = (liWidth + 8) * id - visibleWidth / 2 + liWidth / 2; // 計算新的滾動位置
-
-    // 確保最後幾個元素正確處理
-    if (id >= items.length - 2) {
-      newPosition = maxScroll.value;
-    }
+    const visibleWidth = labelRef.value.clientWidth;
+    const newPosition = (liWidth + 8) * id - visibleWidth / 2 + liWidth / 2;
 
     // 確保新的滾動位置在合理範圍內
-    const adjustedPosition = Math.max(
-      0,
-      Math.min(newPosition, maxScroll.value)
-    );
-
-    // 滾動到新位置
-    scrollArrow(adjustedPosition);
-    //找到homeMenu中id對應的項目
-    selectMenu.value = homeMenu.find((item) => item.id === id);
+    scrollArrow(Math.max(0, Math.min(newPosition, maxScroll.value)));
   }
-  childRef.value.scrollTo(id);
+  chooseRef.value.clickChoose(id);
 };
 
-//判斷箭頭顯示
-const checkScrollWidth = () => {
-  const label = labelRef.value;
-  if (labelRef.value.scrollWidth > label.clientWidth) {
-    showArrow.value = true;
-  } else {
-    showArrow.value = false;
-  }
+// 當前選擇的 ID
+const currentChoose = (id) => {
+  chooseId.value = id;
 };
 
-//檢查箭頭是否顯示
+const updateMenuSelect = (newMenuSelect) => {
+  menuSelect.value = newMenuSelect;
+};
+
 onMounted(() => {
   window.addEventListener("resize", checkScrollWidth);
+  checkScrollWidth();
 });
 
 onBeforeUnmount(() => {
@@ -106,7 +81,6 @@ onBeforeUnmount(() => {
     </TitleBar>
 
     <section class="row" style="overflow-y: hidden">
-      <!-- 滾輪軸 -->
       <div
         class="col-12 col-lg-8 sticky-top"
         style="z-index: 2000__content !important"
@@ -134,6 +108,7 @@ onBeforeUnmount(() => {
             <li
               v-for="i in homeItem"
               :key="i.id"
+              :class="{ active: chooseId === i.id }"
               @click="clickScroll(i.id, homeItem)"
             >
               <img :src="useStore.getImageUrl(i.image)" alt="" />
@@ -151,8 +126,9 @@ onBeforeUnmount(() => {
       </div>
       <div class="col-12 col-lg-8">
         <UserMenuSelect
-          ref="childRef"
+          ref="chooseRef"
           :menuSelect="menuSelect"
+          @currentWatchChoose="currentChoose"
           @menuSelect="updateMenuSelect"
           :menu="homeMenu"
         />
@@ -163,4 +139,10 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
+
+.active {
+  color: var(--cafe-color-brown);
+  border: 0.1rem solid var(--cafe-color-brown);
+  background-color: var(--cafe-color-white);
+}
 </style>

@@ -13,7 +13,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["menuSelect"]);
+const emit = defineEmits(["menuSelect", "currentWatchChoose"]);
 
 // 使用 childInformation 存儲選擇的菜單
 let childInformation = reactive([...props.menuSelect]);
@@ -42,7 +42,10 @@ watch(
 //確認菜單明細
 const confirmPopup = () => {
   occupy.value.option = { ...userSelected.choice };
-  if (!userSelected.validateOption(selectedOptions.value)) {
+  if (
+    Array.isArray(selectedOptions.value) &&
+    !userSelected.validateOption(selectedOptions.value)
+  ) {
     return;
   }
   let existingMenu = makeMenuItem(
@@ -50,12 +53,13 @@ const confirmPopup = () => {
     occupy.value.childId,
     occupy.value.option
   );
-  console.log(existingMenu.count, selectedMenu.value.count);
 
   if (existingMenu.count < selectedMenu.value.count) {
     existingMenu.count++;
     existingMenu.price = existingMenu.count * occupy.value.price;
   }
+  console.log(childInformation);
+
   emit("menuSelect", childInformation);
   useStore.togglePopupShow("menu", false);
 };
@@ -171,8 +175,29 @@ const checkoutOption = (m, c) => {
   });
 };
 
-//父層滾動至指定h1
-const scrollTo = (id) => {
+//需監聽的整個高度
+const scrollContainer = ref(null);
+
+//監聽目前滾動位置
+const watchChoose = () => {
+  let selectId = null;
+  let selectOffset = Infinity;
+
+  props.menu.forEach((m) => {
+    const target = document.getElementById(m.id);
+    if (target) {
+      const offsetTop = target.getBoundingClientRect().top;
+      if (offsetTop >= 0 && offsetTop < selectOffset) {
+        selectOffset = offsetTop;
+        selectId = m.id;
+      }
+    }
+  });
+  emit("currentWatchChoose", selectId);
+};
+
+//點擊滾動到指定位置
+const clickChoose = (id) => {
   const targetElement = document.getElementById(id);
   if (targetElement) {
     targetElement.scrollIntoView({ behavior: "smooth" });
@@ -180,11 +205,19 @@ const scrollTo = (id) => {
 };
 
 //暴露給父層
-defineExpose({ scrollTo });
+defineExpose({ clickChoose });
+
+onMounted(() => {
+  scrollContainer.value?.addEventListener("scroll", watchChoose);
+});
+
+onUnmounted(() => {
+  scrollContainer.value?.addEventListener("scroll", watchChoose);
+});
 </script>
 
 <template>
-  <div class="menu__content">
+  <div ref="scrollContainer" class="menu__content">
     <div v-for="m in props.menu" :key="m.id">
       <h1 :id="m.id">{{ m.name }}</h1>
       <span>{{ m.content }}</span>
@@ -309,9 +342,13 @@ defineExpose({ scrollTo });
       </div>
     </template>
     <template #footer>
-      <div>
+      <div class="d-flex gap-4">
         <button>
           <SvgIcon icon-name="Common-Add"></SvgIcon>
+        </button>
+        <h1>1</h1>
+        <button>
+          <SvgIcon class="popup__minus" icon-name="Common-Minus"></SvgIcon>
         </button>
       </div>
     </template>

@@ -28,10 +28,8 @@
         background-color: var(--cafe-color-transparent);
         cursor: pointer;
         z-index: 1;
-        &:active,
         &:hover {
           color: var(--cafe-color-brown);
-          border: 0.1rem solid var(--cafe-color-brown);
           background-color: var(--cafe-color-white);
         }
         img {
@@ -193,7 +191,7 @@
     &-add {
       position: relative;
       z-index: 2;
-      color: inherit
+      color: inherit;
     }
     &-circle {
       position: absolute;
