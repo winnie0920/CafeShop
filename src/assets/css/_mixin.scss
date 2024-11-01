@@ -1,18 +1,17 @@
 %base-btn-setting {
-    display: flex;
-    border-radius: var(--cafe-radius-md);
-    border: 0.1rem solid var(--cafe-color-brown-lighter);
-    transition: all 0.35s ease-in-out;
-  }
-  
+  display: flex;
+  border-radius: var(--cafe-radius-md);
+  border: 0.1rem solid var(--cafe-color-brown-lighter);
+  transition: all 0.35s ease-in-out;
+}
 
-%popup-base-setting{
+%popup-base-setting {
   display: flex;
   border-radius: var(--cafe-radius-sm);
   background: var(--cafe-color-white);
 }
 
-%check_and-setting{
+%check_and-setting {
   content: "";
   display: block;
   position: absolute;

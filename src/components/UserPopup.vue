@@ -8,6 +8,10 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  button: {
+    type: String,
+    required: false,
+  },
 });
 
 const emit = defineEmits(["closeShow", "confirmPopup"]);
@@ -43,7 +47,9 @@ const confirmPopup = () => {
         </div>
         <footer class="popup__footer">
           <slot name="footer"></slot>
-          <button class="ms-auto" @click="confirmPopup">確認</button>
+          <button class="ms-auto popup__footer-button" @click="confirmPopup">
+            {{ props.button }}
+          </button>
         </footer>
       </div>
     </div>

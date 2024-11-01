@@ -171,7 +171,7 @@ hr {
   height: 0.5px !important;
 }
 
-.popup__container svg, .User__side-label li, .User__side-left, .User__side-right, .menu__content li {
+.popup__container svg, .popup__footer-button, .User__side-label li, .User__side-left, .User__side-right, .menu__content li {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
@@ -513,10 +513,23 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   padding: 1.5rem 2rem;
   gap: 1rem;
   z-index: 2;
+  color: var(--cafe-color-brown);
 }
 .popup__footer button {
-  color: var(--eip-color-text);
-  background-color: var(--eip-color-bg);
+  color: var(--cafe-color-brown);
+  background-color: var(--cafe-color-white);
+}
+.popup__footer-button {
+  font-weight: 400;
+  letter-spacing: 0.2rem;
+  align-items: center;
+  padding: 0 var(--cafe--padding-xs);
+  color: var(--cafe-color-white) !important;
+  background-color: var(--cafe-color-brown) !important;
+}
+.popup__footer-button::after {
+  content: ""; /* 移除最後一個字後的間距 */
+  margin-right: -0.1em;
 }
 
 .popup__img {

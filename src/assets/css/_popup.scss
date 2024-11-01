@@ -62,10 +62,23 @@
     padding: 1.5rem 2rem;
     gap: 1rem;
     z-index: 2;
-
+    color: var(--cafe-color-brown);
     button {
-      color: var(--eip-color-text);
-      background-color: var(--eip-color-bg);
+      color: var(--cafe-color-brown);
+      background-color: var(--cafe-color-white);
+    }
+    &-button {
+      @extend %base-btn-setting;
+      font-weight: 400;
+      letter-spacing: 0.2rem;
+      align-items: center;
+      padding: 0 var(--cafe--padding-xs);
+      color: var(--cafe-color-white) !important;
+      background-color: var(--cafe-color-brown) !important;
+      &::after {
+        content: ""; /* 移除最後一個字後的間距 */
+        margin-right: -0.1em;
+      }
     }
   }
 }

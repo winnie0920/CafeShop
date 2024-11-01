@@ -45,21 +45,22 @@ const confirmPopup = () => {
   if (
     Array.isArray(selectedOptions.value) &&
     !userSelected.validateOption(selectedOptions.value)
-  ) {
+  )
     return;
-  }
-  let existingMenu = makeMenuItem(
+
+  let existingMenu = findMenuItem(
     occupy.value.menuId,
     occupy.value.childId,
     occupy.value.option
   );
 
-  if (existingMenu.count < selectedMenu.value.count) {
-    existingMenu.count++;
+  if (!existingMenu) {
+    childInformation.push(occupy.value);
+    existingMenu = occupy.value;
+  } else if (existingMenu.count < selectedMenu.value.count) {
+    existingMenu.count += occupy.value.count;
     existingMenu.price = existingMenu.count * occupy.value.price;
   }
-  console.log(childInformation);
-
   emit("menuSelect", childInformation);
   useStore.togglePopupShow("menu", false);
 };
@@ -84,7 +85,7 @@ const findMenu = (menuId, childId) => {
 const toggleMenu = (menuId, childId, price) => {
   userSelected.clearChoice();
   findMenu(menuId, childId);
-  occupy.value = { menuId, childId, count: 0, price };
+  occupy.value = { menuId, childId, count: 1, price };
   useStore.togglePopupShow("menu", true);
 };
 
@@ -94,25 +95,19 @@ const addMenuSelect = (menuId, c) => {
   if (selectedOptions.value.length > 0) {
     toggleMenu(menuId, c.id, c.price);
   } else {
-    const existingMenu = makeMenuItem(menuId, c.id, c.option);
-    console.log(existingMenu);
-
+    const existingMenu = makeMenuItem(menuId, c.id);
     if (existingMenu.count < c.count) existingMenu.count++;
     existingMenu.price = existingMenu.count * c.price;
   }
   emit("menuSelect", childInformation);
 };
 
-// 點擊+號或送出，新增菜單品項
-const makeMenuItem = (menuId, childId, option) => {
-  let existed = findMenuItem(menuId, childId, option);
-  if (!existed && !option) {
+// 點擊+號，新增菜單品項
+const makeMenuItem = (menuId, childId) => {
+  let existed = findMenuItem(menuId, childId);
+  if (!existed) {
     childInformation.push({ menuId, childId, count: 0, price: 0 });
     existed = findMenuItem(menuId, childId);
-  }
-  if (!existed && option) {
-    childInformation.push(occupy.value);
-    existed = findMenuItem(menuId, childId, option);
   }
   return existed;
 };
@@ -124,12 +119,14 @@ const findMenuItem = (menuId, childId, option) => {
       const hasSameKeys =
         item.option &&
         Object.keys(item.option).length === Object.keys(option).length;
-
       return (
         item.menuId === menuId &&
         item.childId === childId &&
         hasSameKeys &&
-        Object.keys(option).every((key) => item.option[key] === option[key])
+        Object.keys(option).every(
+          (key) =>
+            JSON.stringify(item.option[key]) === JSON.stringify(option[key])
+        )
       );
     });
   }
@@ -151,7 +148,6 @@ const removeMenuSelect = (menuId, childId) => {
 // 獲取菜單品項的數量
 const getCount = (menuId, childId) => {
   const existingMenu = findMenuItem(menuId, childId);
-
   const totalCount = childInformation
     .filter((item) => item.menuId === menuId && item.childId === childId)
     .reduce((sum, item) => sum + item.count, 0);
@@ -173,6 +169,16 @@ const checkoutOption = (m, c) => {
     }
     return false;
   });
+};
+
+const increaseCount = () => {
+  occupy.value.count += 1;
+};
+
+const decreaseCount = () => {
+  if (occupy.value.count > 1) {
+    occupy.value.count -= 1;
+  }
 };
 
 //需監聽的整個高度
@@ -281,6 +287,7 @@ onUnmounted(() => {
   </div>
 
   <UserPopup
+    button="放入購物車"
     :show="useStore.popupShow.menu"
     @close-show="closeShow"
     @confirm-Popup="confirmPopup"
@@ -342,13 +349,16 @@ onUnmounted(() => {
       </div>
     </template>
     <template #footer>
-      <div class="d-flex gap-4">
-        <button>
-          <SvgIcon icon-name="Common-Add"></SvgIcon>
-        </button>
-        <h1>1</h1>
-        <button>
+      <div class="d-flex gap-4 align-items-center">
+        <button
+          @click="decreaseCount()"
+          :class="{ 'disabled-button': occupy.count <= 1 }"
+        >
           <SvgIcon class="popup__minus" icon-name="Common-Minus"></SvgIcon>
+        </button>
+        <p class="">{{ occupy.count }}</p>
+        <button @click="increaseCount()">
+          <SvgIcon icon-name="Common-Add"></SvgIcon>
         </button>
       </div>
     </template>
@@ -357,4 +367,10 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
+.disabled-button {
+  cursor: not-allowed;
+  svg {
+    background-color: var(--cafe-color-gray);
+  }
+}
 </style>

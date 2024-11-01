@@ -40,7 +40,7 @@ const scrollArrow = (direction) => {
 };
 
 // 點擊滾動
-const clickScroll = (id, items) => {
+const clickScroll = (id) => {
   chooseId.value = id;
   if (labelRef.value) {
     const liWidth = labelRef.value.querySelector("li").offsetWidth;
@@ -60,6 +60,7 @@ const currentChoose = (id) => {
 
 const updateMenuSelect = (newMenuSelect) => {
   menuSelect.value = newMenuSelect;
+  console.log(menuSelect.value);
 };
 
 onMounted(() => {
