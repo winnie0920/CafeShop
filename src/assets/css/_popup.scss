@@ -33,6 +33,14 @@
       height: 2.5rem;
       color: var(--cafe-color-brown);
       background: var(--cafe-color-white);
+      &:hover{
+        @extend %base-btn-hover;
+      }
+      &:disabled {
+        background-color: inherit;
+        color: var(--cafe-color-brown);
+      }
+
     }
   }
 
@@ -59,22 +67,27 @@
 
   &__footer {
     @extend %popup-base-setting;
+    font-size: var(--cafe--font-lg);
     padding: 1.5rem 2rem;
     gap: 1rem;
     z-index: 2;
     color: var(--cafe-color-brown);
+    p{
+      text-align: center;
+      width: 2rem;
+    }
     button {
-      color: var(--cafe-color-brown);
       background-color: var(--cafe-color-white);
     }
     &-button {
-      @extend %base-btn-setting;
-      font-weight: 400;
+      @extend %popup-base-setting-2;
       letter-spacing: 0.2rem;
       align-items: center;
       padding: 0 var(--cafe--padding-xs);
-      color: var(--cafe-color-white) !important;
       background-color: var(--cafe-color-brown) !important;
+      &:hover{
+        background-color: var(--cafe-color-white) !important;
+      }
       &::after {
         content: ""; /* 移除最後一個字後的間距 */
         margin-right: -0.1em;
@@ -111,7 +124,7 @@
   }
   &__text {
     &-option {
-      padding: 0 var(--cafe--padding-sm);
+      padding: 0 var(--cafe--padding-lg);
       color: var(--cafe-color-brown);
       line-height: 1.7;
       div {
@@ -158,6 +171,18 @@
         cursor: pointer;
         position: relative;
         padding-left: 3rem;
+      }
+      textarea{
+        @extend %base-btn-setting;
+        border-color: var(--cafe-color-brown-lighter);
+        padding: var(--cafe--padding-xs);
+        font-size: var(--cafe--font-lg);
+        color: var(--cafe-color-brown);
+        resize: none;
+        &:focus{
+          outline: none;
+          border-color: var(--cafe-color-brown); /* 聚焦時的邊框顏色 */
+        }
       }
     }
   }

@@ -23,11 +23,14 @@
   --cafe--font-md: 1.2rem;
   --cafe--font-lg: 1.4rem;
   --cafe--font-xl: 1.5rem;
+  --cafe--font-xxxl: 1.8rem;
   --cafe--padding-xxs: 0.5rem;
   --cafe--padding-xs: 1rem;
-  --cafe--padding-sm: 2rem;
+  --cafe--padding-sm: 1.5rem;
+  --cafe--padding-lg: 2rem;
   --cafe--margin-xxs: 0.5rem;
   --cafe--margin-xs: 1rem;
+  --cafe--margin-sm:1.5rem;
 }
 
 .opacity-enter-from,
@@ -171,17 +174,36 @@ hr {
   height: 0.5px !important;
 }
 
-.popup__container svg, .popup__footer-button, .User__side-label li, .User__side-left, .User__side-right, .menu__content li {
+.popup__container svg, .popup__text-option textarea, .User__side-label li, .User__side-left, .User__side-right, .menu__content li {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
   transition: all 0.35s ease-in-out;
 }
 
+.popup__container svg:hover, .menu__image button:hover {
+  color: var(--cafe-color-white);
+  background-color: var(--cafe-color-brown);
+  transition: all 0.1s ease-in-out;
+}
+
 .popup__container, .popup__header, .popup__footer {
   display: flex;
   border-radius: var(--cafe-radius-sm);
   background: var(--cafe-color-white);
+}
+
+.popup__footer-button {
+  display: flex;
+  border-radius: var(--cafe-radius-sm);
+  background: var(--cafe-color-brown);
+  color: var(--cafe-color-white);
+  border: 0.1rem solid var(--cafe-color-brown-lighter);
+  transition: all 0.1s ease-in-out;
+}
+.popup__footer-button:hover {
+  background: var(--cafe-color-white);
+  color: var(--cafe-color-brown);
 }
 
 .check__and-radio::after, .check__and-mark::after {
@@ -276,7 +298,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .User__side-label {
   display: flex;
   gap: 1rem;
-  padding: 0.5rem 0rem;
+  padding: 1rem 0rem;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -379,26 +401,30 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .menu__content li div:first-child span {
   color: var(--cafe-color-brown-lighter);
 }
-.menu__content li div:nth-of-type(2) {
+.menu__image {
   position: relative;
   display: grid;
   margin: 1rem;
   border-radius: 1rem;
   overflow: hidden;
 }
-.menu__content li div:nth-of-type(2) img {
+.menu__image img {
   height: 10rem;
   width: 10rem;
   -o-object-fit: cover;
      object-fit: cover;
 }
-.menu__content svg {
+.menu__image svg {
   position: relative;
-  height: 2rem;
-  width: 2rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 0.25rem;
   color: var(--cafe-color-brown);
 }
-.menu__content button {
+.menu__image svg:hover {
+  color: var(--cafe-color-white);
+}
+.menu__image button {
   width: 2.5rem;
   height: 2.5rem;
   transition: all 0.1s ease-in-out;
@@ -419,6 +445,8 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   transition: all 0.1s ease-in-out;
 }
 .menu__btn-content {
+  display: flex;
+  justify-content: end;
   flex-direction: row !important;
   margin: 0 !important;
 }
@@ -439,7 +467,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   text-align: center;
 }
 .menu__btn-trash svg {
-  width: 1.2rem;
+  width: 1.6rem;
 }
 .menu__btn-add {
   position: relative;
@@ -492,6 +520,10 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   color: var(--cafe-color-brown);
   background: var(--cafe-color-white);
 }
+.popup__container svg:disabled {
+  background-color: inherit;
+  color: var(--cafe-color-brown);
+}
 .popup__header {
   justify-content: space-between;
   padding: 1rem;
@@ -510,22 +542,27 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   display: none;
 }
 .popup__footer {
+  font-size: var(--cafe--font-lg);
   padding: 1.5rem 2rem;
   gap: 1rem;
   z-index: 2;
   color: var(--cafe-color-brown);
 }
+.popup__footer p {
+  text-align: center;
+  width: 2rem;
+}
 .popup__footer button {
-  color: var(--cafe-color-brown);
   background-color: var(--cafe-color-white);
 }
 .popup__footer-button {
-  font-weight: 400;
   letter-spacing: 0.2rem;
   align-items: center;
   padding: 0 var(--cafe--padding-xs);
-  color: var(--cafe-color-white) !important;
   background-color: var(--cafe-color-brown) !important;
+}
+.popup__footer-button:hover {
+  background-color: var(--cafe-color-white) !important;
 }
 .popup__footer-button::after {
   content: ""; /* 移除最後一個字後的間距 */
@@ -559,7 +596,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   font-weight: 700;
 }
 .popup__text-option {
-  padding: 0 var(--cafe--padding-sm);
+  padding: 0 var(--cafe--padding-lg);
   color: var(--cafe-color-brown);
   line-height: 1.7;
 }
@@ -607,6 +644,17 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   cursor: pointer;
   position: relative;
   padding-left: 3rem;
+}
+.popup__text-option textarea {
+  border-color: var(--cafe-color-brown-lighter);
+  padding: var(--cafe--padding-xs);
+  font-size: var(--cafe--font-lg);
+  color: var(--cafe-color-brown);
+  resize: none;
+}
+.popup__text-option textarea:focus {
+  outline: none;
+  border-color: var(--cafe-color-brown); /* 聚焦時的邊框顏色 */
 }
 .popup__message-error {
   color: var(--cafe-color-red-darken) !important;

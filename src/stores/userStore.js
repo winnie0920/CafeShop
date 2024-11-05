@@ -11,12 +11,14 @@ export const userStore = defineStore("web", {
     ],
     //popup
     popupShow: { menu: false },
+    //shopping
+    shoppingShow: false,
   }),
 
-  // 定义 getters
+  // 定義 getters
   getters: {},
 
-  // 定义 actions
+  // 定義 actions
   actions: {
     toggleShow(params) {
       if (params) {

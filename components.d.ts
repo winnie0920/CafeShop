@@ -21,5 +21,6 @@ declare module 'vue' {
     UserMenuSelect: typeof import('./src/layout/user/UserMenuSelect.vue')['default']
     UserPopup: typeof import('./src/components/UserPopup.vue')['default']
     UserSide: typeof import('./src/layout/user/UserSide.vue')['default']
+    UserSopping: typeof import('./src/layout/user/UserSopping.vue')['default']
   }
 }

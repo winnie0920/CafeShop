@@ -7,7 +7,6 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
-  const UserSelectedStore: typeof import('./src/stores/selected.js')['UserSelectedStore']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
@@ -73,11 +72,13 @@ declare global {
   const useCssVars: typeof import('vue')['useCssVars']
   const useId: typeof import('vue')['useId']
   const useLink: typeof import('vue-router')['useLink']
+  const useMenuStore: typeof import('./src/stores/menuStore.js')['useMenuStore']
   const useModel: typeof import('vue')['useModel']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
+  const userMenuStore: typeof import('./src/stores/menuStore.js')['userMenuStore']
   const userSelectedStore: typeof import('./src/stores/selected.js')['userSelectedStore']
   const userStore: typeof import('./src/stores/userStore.js')['userStore']
   const watch: typeof import('vue')['watch']

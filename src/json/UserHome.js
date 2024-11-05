@@ -495,7 +495,7 @@ export const option = [
   {
     type: "noddle",
     name: "麵體",
-    isSingleChoice: false,
+    isSingleChoice: true,
     children: [
       { id: 1, name: "細麵" },
       { id: 2, name: "筆管麵", price: 10 },

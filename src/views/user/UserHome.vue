@@ -1,6 +1,7 @@
 <script setup>
 import { homeItem, homeMenu } from "@/json/UserHome";
 
+const menuStore = userMenuStore();
 const useStore = userStore();
 const queryParams = reactive({ search: "" });
 const chooseRef = ref(null);
@@ -59,13 +60,15 @@ const currentChoose = (id) => {
 };
 
 const updateMenuSelect = (newMenuSelect) => {
+  menuStore.setMenuSelect(newMenuSelect);
   menuSelect.value = newMenuSelect;
-  console.log(menuSelect.value);
+  console.log(menuStore.menuSelect, menuSelect.value);
 };
 
 onMounted(() => {
   window.addEventListener("resize", checkScrollWidth);
   checkScrollWidth();
+  menuStore.setHomeMenu(homeMenu);
 });
 
 onBeforeUnmount(() => {
@@ -81,11 +84,9 @@ onBeforeUnmount(() => {
       </div>
     </TitleBar>
 
-    <section class="row" style="overflow-y: hidden">
-      <div
-        class="col-12 col-lg-8 sticky-top"
-        style="z-index: 2000__content !important"
-      >
+    <section class="row g-5">
+      <!-- 左側 2/3 區塊 -->
+      <div class="col-12 col-lg-8">
         <div class="User__side">
           <button
             v-if="showArrow"
@@ -119,20 +120,18 @@ onBeforeUnmount(() => {
             </li>
           </ul>
         </div>
-      </div>
-      <div class="col-4">
-        <div class="User__side sticky-top">
-          <p>計算價錢</p>
-        </div>
-      </div>
-      <div class="col-12 col-lg-8">
+
         <UserMenuSelect
           ref="chooseRef"
-          :menuSelect="menuSelect"
           @currentWatchChoose="currentChoose"
           @menuSelect="updateMenuSelect"
-          :menu="homeMenu"
         />
+      </div>
+
+      <div class="col-12 col-lg-4 d-lg-block d-none">
+        <div class="User__side sticky-top">
+          <UserSopping :menuSelect="menuSelect" :menu="homeMenu"></UserSopping>
+        </div>
       </div>
     </section>
   </div>

@@ -1,22 +1,12 @@
 <script setup>
 import { option } from "@/json/UserHome";
+const menuStore = userMenuStore();
 const useStore = userStore();
 const userSelected = userSelectedStore();
-const props = defineProps({
-  menu: {
-    type: Array,
-    required: true,
-  },
-  menuSelect: {
-    type: Array,
-    required: true,
-  },
-});
-
 const emit = defineEmits(["menuSelect", "currentWatchChoose"]);
 
 // 使用 childInformation 存儲選擇的菜單
-let childInformation = reactive([...props.menuSelect]);
+let childInformation = reactive([...menuStore.menuSelect]);
 
 // 保存打開菜單內容名稱、價錢
 const selectedMenu = ref(null);
@@ -33,9 +23,9 @@ const closeShow = (val) => {
 
 // 監聽 menuSelect 變化 如父層有變化，子層也會變化
 watch(
-  () => props.menuSelect,
+  () => menuStore.menuSelect,
   (newVal) => {
-    childInformation = [...newVal];
+    menuStore.childInformation = [...newVal];
   }
 );
 
@@ -69,7 +59,7 @@ const confirmPopup = () => {
 const findMenu = (menuId, childId) => {
   selectedOptions.value = {};
   // 菜單內容名稱、價錢
-  selectedMenu.value = props.menu
+  selectedMenu.value = menuStore.homeMenu
     .find((m) => m.id === menuId)
     ?.children.find((c) => c.id === childId);
 
@@ -85,7 +75,7 @@ const findMenu = (menuId, childId) => {
 const toggleMenu = (menuId, childId, price) => {
   userSelected.clearChoice();
   findMenu(menuId, childId);
-  occupy.value = { menuId, childId, count: 1, price };
+  occupy.value = { menuId, childId, count: 1, price, remark: "" };
   useStore.togglePopupShow("menu", true);
 };
 
@@ -106,7 +96,7 @@ const addMenuSelect = (menuId, c) => {
 const makeMenuItem = (menuId, childId) => {
   let existed = findMenuItem(menuId, childId);
   if (!existed) {
-    childInformation.push({ menuId, childId, count: 0, price: 0 });
+    childInformation.push({ menuId, childId, count: 0, price: 0, remarK: "" });
     existed = findMenuItem(menuId, childId);
   }
   return existed;
@@ -189,7 +179,7 @@ const watchChoose = () => {
   let selectId = null;
   let selectOffset = Infinity;
 
-  props.menu.forEach((m) => {
+  menuStore.homeMenu.forEach((m) => {
     const target = document.getElementById(m.id);
     if (target) {
       const offsetTop = target.getBoundingClientRect().top;
@@ -224,7 +214,7 @@ onUnmounted(() => {
 
 <template>
   <div ref="scrollContainer" class="menu__content">
-    <div v-for="m in props.menu" :key="m.id">
+    <div v-for="m in menuStore.homeMenu" :key="m.id">
       <h1 :id="m.id">{{ m.name }}</h1>
       <span>{{ m.content }}</span>
       <ul class="menu__background">
@@ -238,7 +228,7 @@ onUnmounted(() => {
             <p>${{ c.price }}</p>
             <span v-if="c.description">{{ c.description }}</span>
           </div>
-          <div>
+          <div class="menu__image">
             <img :src="useStore.getImageUrl(c.image)" alt="" />
             <transition name="opacity">
               <div
@@ -346,6 +336,15 @@ onUnmounted(() => {
           </li>
           <hr />
         </ul>
+        <div class="flex-column">
+          <h3 class="mb-2">餐點備註：</h3>
+          <textarea
+            v-model="occupy.remark"
+            class="mb-2"
+            placeholder="新增備註"
+            rows="4"
+          ></textarea>
+        </div>
       </div>
     </template>
     <template #footer>
@@ -369,8 +368,14 @@ onUnmounted(() => {
 @use "@/assets/css/mixin" as *;
 .disabled-button {
   cursor: not-allowed;
+  &:hover {
+    background-color: inherit;
+  }
   svg {
     background-color: var(--cafe-color-gray);
+    &:hover {
+      color: inherit;
+    }
   }
 }
 </style>

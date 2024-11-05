@@ -7,10 +7,10 @@ export const userSelectedStore = defineStore("select", {
     errorMessages: {},
   }),
 
-  // 定义 getters
+  // 定義 getters
   getters: {},
 
-  // 定义 actions
+  // 定義 actions
   actions: {
     //清空選項
     clearChoice() {

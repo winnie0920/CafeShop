@@ -16,7 +16,7 @@
     &-label {
       display: flex;
       gap: 1rem;
-      padding: 0.5rem 0rem;
+      padding: 1rem 0rem;
       overflow-x: auto;
       scrollbar-width: none;
       li {
@@ -126,24 +126,28 @@
           color: var(--cafe-color-brown-lighter);
         }
       }
-      div:nth-of-type(2) {
-        position: relative;
-        display: grid;
-        margin: 1rem;
-        border-radius: 1rem;
-        overflow: hidden;
-        img {
-          height: 10rem;
-          width: 10rem;
-          object-fit: cover;
-        }
-      }
+    }
+  }
+  &__image{
+    position: relative;
+    display: grid;
+    margin: 1rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    img {
+      height: 10rem;
+      width: 10rem;
+      object-fit: cover;
     }
     svg {
       position: relative;
-      height: 2rem;
-      width: 2rem;
+      height: 2.5rem;
+      width: 2.5rem;
+      padding: 0.25rem;
       color: var(--cafe-color-brown);
+      &:hover{
+        color: var(--cafe-color-white);
+      }
     }
     button {
       width: 2.5rem;
@@ -151,6 +155,9 @@
       transition: all 0.1s ease-in-out;
       background-color: var(--cafe-color-white);
       border-radius: var(--cafe-radius-lg);
+      &:hover{
+        @extend %base-btn-hover;
+      }
     }
   }
   &__btn {
@@ -166,6 +173,8 @@
     background-color: var(--cafe-color-white);
     transition: all 0.1s ease-in-out;
     &-content {
+      display: flex;
+      justify-content: end;
       flex-direction: row !important;
       margin: 0 !important;
       div {
@@ -185,7 +194,7 @@
       padding-top: 0.1rem;
       text-align: center;
       svg {
-        width: 1.2rem;
+        width: 1.6rem;
       }
     }
     &-add {
