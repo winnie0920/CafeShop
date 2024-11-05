@@ -1,20 +1,34 @@
 <script setup>
 const props = defineProps({
-  menu: {
-    type: Array,
-    required: true,
-  },
-  menuSelect: {
+  option: {
     type: Array,
     required: true,
   },
 });
 
 const menuStore = userMenuStore();
-
-onMounted(() => {
+const checkOrder = () => {
   console.log(menuStore.menuSelect);
-});
+};
+
+const calculateTotal = () => {
+  return menuStore.menuSelect.reduce((total, i) => {
+    return total + i.price;
+  }, 0);
+};
+
+const findSelectOption = (selected) => {
+  const result = {};
+
+  props.option.forEach((o) => {
+    const selectedId = selected[o.type];
+    const selectedChild = o.children.find((c) => c.id === selectedId);
+    if (selectedChild) {
+      result[o.type] = selectedChild;
+    }
+  });
+  return result;
+};
 </script>
 
 <template>
@@ -22,24 +36,47 @@ onMounted(() => {
     <h1>購物車</h1>
 
     <div class="User__shop-content">
-      <div class="d-flex mt-3 mb-3 position-relative">
-        <img src="../../assets/image/food_Fried-2.jpeg" alt="" />
+      <div
+        class="d-flex mt-3 mb-3 position-relative"
+        v-for="m in menuStore.menuSelect"
+        :key="m.id"
+      >
+        <img :src="menuStore.getImageUrl(m.detail.image)" alt="" />
         <div
           class="d-flex flex-column justify-content-center gap-3 ms-3 flex-grow-1"
         >
-          <h2>義大利肉醬</h2>
-          <p>$133</p>
+          <h4>{{ m.detail.name }}</h4>
+          <p>${{ m.detail.price }}</p>
+          <div v-if="m.option" class="d-flex gap-2">
+            <div v-for="o in findSelectOption(m.option)" :key="o.id">
+              <p class="User__shop-remark">
+                {{ o.name }}
+              </p>
+            </div>
+          </div>
           <div class="menu__image">
             <transition name="opacity">
               <div class="menu__btn-content">
-                <button class="menu__btn-trash">
-                  <SvgIcon icon-name="Common-Trash"></SvgIcon>
-                  <SvgIcon icon-name="Common-Minus"></SvgIcon>
+                <button
+                  class="menu__btn-trash"
+                  @click.stop="menuStore.removeMenuSelect(m.menuId, m.childId)"
+                >
+                  <SvgIcon
+                    icon-name="Common-Trash"
+                    v-if="menuStore.getCount(m.menuId, m.childId) == 1"
+                  ></SvgIcon>
+                  <SvgIcon
+                    icon-name="Common-Minus"
+                    v-if="menuStore.getCount(m.menuId, m.childId) > 1"
+                  ></SvgIcon>
                 </button>
                 <div>
-                  <p>22</p>
+                  <p>{{ m.count }}</p>
                 </div>
-                <button class="menu__btn-add">
+                <button
+                  class="menu__btn-add"
+                  @click="menuStore.addMenuSelect(m.menuId, m.detail)"
+                >
                   <SvgIcon icon-name="Common-Add"></SvgIcon>
                 </button>
               </div>
@@ -50,72 +87,26 @@ onMounted(() => {
     </div>
     <div class="d-flex justify-content-between mb-2">
       <h3>小計</h3>
-      <p>$553</p>
+      <p>${{ calculateTotal() }}</p>
     </div>
     <div class="d-flex justify-content-between">
       <h3>服務費</h3>
-      <p>$100</p>
+      <p>${{ Math.ceil(calculateTotal() * 0.1) }}</p>
     </div>
     <hr />
     <div class="d-flex align-items-center">
-      <button class="User__shop-btn">查看訂單</button>
+      <button class="User__shop-btn" @click="checkOrder()">查看訂單</button>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
-
-.User {
-  &__shop {
-    &-container {
-      @extend %base-btn-setting;
-      flex-direction: column;
-      max-height: calc(100vh - 10.5rem);
-      color: var(--cafe-color-brown);
-      background-color: var(--cafe-color-white);
-      margin-top: var(--cafe--margin-xs);
-      padding: var(--cafe--padding-sm);
-      overflow: hidden;
-      h1 {
-        font-size: var(--cafe--font-xxxl);
-        line-height: 1.5;
-      }
-      h3 {
-        font-size: var(--cafe--font-md);
-      }
-      hr {
-        border: 0;
-        opacity: 100;
-        background: var(--cafe-color-brown);
-        border-top: 0.2rem dashed var(--cafe-color-white);
-      }
-    }
-    &-content {
-      height: 100vh;
-      max-height: calc(50%);
-      overflow-y: auto;
-      scrollbar-width: none;
-      margin: var(--cafe--margin-sm) 0;
-      ::-webkit-scrollbar {
-        display: none;
-      }
-      img {
-        width: 10rem;
-        height: 10rem;
-        object-fit: cover;
-        border-radius: var(--cafe-radius-sm);
-      }
-    }
-    &-btn {
-      @extend %popup-base-setting-2;
-      display: block;
-      text-align: center;
-      font-size: var(--cafe--font-xl);
-      padding: var(--cafe--margin-xs);
-      margin: var(--cafe--margin-xxs) 0;
-      width: 100%;
-    }
-  }
+.menu__image {
+  overflow: visible;
+}
+.menu__btn-content {
+  border: solid 0.1rem var(--cafe-color-brown);
+  border-radius: 2rem;
 }
 </style>

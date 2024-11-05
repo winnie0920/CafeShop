@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const userStore = defineStore("web", {
+export const useShowStore = defineStore("web", {
   state: () => ({
     sLanguage: { id: -1, name: "請選擇" },
     //dropdown
@@ -27,9 +27,6 @@ export const userStore = defineStore("web", {
     },
     togglePopupShow(type, val) {
       this.popupShow[type] = val;
-    },
-    getImageUrl(id) {
-      return new URL(`../assets/image/${id}`, import.meta.url).href;
     },
   },
 });

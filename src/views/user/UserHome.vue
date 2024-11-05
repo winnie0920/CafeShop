@@ -1,11 +1,9 @@
 <script setup>
-import { homeItem, homeMenu } from "@/json/UserHome";
+import { homeItem, homeMenu, option } from "@/json/UserHome";
 
 const menuStore = userMenuStore();
-const useStore = userStore();
 const queryParams = reactive({ search: "" });
 const chooseRef = ref(null);
-const menuSelect = ref([]);
 
 // 當前選擇的 ID
 const chooseId = ref(1);
@@ -59,12 +57,6 @@ const currentChoose = (id) => {
   chooseId.value = id;
 };
 
-const updateMenuSelect = (newMenuSelect) => {
-  menuStore.setMenuSelect(newMenuSelect);
-  menuSelect.value = newMenuSelect;
-  console.log(menuStore.menuSelect, menuSelect.value);
-};
-
 onMounted(() => {
   window.addEventListener("resize", checkScrollWidth);
   checkScrollWidth();
@@ -113,7 +105,7 @@ onBeforeUnmount(() => {
               :class="{ active: chooseId === i.id }"
               @click="clickScroll(i.id, homeItem)"
             >
-              <img :src="useStore.getImageUrl(i.image)" alt="" />
+              <img :src="menuStore.getImageUrl(i.image)" alt="" />
               <h5>
                 {{ i.name }}<span>({{ i.count }})</span>
               </h5>
@@ -123,14 +115,14 @@ onBeforeUnmount(() => {
 
         <UserMenuSelect
           ref="chooseRef"
+          :option="option"
           @currentWatchChoose="currentChoose"
-          @menuSelect="updateMenuSelect"
         />
       </div>
 
       <div class="col-12 col-lg-4 d-lg-block d-none">
         <div class="User__side sticky-top">
-          <UserSopping :menuSelect="menuSelect" :menu="homeMenu"></UserSopping>
+          <UserSopping :option="option"></UserSopping>
         </div>
       </div>
     </section>

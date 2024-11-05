@@ -1,7 +1,7 @@
 <script setup>
 import { homeLanguage } from "@/json/UserHome";
 
-const useStore = userStore();
+const showStore = useShowStore();
 </script>
 
 <template>
@@ -9,7 +9,7 @@ const useStore = userStore();
     <slot />
     <div class="col-auto d-flex">
       <DropDown
-        v-model="useStore.sLanguage"
+        v-model="showStore.sLanguage"
         :data="homeLanguage"
         drop="language"
         width="5rem"

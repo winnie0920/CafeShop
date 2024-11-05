@@ -1,5 +1,5 @@
 <script setup>
-const useStore = userStore();
+const showStore = useShowStore();
 const props = defineProps({
   title: {
     type: String,
@@ -20,7 +20,7 @@ const props = defineProps({
 });
 
 const toggleShow = () => {
-  useStore.toggleShow(props.drop);
+  showStore.toggleShow(props.drop);
 };
 
 const model = defineModel({ default: { id: -1, name: "請選擇" } });
@@ -36,7 +36,7 @@ const data = computed({
 });
 
 const closeShow = () => {
-  if (useStore.show[props.drop]) useStore.show[props.drop] = false;
+  if (showStore.show[props.drop]) showStore.show[props.drop] = false;
 };
 onMounted(() => {
   changeSelected({ id: -1, name: "請選擇" });
@@ -64,12 +64,12 @@ onBeforeUnmount(() => {
       :style="{ width: props.width }"
       class="list__text"
     >
-      {{ useStore.sLanguage.name }}
+      {{ showStore.sLanguage.name }}
     </h5>
     <SvgIcon class="list__svg-end" iconName="Common-Arrow-Circle"></SvgIcon>
 
     <transition name="move-in">
-      <ul v-if="useStore.show[props.drop]" class="list__drop">
+      <ul v-if="showStore.show[props.drop]" class="list__drop">
         <li
           @click="changeSelected(d)"
           v-for="d in data"

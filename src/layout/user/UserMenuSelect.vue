@@ -1,58 +1,50 @@
 <script setup>
-import { option } from "@/json/UserHome";
-const menuStore = userMenuStore();
-const useStore = userStore();
-const userSelected = userSelectedStore();
-const emit = defineEmits(["menuSelect", "currentWatchChoose"]);
+const props = defineProps({
+  option: {
+    type: Array,
+    required: true,
+  },
+});
 
-// 使用 childInformation 存儲選擇的菜單
-let childInformation = reactive([...menuStore.menuSelect]);
+const menuStore = userMenuStore();
+const showStore = useShowStore();
+const userSelected = userSelectedStore();
+const emit = defineEmits(["currentWatchChoose"]);
 
 // 保存打開菜單內容名稱、價錢
 const selectedMenu = ref(null);
-
 // 保存打開菜單顯示的選項
 const selectedOptions = ref([]);
-
-// 用來存儲菜單明細的暫存選項
+// 保存菜單明細的選項
 const occupy = ref({});
 
 const closeShow = (val) => {
-  useStore.togglePopupShow("menu", val);
+  showStore.togglePopupShow("menu", val);
 };
-
-// 監聽 menuSelect 變化 如父層有變化，子層也會變化
-watch(
-  () => menuStore.menuSelect,
-  (newVal) => {
-    menuStore.childInformation = [...newVal];
-  }
-);
 
 //確認菜單明細
 const confirmPopup = () => {
   occupy.value.option = { ...userSelected.choice };
+  occupy.value.detail = { ...selectedMenu.value };
   if (
     Array.isArray(selectedOptions.value) &&
     !userSelected.validateOption(selectedOptions.value)
   )
     return;
-
-  let existingMenu = findMenuItem(
+  let existingMenu = menuStore.findMenuItem(
     occupy.value.menuId,
     occupy.value.childId,
     occupy.value.option
   );
 
   if (!existingMenu) {
-    childInformation.push(occupy.value);
+    menuStore.pushMenuSelect(occupy.value);
     existingMenu = occupy.value;
   } else if (existingMenu.count < selectedMenu.value.count) {
     existingMenu.count += occupy.value.count;
     existingMenu.price = existingMenu.count * occupy.value.price;
   }
-  emit("menuSelect", childInformation);
-  useStore.togglePopupShow("menu", false);
+  showStore.togglePopupShow("menu", false);
 };
 
 // 找到相對應的 MenuSelect 的菜單品項及客製化選項
@@ -65,7 +57,7 @@ const findMenu = (menuId, childId) => {
 
   // 菜單顯示的選項
   if (selectedMenu.value.option && selectedMenu.value.option.length > 0) {
-    selectedOptions.value = option.filter((o) =>
+    selectedOptions.value = props.option.filter((o) =>
       selectedMenu.value.option.includes(o.type)
     );
   }
@@ -76,7 +68,7 @@ const toggleMenu = (menuId, childId, price) => {
   userSelected.clearChoice();
   findMenu(menuId, childId);
   occupy.value = { menuId, childId, count: 1, price, remark: "" };
-  useStore.togglePopupShow("menu", true);
+  showStore.togglePopupShow("menu", true);
 };
 
 // 點擊+號，添加 MenuSelect 數量及金額
@@ -85,70 +77,15 @@ const addMenuSelect = (menuId, c) => {
   if (selectedOptions.value.length > 0) {
     toggleMenu(menuId, c.id, c.price);
   } else {
-    const existingMenu = makeMenuItem(menuId, c.id);
-    if (existingMenu.count < c.count) existingMenu.count++;
-    existingMenu.price = existingMenu.count * c.price;
+    menuStore.addMenuSelect(menuId, c);
   }
-  emit("menuSelect", childInformation);
-};
-
-// 點擊+號，新增菜單品項
-const makeMenuItem = (menuId, childId) => {
-  let existed = findMenuItem(menuId, childId);
-  if (!existed) {
-    childInformation.push({ menuId, childId, count: 0, price: 0, remarK: "" });
-    existed = findMenuItem(menuId, childId);
-  }
-  return existed;
-};
-
-// 找到相對應 MenuSelect 的菜單品項
-const findMenuItem = (menuId, childId, option) => {
-  if (option) {
-    return childInformation.find((item) => {
-      const hasSameKeys =
-        item.option &&
-        Object.keys(item.option).length === Object.keys(option).length;
-      return (
-        item.menuId === menuId &&
-        item.childId === childId &&
-        hasSameKeys &&
-        Object.keys(option).every(
-          (key) =>
-            JSON.stringify(item.option[key]) === JSON.stringify(option[key])
-        )
-      );
-    });
-  }
-  return childInformation.find(
-    (item) => item.menuId === menuId && item.childId === childId
-  );
-};
-
-// 點擊減少、刪除 MenuSelect 的菜單品項及數量
-const removeMenuSelect = (menuId, childId) => {
-  const existingMenu = findMenuItem(menuId, childId);
-  // 減少數量
-  existingMenu.count > 1
-    ? existingMenu.count--
-    : childInformation.splice(childInformation.indexOf(existingMenu), 1);
-  emit("menuSelect", childInformation);
-};
-
-// 獲取菜單品項的數量
-const getCount = (menuId, childId) => {
-  const existingMenu = findMenuItem(menuId, childId);
-  const totalCount = childInformation
-    .filter((item) => item.menuId === menuId && item.childId === childId)
-    .reduce((sum, item) => sum + item.count, 0);
-  return existingMenu ? totalCount : 0;
 };
 
 //監聽childInformation 是否有option
 const checkoutOption = (m, c) => {
   return computed(() => {
-    if (Array.isArray(childInformation)) {
-      return childInformation.some((child) => {
+    if (Array.isArray(menuStore.menuSelect)) {
+      return menuStore.menuSelect.some((child) => {
         return (
           child.menuId === m &&
           child.childId === c &&
@@ -229,30 +166,31 @@ onUnmounted(() => {
             <span v-if="c.description">{{ c.description }}</span>
           </div>
           <div class="menu__image">
-            <img :src="useStore.getImageUrl(c.image)" alt="" />
+            <img :src="menuStore.getImageUrl(c.image)" alt="" />
             <transition name="opacity">
               <div
                 class="menu__btn"
                 v-if="
-                  getCount(m.id, c.id) > 0 && !checkoutOption(m.id, c.id).value
+                  menuStore.getCount(m.id, c.id) > 0 &&
+                  !checkoutOption(m.id, c.id).value
                 "
               >
                 <div class="menu__btn-content">
                   <button
                     class="menu__btn-trash"
-                    @click.stop="removeMenuSelect(m.id, c.id)"
+                    @click.stop="menuStore.removeMenuSelect(m.id, c.id)"
                   >
                     <SvgIcon
-                      v-if="getCount(m.id, c.id) == 1"
+                      v-if="menuStore.getCount(m.id, c.id) == 1"
                       icon-name="Common-Trash"
                     ></SvgIcon>
                     <SvgIcon
-                      v-if="getCount(m.id, c.id) > 1"
+                      v-if="menuStore.getCount(m.id, c.id) > 1"
                       icon-name="Common-Minus"
                     ></SvgIcon>
                   </button>
                   <div>
-                    <p>{{ getCount(m.id, c.id) }}</p>
+                    <p>{{ menuStore.getCount(m.id, c.id) }}</p>
                   </div>
                   <button class="menu__btn-add"></button>
                 </div>
@@ -266,7 +204,7 @@ onUnmounted(() => {
                   @click.stop="addMenuSelect(m.id, c)"
                 ></SvgIcon>
                 <p v-else>
-                  {{ getCount(m.id, c.id) }}
+                  {{ menuStore.getCount(m.id, c.id) }}
                 </p>
               </button>
             </span>
@@ -278,14 +216,14 @@ onUnmounted(() => {
 
   <UserPopup
     button="放入購物車"
-    :show="useStore.popupShow.menu"
+    :show="showStore.popupShow.menu"
     @close-show="closeShow"
     @confirm-Popup="confirmPopup"
   >
     <template #main="{ title }">
       <img
         :class="['popup__img', { 'popup__img-rounded': !title }]"
-        :src="useStore.getImageUrl(selectedMenu.image)"
+        :src="menuStore.getImageUrl(selectedMenu.image)"
       />
       <div class="popup__text-content">
         <h3>{{ selectedMenu.name }}</h3>

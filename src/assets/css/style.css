@@ -174,7 +174,7 @@ hr {
   height: 0.5px !important;
 }
 
-.popup__container svg, .popup__text-option textarea, .User__side-label li, .User__side-left, .User__side-right, .menu__content li {
+.popup__container svg, .popup__text-option textarea, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
@@ -193,7 +193,7 @@ hr {
   background: var(--cafe-color-white);
 }
 
-.popup__footer-button {
+.popup__footer-button, .User__shop-btn {
   display: flex;
   border-radius: var(--cafe-radius-sm);
   background: var(--cafe-color-brown);
@@ -201,7 +201,7 @@ hr {
   border: 0.1rem solid var(--cafe-color-brown-lighter);
   transition: all 0.1s ease-in-out;
 }
-.popup__footer-button:hover {
+.popup__footer-button:hover, .User__shop-btn:hover {
   background: var(--cafe-color-white);
   color: var(--cafe-color-brown);
 }
@@ -358,6 +358,56 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .User__side-right {
   right: 0;
 }
+.User__shop-container {
+  flex-direction: column;
+  max-height: calc(100vh - 10.5rem);
+  color: var(--cafe-color-brown);
+  background-color: var(--cafe-color-white);
+  margin-top: var(--cafe--margin-xs);
+  padding: var(--cafe--padding-sm);
+  overflow: hidden;
+}
+.User__shop-container h1 {
+  font-size: var(--cafe--font-xxxl);
+  line-height: 1.5;
+}
+.User__shop-container h3 {
+  font-size: var(--cafe--font-md);
+}
+.User__shop-container hr {
+  border: 0;
+  opacity: 100;
+  background: var(--cafe-color-brown);
+  border-top: 0.2rem dashed var(--cafe-color-white);
+}
+.User__shop-content {
+  height: 100vh;
+  max-height: 50%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  margin: var(--cafe--margin-sm) 0;
+}
+.User__shop-content ::-webkit-scrollbar {
+  display: none;
+}
+.User__shop-content img {
+  width: 10rem;
+  height: 10rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: var(--cafe-radius-sm);
+}
+.User__shop-btn {
+  display: block;
+  text-align: center;
+  font-size: var(--cafe--font-xl);
+  padding: var(--cafe--margin-xs);
+  margin: var(--cafe--margin-xxs) 0;
+  width: 100%;
+}
+.User__shop-remark {
+  color: var(--cafe-color-brown-lighter);
+}
 
 .menu__content {
   color: var(--cafe-color-brown);
@@ -403,7 +453,9 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 .menu__image {
   position: relative;
-  display: grid;
+  display: flex;
+  flex-grow: 0;
+  justify-content: end;
   margin: 1rem;
   border-radius: 1rem;
   overflow: hidden;

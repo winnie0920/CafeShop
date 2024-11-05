@@ -81,6 +81,61 @@
       right: 0;
     }
   }
+
+  
+  &__shop {
+    &-container {
+      @extend %base-btn-setting;
+      flex-direction: column;
+      max-height: calc(100vh - 10.5rem);
+      color: var(--cafe-color-brown);
+      background-color: var(--cafe-color-white);
+      margin-top: var(--cafe--margin-xs);
+      padding: var(--cafe--padding-sm);
+      overflow: hidden;
+      h1 {
+        font-size: var(--cafe--font-xxxl);
+        line-height: 1.5;
+      }
+      h3 {
+        font-size: var(--cafe--font-md);
+      }
+      hr {
+        border: 0;
+        opacity: 100;
+        background: var(--cafe-color-brown);
+        border-top: 0.2rem dashed var(--cafe-color-white);
+      }
+    }
+    &-content {
+      height: 100vh;
+      max-height: calc(50%);
+      overflow-y: auto;
+      scrollbar-width: none;
+      margin: var(--cafe--margin-sm) 0;
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      img {
+        width: 10rem;
+        height: 10rem;
+        object-fit: cover;
+        border-radius: var(--cafe-radius-sm);
+      }
+    }
+    &-btn {
+      @extend %popup-base-setting-2;
+      display: block;
+      text-align: center;
+      font-size: var(--cafe--font-xl);
+      padding: var(--cafe--margin-xs);
+      margin: var(--cafe--margin-xxs) 0;
+      width: 100%;
+    }
+    &-remark{
+      color: var(--cafe-color-brown-lighter);
+    }
+  }
 }
 
 .menu {
@@ -130,7 +185,9 @@
   }
   &__image{
     position: relative;
-    display: grid;
+    display: flex;
+    flex-grow: 0;
+    justify-content: end;
     margin: 1rem;
     border-radius: 1rem;
     overflow: hidden;

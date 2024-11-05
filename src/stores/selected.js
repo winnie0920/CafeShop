@@ -6,10 +6,6 @@ export const userSelectedStore = defineStore("select", {
     choice: {},
     errorMessages: {},
   }),
-
-  // 定義 getters
-  getters: {},
-
   // 定義 actions
   actions: {
     //清空選項
