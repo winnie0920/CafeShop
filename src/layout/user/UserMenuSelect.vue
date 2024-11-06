@@ -37,8 +37,15 @@ const confirmPopup = () => {
     occupy.value.option
   );
 
+  const optionPrice = menuStore.totalOptionPrice(
+    selectedOptions.value,
+    occupy.value.option
+  );
+  occupy.value.price += optionPrice;
+
   if (!existingMenu) {
     menuStore.pushMenuSelect(occupy.value);
+
     existingMenu = occupy.value;
   } else if (existingMenu.count < selectedMenu.value.count) {
     existingMenu.count += occupy.value.count;
@@ -67,7 +74,7 @@ const findMenu = (menuId, childId) => {
 const toggleMenu = (menuId, childId, price) => {
   userSelected.clearChoice();
   findMenu(menuId, childId);
-  occupy.value = { menuId, childId, count: 1, price, remark: "" };
+  occupy.value = { menuId, childId, count: 1, price };
   showStore.togglePopupShow("menu", true);
 };
 
@@ -274,15 +281,6 @@ onUnmounted(() => {
           </li>
           <hr />
         </ul>
-        <div class="flex-column">
-          <h3 class="mb-2">餐點備註：</h3>
-          <textarea
-            v-model="occupy.remark"
-            class="mb-2"
-            placeholder="新增備註"
-            rows="4"
-          ></textarea>
-        </div>
       </div>
     </template>
     <template #footer>

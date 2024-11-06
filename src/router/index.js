@@ -21,6 +21,13 @@ export const routes = [
         name: "UserHome",
         meta: { icon: "Side-Bookmark", title: "點餐首頁" },
         component: () => import("@/views/user/UserHome.vue"),
+        children: [
+          {
+            path: "checkout",
+            name: "UserCheckout",
+            component: () => import("@/views/user/UserCheckout.vue"),
+          },
+        ],
       },
       {
         path: "about",

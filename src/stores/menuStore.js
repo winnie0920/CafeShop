@@ -70,6 +70,22 @@ export const userMenuStore = defineStore("menu", {
         : this.menuSelect.splice(this.menuSelect.indexOf(existingMenu), 1);
     },
 
+    //計算option裡面的細項金額
+    totalOptionPrice(option, occupy) {
+      return option.reduce((total, item) => {
+        const selectedValue = occupy[item.type];
+
+        if (selectedValue !== undefined) {
+          const selectedOption = item.children.find(
+            (child) => child.id === selectedValue
+          );
+          if (selectedOption && selectedOption.price) {
+            return total + selectedOption.price;
+          }
+        }
+        return total;
+      }, 0);
+    },
     // 獲取菜單品項的數量
     getCount(menuId, childId) {
       const existingMenu = this.findMenuItem(menuId, childId);

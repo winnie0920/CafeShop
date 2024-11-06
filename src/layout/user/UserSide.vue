@@ -3,9 +3,9 @@ import { homeSide } from "@/json/UserHome";
 </script>
 
 <template>
-  <nav class="sidebar__container">
+  <nav class="sidebar__container d-lg-block d-none">
     <div class="sidebar__head">
-      <router-link to="home">
+      <router-link :to="{ name: 'UserHome' }">
         <img src="@/assets/icons/Logo-coffee.png" alt="" />
       </router-link>
       <ul>

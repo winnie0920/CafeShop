@@ -216,6 +216,13 @@ hr {
   opacity: 0;
 }
 
+.User__shop-clear, .menu__btn-content div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .check__and-radio,
 .check__and-mark {
   height: 1.7rem;
@@ -397,6 +404,16 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
      object-fit: cover;
   border-radius: var(--cafe-radius-sm);
 }
+.User__shop-clear {
+  color: var(--cafe-color-brown-lighter);
+  height: 100%;
+}
+.User__shop-clear svg {
+  width: 8rem;
+  height: 8rem;
+  color: inherit;
+  margin-bottom: var(--cafe--margin-xs);
+}
 .User__shop-btn {
   display: block;
   text-align: center;
@@ -405,7 +422,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   margin: var(--cafe--margin-xxs) 0;
   width: 100%;
 }
-.User__shop-remark {
+.User__shop-option {
   color: var(--cafe-color-brown-lighter);
 }
 
@@ -503,11 +520,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   margin: 0 !important;
 }
 .menu__btn-content div {
-  display: flex;
   width: 1.5rem;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
 }
 .menu__btn-num {
   height: 1.5rem;
@@ -519,7 +532,8 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   text-align: center;
 }
 .menu__btn-trash svg {
-  width: 1.6rem;
+  padding: 0.5rem 0.7rem 0.7rem 0.7rem;
+  width: 100%;
 }
 .menu__btn-add {
   position: relative;

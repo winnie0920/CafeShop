@@ -16,7 +16,9 @@ const sendSearch = (val) => (queryParams.search = val);
 
 // 檢查箭頭顯示
 const checkScrollWidth = () => {
-  showArrow.value = labelRef.value.scrollWidth > labelRef.value.clientWidth;
+  if (labelRef.value) {
+    showArrow.value = labelRef.value.scrollWidth > labelRef.value.clientWidth;
+  }
 };
 
 // 滾動箭頭
@@ -57,6 +59,21 @@ const currentChoose = (id) => {
   chooseId.value = id;
 };
 
+//監聽所在頁面
+const checkoutView = ref(false);
+watch(
+  () => router.currentRoute.value.name,
+
+  (val) => {
+    if (val === "UserCheckout") {
+      checkoutView.value = true;
+    } else {
+      checkoutView.value = false;
+    }
+  },
+  { immediate: true }
+);
+
 onMounted(() => {
   window.addEventListener("resize", checkScrollWidth);
   checkScrollWidth();
@@ -69,7 +86,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="User__container">
+  <router-view v-if="checkoutView"></router-view>
+  <div v-else class="User__container">
     <TitleBar class="sticky-top">
       <div class="col-12 col-sm-7 col-md-6 col-lg-4 me-auto d-flex">
         <SearchBar :value="queryParams.search" @send-search="sendSearch" />

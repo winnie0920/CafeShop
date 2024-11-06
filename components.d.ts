@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     ConfirmBtn: typeof import('./src/components/ConfirmBtn.vue')['default']
     DropDown: typeof import('./src/components/DropDown.vue')['default']
+    FilloutForm: typeof import('./src/components/FilloutForm.vue')['default']
     LoginView: typeof import('./src/views/LoginView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -16,6 +17,7 @@ declare module 'vue' {
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
     TitleBar: typeof import('./src/layout/user/TitleBar.vue')['default']
     UserAbout: typeof import('./src/views/user/UserAbout.vue')['default']
+    UserCheckout: typeof import('./src/views/user/UserCheckout.vue')['default']
     UserHome: typeof import('./src/views/user/UserHome.vue')['default']
     UserLayout: typeof import('./src/layout/user/UserLayout.vue')['default']
     UserMenuSelect: typeof import('./src/layout/user/UserMenuSelect.vue')['default']

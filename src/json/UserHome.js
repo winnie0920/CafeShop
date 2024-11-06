@@ -485,7 +485,7 @@ export const option = [
   {
     type: "size",
     name: "份量",
-    isSingleChoice: true,
+    isSingleChoice: false,
     children: [
       { id: 1, name: "小", selected: true },
       { id: 2, name: "中", price: 10 },
@@ -577,6 +577,46 @@ const data = [
         option: {
           noodle: 3,
           spicy: 3,
+        },
+      },
+    ],
+  },
+];
+
+const orderData = [
+  {
+    orderStatus: "1", //未完成
+    PayStatus: "1", //未付款
+    table: 1,
+    allAmount: 795,
+    payMethod: "1", //信用卡
+    remark: "無",
+    menuList: [
+      {
+        menuId: 1,
+        childId: 1,
+        price: 600,
+        count: 4,
+      },
+      {
+        menuId: 1,
+        childId: 1,
+        price: 140,
+        count: 1,
+        option: {
+          noodle: 1,
+          spicy: 2,
+        },
+      },
+      {
+        menuId: 1,
+        childId: 1,
+        price: 280,
+        count: 2,
+        option: {
+          size: [1, 2],
+          noodle: 1,
+          spicy: 2,
         },
       },
     ],

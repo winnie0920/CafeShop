@@ -19,7 +19,7 @@
 
 .check__and-radio {
   &::after {
-    @extend %check_and-setting;
+    @extend %check-and-setting;
     height: 0.7rem;
     width: 0.7rem;
     border-radius: 50%;
@@ -30,7 +30,7 @@
 .check__and-mark {
   border-radius: 10%;
   &::after {
-    @extend %check_and-setting;
+    @extend %check-and-setting;
     height: 0.7rem;
     width: 0.3rem;
     border: solid var(--cafe-color-brown);
