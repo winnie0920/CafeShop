@@ -4,6 +4,7 @@ import { homeItem, homeMenu, option } from "@/json/UserHome";
 const menuStore = userMenuStore();
 const queryParams = reactive({ search: "" });
 const chooseRef = ref(null);
+const router = useRouter();
 
 // 當前選擇的 ID
 const chooseId = ref(1);
@@ -59,6 +60,10 @@ const currentChoose = (id) => {
   chooseId.value = id;
 };
 
+const goBack = () => {
+  router.push({ name: "UserHome" });
+};
+
 //監聽所在頁面
 const checkoutView = ref(false);
 watch(
@@ -86,15 +91,24 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <router-view v-if="checkoutView"></router-view>
-  <div v-else class="User__container">
+  <div class="User__container">
     <TitleBar class="sticky-top">
       <div class="col-12 col-sm-7 col-md-6 col-lg-4 me-auto d-flex">
-        <SearchBar :value="queryParams.search" @send-search="sendSearch" />
+        <SearchBar
+          v-if="!checkoutView"
+          :value="queryParams.search"
+          @send-search="sendSearch"
+        />
+        <ConfirmBtn
+          v-else
+          iconName="Common-Leave"
+          title="返回"
+          @click="goBack()"
+        />
       </div>
     </TitleBar>
-
-    <section class="row g-5">
+    <router-view v-if="checkoutView"></router-view>
+    <section v-else class="row g-5">
       <!-- 左側 2/3 區塊 -->
       <div class="col-12 col-lg-8">
         <div class="User__side">

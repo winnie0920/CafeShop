@@ -1,0 +1,22 @@
+@use "mixin" as *;
+.new{
+    &__container{
+        @extend %popup-base-setting;
+        flex-direction: column;
+        margin-top: var(--cafe--margin-xs);
+        color: var(--cafe-color-brown);
+        padding:var(--cafe--padding-sm);
+        p{
+            font-size: 1.2rem;
+        }
+        hr{
+            @extend %hr-dotted-setting;
+        }
+    }
+    &__gray-text{
+        color: var(--cafe-color-gray-darken);
+    }
+    &__strong-text{
+        font-weight: 600;
+    }
+}

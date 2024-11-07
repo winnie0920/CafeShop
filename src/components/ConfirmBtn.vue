@@ -2,15 +2,19 @@
 const props = defineProps({
   iconName: {
     type: String,
+    default: "",
   },
   title: {
+    type: String,
+  },
+  color: {
     type: String,
   },
 });
 </script>
 
 <template>
-  <button class="drop__btn">
+  <button class="drop__btn" :class="{ gray: props.color === 'gray' }">
     <SvgIcon
       v-show="props.iconName"
       :iconName="props.iconName"
@@ -50,6 +54,18 @@ const props = defineProps({
         color: var(--cafe-color-white);
       }
     }
+  }
+}
+.gray {
+  border: 0.1rem solid var(--cafe-color-gray-darken) !important;
+  color: var(--cafe-color-gray-darken) !important;
+  svg {
+    color: var(--cafe-color-gray-darken) !important;
+  }
+  &:active {
+    color: var(--cafe-color-white) !important;
+    border: 0.1rem solid var(--cafe-color-gray-darken) !important;
+    background-color: var(--cafe-color-gray-darken) !important;
   }
 }
 </style>

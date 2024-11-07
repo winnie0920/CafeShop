@@ -8,11 +8,9 @@ const props = defineProps({
 const router = useRouter();
 const menuStore = userMenuStore();
 const checkOrder = () => {
-  console.log(menuStore.menuSelect);
-
-  // if (menuStore.menuSelect.length > 0) {
-  //   router.push("/home/checkout");
-  // }
+  if (menuStore.menuSelect.length > 0) {
+    router.push("/home/checkout");
+  }
 };
 
 const calculateTotal = () => {
@@ -37,7 +35,7 @@ const findSelectOption = (selected) => {
 
 <template>
   <div class="User__shop-container">
-    <h1>購物車</h1>
+    <h3>購物車</h3>
     <div class="User__shop-content">
       <div v-if="menuStore.menuSelect.length !== 0">
         <div
@@ -96,16 +94,16 @@ const findSelectOption = (selected) => {
           class="User__shop-icon"
           icon-name="Common-Shopping-Clear"
         ></SvgIcon>
-        <h3>購物車目前暫無商品</h3>
+        <p>購物車目前暫無商品</p>
       </div>
     </div>
     <div class="d-flex justify-content-between mb-2">
-      <h3>小計</h3>
-      <p>${{ calculateTotal() }}</p>
+      <h5>小計</h5>
+      <h5>${{ calculateTotal() }}</h5>
     </div>
     <div class="d-flex justify-content-between">
-      <h3>服務費</h3>
-      <p>${{ Math.ceil(calculateTotal() * 0.1) }}</p>
+      <h5>服務費</h5>
+      <h5>${{ Math.ceil(calculateTotal() * 0.1) }}</h5>
     </div>
     <hr />
     <div class="d-flex align-items-center">

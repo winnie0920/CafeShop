@@ -46,3 +46,10 @@
   justify-content: center;
   align-items: center;
 }
+
+%hr-dotted-setting {
+  border: 0;
+  opacity: 100;
+  background: var(--cafe-color-brown);
+  border-top: 0.2rem dashed var(--cafe-color-white);
+}

@@ -89,6 +89,7 @@ onBeforeUnmount(() => {
 .list {
   &__container {
     @extend %base-btn-setting;
+    height: 4rem;
     position: relative;
     display: grid;
     padding: var(--cafe--padding-xs);

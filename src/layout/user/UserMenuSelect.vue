@@ -36,16 +36,13 @@ const confirmPopup = () => {
     occupy.value.childId,
     occupy.value.option
   );
-
-  const optionPrice = menuStore.totalOptionPrice(
+  occupy.value.price += menuStore.totalOptionPrice(
     selectedOptions.value,
     occupy.value.option
   );
-  occupy.value.price += optionPrice;
 
   if (!existingMenu) {
     menuStore.pushMenuSelect(occupy.value);
-
     existingMenu = occupy.value;
   } else if (existingMenu.count < selectedMenu.value.count) {
     existingMenu.count += occupy.value.count;

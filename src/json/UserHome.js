@@ -614,7 +614,7 @@ const orderData = [
         price: 280,
         count: 2,
         option: {
-          size: [1, 2],
+          size: [1,2],
           noodle: 1,
           spicy: 2,
         },

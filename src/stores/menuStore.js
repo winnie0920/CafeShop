@@ -74,7 +74,6 @@ export const userMenuStore = defineStore("menu", {
     totalOptionPrice(option, occupy) {
       return option.reduce((total, item) => {
         const selectedValue = occupy[item.type];
-
         if (selectedValue !== undefined) {
           const selectedOption = item.children.find(
             (child) => child.id === selectedValue
