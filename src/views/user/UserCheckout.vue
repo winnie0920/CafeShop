@@ -138,7 +138,7 @@ const goBack = () => {
     </div>
     <div class="col-lg-4 col-12">
       <div class="new__container new__width">
-        <h3 class="mb-5">您的訂單</h3>
+        <h3 class="mb-4">您的訂單</h3>
         <div class="new__content">
           <div class="mb-3 new__menu-content" v-for="m in menu" :key="m.index">
             <div>
@@ -158,7 +158,7 @@ const goBack = () => {
           <p>服務費</p>
           <p>$10</p>
         </div>
-        <div class="new__strong-text new__menu-content mt-5">
+        <div class="new__strong-text new__menu-content mt-4">
           <h2>總計</h2>
           <h2>$110</h2>
         </div>
