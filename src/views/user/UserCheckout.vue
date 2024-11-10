@@ -2,128 +2,150 @@
 import { homeItem, homeMenu, option } from "@/json/UserHome";
 const router = useRouter();
 
+const menu = ref([
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+  {
+    name: "肉醬義大利麵",
+    count: 1,
+    size: "小份",
+    spicy: "小辣",
+    price: 130,
+  },
+]);
+
+const tableNumber = ref("");
+const errorMessage = ref("");
+
+const validateNumber = () => {
+  tableNumber.value = tableNumber.value.replace(/[^0-9]/g, ""); // 移除非數字字符
+};
+
 const goBack = () => {
-  router.push({ name: "UserHome" });
+  if (!tableNumber.value) {
+    errorMessage.value = "未輸入桌號";
+  } else {
+    errorMessage.value = "";
+    router.push({ name: "UserHome" });
+  }
 };
 </script>
 
 <template>
-  <section class="row g-5">
-    <div class="col-lg-8 col-12" style="margin-top: 4rem">
-      <div class="new__width">
-        <div class="new__container m-0">
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
+  <section class="row g-lg-5 g-4">
+    <div class="col-lg-8 col-12">
+      <div class="new__container User__shop-container new__scrollbar">
+        <div class="mb-3 new__menu-content check__inputBox">
+          <label for="tableNumber" class="form-label">桌號</label>
+          <input
+            type="text"
+            id="tableNumber"
+            placeholder="請輸入桌號"
+            v-model="tableNumber"
+            @input="validateNumber"
+          />
         </div>
-      </div>
-      <div class="new__container" style="display: block">
-        <ConfirmBtn
-          color="gray"
-          class="ms-auto"
-          title="取消"
-          @click="goBack()"
-        />
       </div>
     </div>
     <div class="col-lg-4 col-12">
-      <div class="new__container User__shop-container">
+      <div class="new__container new__width">
         <h3 class="mb-5">您的訂單</h3>
         <div class="new__content">
-          <div class="mb-3 new__menu-content">
+          <div class="mb-3 new__menu-content" v-for="m in menu" :key="m.index">
             <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
+              <p>{{ m.name }} X{{ m.count }}</p>
+              <p class="User__shop-option">{{ m.size }} {{ m.spicy }}</p>
             </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
-          </div>
-          <div class="mb-3 new__menu-content">
-            <div>
-              <p>肉醬義大利麵 X1</p>
-              <p class="User__shop-option">小份 小辣</p>
-            </div>
-            <p>$130</p>
+            <p>{{ m.price }}</p>
           </div>
         </div>
         <hr />
@@ -141,6 +163,13 @@ const goBack = () => {
           <h2>$110</h2>
         </div>
       </div>
+      <div class="new__container flex-row mb-5 mb-lg-0">
+        <ConfirmBtn class="ms-auto me-3" title="送出訂單" />
+        <ConfirmBtn color="gray" title="取消" @click="goBack()" />
+      </div>
+    </div>
+    <div v-if="errorMessage" class="alert alert-danger mt-2">
+      {{ errorMessage }}
     </div>
   </section>
 </template>
@@ -148,9 +177,14 @@ const goBack = () => {
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
 .new {
+  &__scrollbar {
+    overflow-y: auto;
+    height: 100%;
+    scrollbar-width: none;
+  }
   &__width {
     max-width: 100%;
-    max-height: calc(100vh - 16rem);
+    max-height: calc(100vh - 18.5rem);
     scrollbar-width: none;
     overflow-y: auto;
   }
@@ -163,7 +197,7 @@ const goBack = () => {
   &__menu {
     &-content {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
     }
   }
   &__floor {

@@ -4,8 +4,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: 3rem 3rem 0;
-    gap: 1rem;
+    padding: 0rem 3rem;
     overflow-x: hidden;
   }
 
@@ -16,7 +15,7 @@
     &-label {
       display: flex;
       gap: 1rem;
-      padding: 1rem 0rem;
+      padding: 0rem 0rem 1rem 0;
       overflow-x: auto;
       scrollbar-width: none;
       li {
@@ -82,12 +81,11 @@
     }
   }
 
-  
   &__shop {
     &-container {
       @extend %base-btn-setting;
       flex-direction: column;
-      max-height: calc(100vh - 10.5rem);
+      max-height: calc(100vh - 11rem);
       color: var(--cafe-color-brown);
       background-color: var(--cafe-color-white);
       margin-top: var(--cafe--margin-xs);
@@ -116,11 +114,11 @@
         border-radius: var(--cafe-radius-sm);
       }
     }
-    &-clear{
+    &-clear {
       @extend %center-setting;
-      color:var(--cafe-color-brown-lighter);
+      color: var(--cafe-color-brown-lighter);
       height: 100%;
-      svg{
+      svg {
         width: 8rem;
         height: 8rem;
         color: inherit;
@@ -136,7 +134,7 @@
       margin: var(--cafe--margin-xxs) 0;
       width: 100%;
     }
-    &-option{
+    &-option {
       color: var(--cafe-color-brown-lighter);
     }
   }
@@ -146,7 +144,7 @@
   &__content {
     color: var(--cafe-color-brown);
     max-width: 100%;
-    max-height: calc(100vh - 20rem);
+    max-height: calc(100vh - 19.5rem);
     scrollbar-width: none;
     overflow-y: auto;
     &::-webkit-scrollbar {
@@ -187,7 +185,7 @@
       }
     }
   }
-  &__image{
+  &__image {
     position: relative;
     display: flex;
     flex-grow: 0;
@@ -206,7 +204,7 @@
       width: 2.5rem;
       padding: 0.25rem;
       color: var(--cafe-color-brown);
-      &:hover{
+      &:hover {
         color: var(--cafe-color-white);
       }
     }
@@ -216,7 +214,7 @@
       transition: all 0.1s ease-in-out;
       background-color: var(--cafe-color-white);
       border-radius: var(--cafe-radius-lg);
-      &:hover{
+      &:hover {
         @extend %base-btn-hover;
       }
     }

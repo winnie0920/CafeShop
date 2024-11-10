@@ -24,4 +24,8 @@ const showStore = useShowStore();
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
+header {
+  background-color: var(--cafe-color-bisque);
+  padding: 3rem 0 1.5rem 0;
+}
 </style>

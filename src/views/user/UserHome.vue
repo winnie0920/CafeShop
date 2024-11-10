@@ -99,12 +99,6 @@ onBeforeUnmount(() => {
           :value="queryParams.search"
           @send-search="sendSearch"
         />
-        <ConfirmBtn
-          v-else
-          iconName="Common-Leave"
-          title="返回"
-          @click="goBack()"
-        />
       </div>
     </TitleBar>
     <router-view v-if="checkoutView"></router-view>

@@ -9,7 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     ConfirmBtn: typeof import('./src/components/ConfirmBtn.vue')['default']
     DropDown: typeof import('./src/components/DropDown.vue')['default']
-    FilloutForm: typeof import('./src/components/FilloutForm.vue')['default']
     LoginView: typeof import('./src/views/LoginView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

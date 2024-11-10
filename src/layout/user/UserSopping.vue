@@ -107,7 +107,13 @@ const findSelectOption = (selected) => {
     </div>
     <hr />
     <div class="d-flex align-items-center">
-      <button class="User__shop-btn" @click="checkOrder()">查看訂單</button>
+      <button
+        class="User__shop-btn"
+        :class="{ 'disabled-button': menuStore.menuSelect.length <= 0 }"
+        @click="checkOrder()"
+      >
+        查看訂單
+      </button>
     </div>
   </div>
 </template>
@@ -120,5 +126,10 @@ const findSelectOption = (selected) => {
 .menu__btn-content {
   border: solid 0.1rem var(--cafe-color-brown);
   border-radius: 2rem;
+}
+.disabled-button {
+  cursor: not-allowed;
+  background-color: var(--cafe-color-gray);
+  color: var(--cafe-color-brown);
 }
 </style>
