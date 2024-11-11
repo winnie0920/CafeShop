@@ -4,6 +4,7 @@ export const userMenuStore = defineStore("menu", {
   state: () => ({
     homeMenu: [],
     menuSelect: [],
+    debouncing: false,
   }),
   actions: {
     setMenuSelect(newMenuSelect) {
@@ -48,7 +49,6 @@ export const userMenuStore = defineStore("menu", {
           childId,
           count: 0,
           price: 0,
-          remark: "",
           detail: c,
         });
         existed = this.findMenuItem(menuId, childId);
@@ -72,7 +72,8 @@ export const userMenuStore = defineStore("menu", {
 
     //計算option裡面的細項金額
     totalOptionPrice(option, occupy) {
-      return option.reduce((total, item) => {
+      const options = Array.isArray(option) ? option : [];
+      return options.reduce((total, item) => {
         const selectedValue = occupy[item.type];
         if (selectedValue !== undefined) {
           const selectedOption = item.children.find(
@@ -97,6 +98,16 @@ export const userMenuStore = defineStore("menu", {
     //取得正確路徑圖片
     getImageUrl(id) {
       return new URL(`../assets/image/${id}`, import.meta.url).href;
+    },
+
+    //防抖
+    async debounceAction(callback, delay = 1000) {
+      if (this.debouncing) return;
+      this.debouncing = true;
+      await callback();
+      setTimeout(() => {
+        this.debouncing = false;
+      }, delay);
     },
   },
 });

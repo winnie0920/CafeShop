@@ -8,14 +8,14 @@ const props = defineProps({
 
 const menuStore = userMenuStore();
 const showStore = useShowStore();
-const userSelected = userSelectedStore();
+const formStore = userFormStore();
 const emit = defineEmits(["currentWatchChoose"]);
 
-// 保存打開菜單內容名稱、價錢
+// 菜單內容名稱、價錢
 const selectedMenu = ref(null);
-// 保存打開菜單顯示的選項
+// 菜單顯示的選項
 const selectedOptions = ref([]);
-// 保存菜單明細的選項
+// 菜單明細的占存全部內容
 const occupy = ref({});
 
 const closeShow = (val) => {
@@ -24,13 +24,15 @@ const closeShow = (val) => {
 
 //確認菜單明細
 const confirmPopup = () => {
-  occupy.value.option = { ...userSelected.choice };
+  occupy.value.option = { ...formStore.choice };
   occupy.value.detail = { ...selectedMenu.value };
   if (
     Array.isArray(selectedOptions.value) &&
-    !userSelected.validateOption(selectedOptions.value)
-  )
+    !formStore.validateOption(selectedOptions.value)
+  ) {
     return;
+  }
+  //找到菜單裡面是否有相同的菜單選項
   let existingMenu = menuStore.findMenuItem(
     occupy.value.menuId,
     occupy.value.childId,
@@ -41,14 +43,17 @@ const confirmPopup = () => {
     occupy.value.option
   );
 
-  if (!existingMenu) {
-    menuStore.pushMenuSelect(occupy.value);
-    existingMenu = occupy.value;
-  } else if (existingMenu.count < selectedMenu.value.count) {
-    existingMenu.count += occupy.value.count;
-    existingMenu.price = existingMenu.count * occupy.value.price;
-  }
-  showStore.togglePopupShow("menu", false);
+  //如果這裡快速點擊，就做防抖防止
+  menuStore.debounceAction(() => {
+    if (!existingMenu) {
+      menuStore.pushMenuSelect(occupy.value);
+      existingMenu = occupy.value;
+    } else if (existingMenu.count < selectedMenu.value.count) {
+      existingMenu.count += occupy.value.count;
+      existingMenu.price = existingMenu.count * occupy.value.price;
+    }
+    showStore.togglePopupShow("menu", false);
+  }, 1000);
 };
 
 // 找到相對應的 MenuSelect 的菜單品項及客製化選項
@@ -69,7 +74,7 @@ const findMenu = (menuId, childId) => {
 
 // 點擊外框，打開每個菜單明細
 const toggleMenu = (menuId, childId, price) => {
-  userSelected.clearChoice();
+  formStore.clearChoice();
   findMenu(menuId, childId);
   occupy.value = { menuId, childId, count: 1, price };
   showStore.togglePopupShow("menu", true);
@@ -235,50 +240,7 @@ onUnmounted(() => {
         <span>{{ selectedMenu.description }}</span>
         <hr />
       </div>
-      <div class="popup__text-option" v-if="selectedOptions">
-        <ul v-for="o in selectedOptions" :key="o.id">
-          <div>
-            <h3>{{ o.name }}選擇</h3>
-            <div
-              :class="{
-                'popup__message-error': userSelected.errorMessages[o.type],
-              }"
-            >
-              必填
-            </div>
-          </div>
-          <h5 v-if="o.isSingleChoice">請擇一選擇</h5>
-          <h5 v-else>可多選擇</h5>
-          <li v-for="c in o.children" :key="c.id">
-            <input
-              v-if="o.isSingleChoice"
-              type="radio"
-              :name="o.type"
-              :id="`radio-${o.type}-${c.id}`"
-              :value="c.id"
-              @change="userSelected.singleOption(o.type, c.id)"
-            />
-            <label v-if="o.isSingleChoice" :for="`radio-${o.type}-${c.id}`">
-              <span class="check__and-radio"></span>
-              {{ c.name }}
-            </label>
-            <input
-              v-else
-              type="checkbox"
-              :id="`checkbox-${o.type}-${c.id}`"
-              :value="c.id"
-              @change="userSelected.pluralOption(o.type, c.id)"
-            />
-            <label v-if="!o.isSingleChoice" :for="`checkbox-${o.type}-${c.id}`">
-              <span class="check__and-mark"></span>
-              {{ c.name }}
-            </label>
-            <p v-if="c.price">${{ c.price }}</p>
-            <p v-else>免費</p>
-          </li>
-          <hr />
-        </ul>
-      </div>
+      <CheckInput :option="selectedOptions" class="select" />
     </template>
     <template #footer>
       <div class="d-flex gap-4 align-items-center">

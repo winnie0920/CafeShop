@@ -1,5 +1,7 @@
 <script setup>
 import { homeItem, homeMenu, option } from "@/json/UserHome";
+const alertStore = useAlertStore();
+const formStore = userFormStore();
 const router = useRouter();
 
 const menu = ref([
@@ -104,17 +106,16 @@ const menu = ref([
 ]);
 
 const tableNumber = ref("");
-const errorMessage = ref("");
 
 const validateNumber = () => {
-  tableNumber.value = tableNumber.value.replace(/[^0-9]/g, ""); // 移除非數字字符
+  tableNumber.value = tableNumber.value.replace(/[^0-9]/g, "");
 };
 
 const goBack = () => {
+  formStore.validateOption();
   if (!tableNumber.value) {
-    errorMessage.value = "未輸入桌號";
+    alertStore.pushMsg("Common-Error", "未輸入桌號！");
   } else {
-    errorMessage.value = "";
     router.push({ name: "UserHome" });
   }
 };
@@ -125,13 +126,11 @@ const goBack = () => {
     <div class="col-lg-8 col-12">
       <div class="new__container User__shop-container new__scrollbar">
         <div class="mb-3 new__menu-content check__inputBox">
-          <label for="tableNumber" class="form-label">桌號</label>
-          <input
-            type="text"
+          <CheckInput
+            :regex="/[^0-9]/g"
+            class="input"
             id="tableNumber"
-            placeholder="請輸入桌號"
-            v-model="tableNumber"
-            @input="validateNumber"
+            name="桌號"
           />
         </div>
       </div>
@@ -167,9 +166,6 @@ const goBack = () => {
         <ConfirmBtn class="ms-auto me-3" title="送出訂單" />
         <ConfirmBtn color="gray" title="取消" @click="goBack()" />
       </div>
-    </div>
-    <div v-if="errorMessage" class="alert alert-danger mt-2">
-      {{ errorMessage }}
     </div>
   </section>
 </template>

@@ -20,16 +20,17 @@ const calculateTotal = () => {
 };
 
 const findSelectOption = (selected) => {
-  const result = {};
+  return props.option.reduce((result, o) => {
+    const selectedIds = Array.isArray(selected[o.type])
+      ? selected[o.type]
+      : [selected[o.type]];
 
-  props.option.forEach((o) => {
-    const selectedId = selected[o.type];
-    const selectedChild = o.children.find((c) => c.id === selectedId);
-    if (selectedChild) {
-      result[o.type] = selectedChild;
-    }
-  });
-  return result;
+    result[o.type] = o.children.filter((child) =>
+      selectedIds.includes(child.id)
+    );
+
+    return result;
+  }, {});
 };
 </script>
 
@@ -50,10 +51,17 @@ const findSelectOption = (selected) => {
             <h4>{{ m.detail.name }}</h4>
             <p>${{ m.price }}</p>
             <div v-if="m.option" class="d-flex gap-2">
-              <div v-for="o in findSelectOption(m.option)" :key="o.id">
-                <p class="User__shop-option">
-                  {{ o.name }}
-                </p>
+              <div
+                class="d-flex"
+                v-for="(options, type) in findSelectOption(m.option)"
+                :key="type"
+              >
+                <div v-for="(o, index) in options" :key="o.id">
+                  <p class="User__shop-option">
+                    {{ o.name
+                    }}<span v-if="index < options.length - 1">、</span>
+                  </p>
+                </div>
               </div>
             </div>
             <div class="menu__image">
