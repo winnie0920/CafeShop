@@ -11,9 +11,9 @@
     p {
       font-size: 1.2rem;
     }
-    hr {
-      @extend %hr-dotted-setting;
-    }
+  }
+  &__hr {
+    @extend %hr-dotted-setting;
   }
   &__gray-text {
     color: var(--cafe-color-gray-darken);

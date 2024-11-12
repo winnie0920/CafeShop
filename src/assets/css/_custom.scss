@@ -54,12 +54,13 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
 .check {
   &__inputBox {
     label {
-      font-size: var(--cafe--font-md);
+      font-size: var(--cafe--font-xxxl);
       padding-left: var(--cafe--padding-xxs);
     }
     input {
-      font-size: var(--cafe--font-sm);
       @extend %base-btn-setting;
+      width: 100%;
+      font-size: var(--cafe--font-sm);
       border-color: var(--cafe-color-brown-lighter);
       padding: var(--cafe--padding-xs);
       color: var(--cafe-color-brown);
@@ -67,6 +68,17 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
       &:focus {
         outline: none;
         border-color: var(--cafe-color-brown);
+      }
+    }
+    textarea {
+      @extend %base-btn-setting;
+      border-color: var(--cafe-color-brown-lighter);
+      padding: var(--cafe--padding-xs);
+      color: var(--cafe-color-brown);
+      resize: none;
+      &:focus {
+        outline: none;
+        border-color: var(--cafe-color-brown); /* 聚焦時的邊框顏色 */
       }
     }
   }

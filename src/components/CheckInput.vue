@@ -5,6 +5,7 @@ const props = defineProps({
     type: [Array, Object],
     required: false,
   },
+  noPadding: Boolean,
   id: String,
   name: String,
   class: String,
@@ -13,27 +14,43 @@ const props = defineProps({
 
 onMounted(() => {
   if (props.id) {
-    formStore.choice = { [props.id]: "" };
+    formStore.choice = { ...formStore.choice, [props.id]: "" };
+    formStore.regex = { ...formStore.regex, [props.id]: props.regex };
   }
 });
 </script>
 
 <template>
-  <!-- 多選及單選 -->
+  <template v-if="props.class === 'textarea'">
+    <label :for="props.id" class="form-label">{{ props.name }}</label>
+    <textarea
+      class="mb-3"
+      type="text"
+      :id="props.id"
+      :placeholder="`請輸入${props.name}`"
+      v-model="formStore.choice[props.id]"
+      rows="4"
+    ></textarea>
+  </template>
   <template v-if="props.class === 'input'">
-    {{ formStore.choice[props.id] }}
     <label :for="props.id" class="form-label">{{ props.name }}</label>
     <input
+      class="mb-3"
       type="text"
       :id="props.id"
       :placeholder="`請輸入${props.name}`"
       v-model="formStore.choice[props.id]"
     />
   </template>
-  <div class="popup__text-option" v-if="props.class === 'select'">
+  <!-- 多選及單選 -->
+  <div
+    :class="{ 'no-padding': noPadding }"
+    class="popup__text-option"
+    v-if="props.class === 'select'"
+  >
     <ul v-for="o in option" :key="o.id">
       <div>
-        <h3>{{ o.name }}選擇</h3>
+        <h3>{{ o.name }}選項</h3>
         <div
           :class="{
             'popup__message-error': formStore.errorMessages[o.type],
@@ -71,11 +88,17 @@ onMounted(() => {
         <p v-if="c.price">${{ c.price }}</p>
         <p v-else>免費</p>
       </li>
-      <hr />
+      <hr class="mb-4" />
     </ul>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
+.no-padding {
+  padding: 0;
+}
+.form-label {
+  font-weight: 700;
+}
 </style>

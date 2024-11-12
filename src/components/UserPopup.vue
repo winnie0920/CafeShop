@@ -4,14 +4,13 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  title: {
-    type: String,
-    required: false,
+  style: {
+    type: Object,
+    default: () => ({ width: "30rem", height: "40vh" }),
   },
-  button: {
-    type: String,
-    required: false,
-  },
+  title: String,
+  button: String,
+  isFull: Boolean,
 });
 
 const emit = defineEmits(["closeShow", "confirmPopup"]);
@@ -28,7 +27,13 @@ const confirmPopup = () => {
 <template>
   <transition name="opacity">
     <div v-if="props.show" class="popup__wrapper" @click="closePopup">
-      <div ref="containerDOM" class="popup__container" @click.stop>
+      <div
+        ref="containerDOM"
+        class="popup__container"
+        :style="style"
+        :class="{ 'full-size': isFull }"
+        @click.stop
+      >
         <SvgIcon
           class="popup__close"
           icon-name="Common-Add"
@@ -45,7 +50,7 @@ const confirmPopup = () => {
         <div class="popup__content">
           <slot name="main" :title="title"></slot>
         </div>
-        <footer class="popup__footer">
+        <footer class="popup__footer" :class="{ 'none-radius ': isFull }">
           <slot name="footer"></slot>
           <button class="ms-auto popup__footer-button" @click="confirmPopup">
             {{ props.button }}
@@ -58,4 +63,15 @@ const confirmPopup = () => {
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
+
+.full-size {
+  @media (max-width: 400px) {
+    width: 100% !important;
+    height: 100% !important;
+    overflow: auto !important;
+  }
+}
+.none-radius {
+  border-radius: 0 !important;
+}
 </style>

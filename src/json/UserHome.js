@@ -514,6 +514,18 @@ export const option = [
   },
 ];
 
+export const payOption = [
+  {
+    type: "size",
+    name: "付款",
+    isSingleChoice: true,
+    children: [
+      { id: 1, name: "現金付款" },
+      { id: 2, name: "LINE PAY" },
+    ],
+  },
+];
+
 // id(pk) | orderNum | orderDate | orderStatus | PayStatus | table | allAmount | payMethod | remark | menuId | childId | foodName | foodCount | foodPrice | foodAmount | foodDescription | foodImage | optId | optKey | optVal |
 
 // 1 | 20240001 | '2024-01-01' | '已完成' | '已付款' | 1 | 795 | '信用卡' | '' | 1 | 1 | '波隆那肉醬義大利麵' | 4 | 140 | 560 | '台灣豬肉' | "image-Pasta.jpg" | 1 | 'noodle' | 1 |
@@ -614,7 +626,7 @@ const orderData = [
         price: 280,
         count: 2,
         option: {
-          size: [1,2],
+          size: [1, 2],
           noodle: 1,
           spicy: 2,
         },

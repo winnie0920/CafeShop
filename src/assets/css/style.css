@@ -178,7 +178,7 @@ hr {
   height: 0.5px !important;
 }
 
-.popup__container svg, .popup__text-option textarea, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li, .check__inputBox input {
+.popup__container svg, .popup__text-option textarea, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li, .check__inputBox input, .check__inputBox textarea {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
@@ -227,7 +227,7 @@ hr {
   align-items: center;
 }
 
-.new__container hr, .User__shop-container hr {
+.new__hr, .User__shop-container hr {
   border: 0;
   opacity: 100;
   background: var(--cafe-color-brown);
@@ -278,10 +278,11 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 
 .check__inputBox label {
-  font-size: var(--cafe--font-md);
+  font-size: var(--cafe--font-xxxl);
   padding-left: var(--cafe--padding-xxs);
 }
 .check__inputBox input {
+  width: 100%;
   font-size: var(--cafe--font-sm);
   border-color: var(--cafe-color-brown-lighter);
   padding: var(--cafe--padding-xs);
@@ -291,6 +292,16 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .check__inputBox input:focus {
   outline: none;
   border-color: var(--cafe-color-brown);
+}
+.check__inputBox textarea {
+  border-color: var(--cafe-color-brown-lighter);
+  padding: var(--cafe--padding-xs);
+  color: var(--cafe-color-brown);
+  resize: none;
+}
+.check__inputBox textarea:focus {
+  outline: none;
+  border-color: var(--cafe-color-brown); /* 聚焦時的邊框顏色 */
 }
 
 @keyframes pop-in {
@@ -589,8 +600,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .popup__container {
   position: relative;
   flex-direction: column;
-  width: 60rem;
-  height: 80vh;
   overflow: hidden;
 }
 .popup__container svg {
@@ -598,6 +607,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   height: 2.5rem;
   color: var(--cafe-color-brown);
   background: var(--cafe-color-white);
+  z-index: 1;
 }
 .popup__container svg:disabled {
   background-color: inherit;
@@ -754,9 +764,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   .popup__wrapper {
     position: fixed;
     display: block;
-  }
-  .popup__container {
-    height: 100%;
   }
   .popup__header, .popup__footer {
     border-radius: 0px;

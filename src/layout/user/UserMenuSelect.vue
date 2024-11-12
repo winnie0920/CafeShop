@@ -74,7 +74,7 @@ const findMenu = (menuId, childId) => {
 
 // 點擊外框，打開每個菜單明細
 const toggleMenu = (menuId, childId, price) => {
-  formStore.clearChoice();
+  formStore.clearState();
   findMenu(menuId, childId);
   occupy.value = { menuId, childId, count: 1, price };
   showStore.togglePopupShow("menu", true);
@@ -228,6 +228,8 @@ onUnmounted(() => {
     :show="showStore.popupShow.menu"
     @close-show="closeShow"
     @confirm-Popup="confirmPopup"
+    :style="{ width: '60rem', height: '80vh' }"
+    isFull="true"
   >
     <template #main="{ title }">
       <img

@@ -24,8 +24,6 @@
     @extend %popup-base-setting;
     position: relative;
     flex-direction: column;
-    width: 60rem;
-    height: 80vh;
     overflow: hidden;
     svg {
       @extend %base-btn-setting;
@@ -33,6 +31,7 @@
       height: 2.5rem;
       color: var(--cafe-color-brown);
       background: var(--cafe-color-white);
+      z-index: 1;
       &:hover {
         @extend %base-btn-hover;
       }
@@ -211,9 +210,6 @@
     &__wrapper {
       position: fixed;
       display: block;
-    }
-    &__container {
-      height: 100%;
     }
     &__header,
     &__footer {

@@ -1,8 +1,10 @@
 <script setup>
-import { homeItem, homeMenu, option } from "@/json/UserHome";
+import { homeItem, homeMenu, payOption } from "@/json/UserHome";
 const alertStore = useAlertStore();
 const formStore = userFormStore();
 const router = useRouter();
+// 菜單顯示的選項
+const selectedOptions = ref([...payOption]);
 
 const menu = ref([
   {
@@ -105,33 +107,56 @@ const menu = ref([
   },
 ]);
 
-const tableNumber = ref("");
-
-const validateNumber = () => {
-  tableNumber.value = tableNumber.value.replace(/[^0-9]/g, "");
+const sendBack = () => {
+  router.push({ name: "UserHome" });
 };
 
-const goBack = () => {
-  formStore.validateOption();
-  if (!tableNumber.value) {
-    alertStore.pushMsg("Common-Error", "未輸入桌號！");
-  } else {
-    router.push({ name: "UserHome" });
+const sendOrder = () => {
+  formStore.clearError();
+  const validate = [
+    {
+      id: "tableNumber",
+      name: "桌號",
+      message: "請輸入桌號，請勿輸入英文字母",
+    },
+  ];
+
+  const isValid = validate.every((field) =>
+    formStore.validateInput(field.id, field.name, field.message)
+  );
+
+  if (
+    (Array.isArray(selectedOptions.value) &&
+      !formStore.validateOption(selectedOptions.value)) ||
+    !isValid
+  ) {
+    return;
   }
+  router.push({ name: "UserHome" });
 };
 </script>
 
 <template>
   <section class="row g-lg-5 g-4">
     <div class="col-lg-8 col-12">
-      <div class="new__container User__shop-container new__scrollbar">
+      <div class="new__container new__scrollbar">
         <div class="mb-3 new__menu-content check__inputBox">
+          <div class="col-md-6 col-12">
+            <CheckInput
+              :regex="/^[0-9]{1,2}$/"
+              class="input"
+              id="tableNumber"
+              name="桌號"
+            />
+          </div>
+          <hr class="mb-3" />
           <CheckInput
-            :regex="/[^0-9]/g"
-            class="input"
-            id="tableNumber"
-            name="桌號"
+            :noPadding="true"
+            :option="selectedOptions"
+            class="select"
           />
+          <CheckInput class="textarea" id="remark" name="備註" />
+          <hr class="mb-3" />
         </div>
       </div>
     </div>
@@ -147,7 +172,7 @@ const goBack = () => {
             <p>{{ m.price }}</p>
           </div>
         </div>
-        <hr />
+        <hr class="new__hr" />
         <div class="new__floor"></div>
         <div class="new__gray-text new__menu-content mb-2">
           <p>小計</p>
@@ -163,8 +188,12 @@ const goBack = () => {
         </div>
       </div>
       <div class="new__container flex-row mb-5 mb-lg-0">
-        <ConfirmBtn class="ms-auto me-3" title="送出訂單" />
-        <ConfirmBtn color="gray" title="取消" @click="goBack()" />
+        <ConfirmBtn
+          class="ms-auto me-3"
+          title="送出訂單"
+          @click="sendOrder()"
+        />
+        <ConfirmBtn color="gray" title="取消" @click="sendBack()" />
       </div>
     </div>
   </section>
@@ -176,6 +205,7 @@ const goBack = () => {
   &__scrollbar {
     overflow-y: auto;
     height: 100%;
+    max-height: calc(100vh - 11rem);
     scrollbar-width: none;
   }
   &__width {
