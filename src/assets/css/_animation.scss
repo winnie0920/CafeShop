@@ -13,7 +13,7 @@
 
 .move-up-enter-from {
   opacity: 0;
-  transform: translateY(2rem);
+  transform: translateY(-1rem);
 }
 .move-up-enter-active,
 .move-up-leave-active {
@@ -26,5 +26,5 @@
 }
 .move-up-leave-to {
   opacity: 0;
-  transform: translateY(-2rem);
+  transform: translateY(-1rem);
 }

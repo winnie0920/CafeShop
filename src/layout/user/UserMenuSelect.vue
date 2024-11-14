@@ -225,7 +225,6 @@ onUnmounted(() => {
 
   <UserPopup
     button="放入購物車"
-    v-if="showStore.popupShow.menu"
     :show="showStore.popupShow.menu"
     @close-show="closeShow"
     @confirm-Popup="confirmPopup"

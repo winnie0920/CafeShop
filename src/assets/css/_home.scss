@@ -85,7 +85,7 @@
     &-container {
       @extend %base-btn-setting;
       flex-direction: column;
-      max-height: calc(100vh - 11rem);
+      max-height: calc(100vh - 11.5rem);
       color: var(--cafe-color-brown);
       background-color: var(--cafe-color-white);
       margin-top: var(--cafe--margin-xs);
@@ -144,7 +144,7 @@
   &__content {
     color: var(--cafe-color-brown);
     max-width: 100%;
-    max-height: calc(100vh - 19.5rem);
+    max-height: calc(100vh - 20rem);
     scrollbar-width: none;
     overflow-y: auto;
     &::-webkit-scrollbar {
@@ -270,10 +270,8 @@
   }
 }
 
-@media (max-width: 640px) {
-  .menu {
-    &__content {
-      max-height: calc(100vh - 26rem);
-    }
+@media (max-width: 575.98px) {
+  .menu__content {
+      max-height:58vh
   }
 }

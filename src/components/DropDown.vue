@@ -68,7 +68,7 @@ onBeforeUnmount(() => {
     </h5>
     <SvgIcon class="list__svg-end" iconName="Common-Arrow-Circle"></SvgIcon>
 
-    <transition name="move-in">
+    <transition name="move-up">
       <ul v-if="showStore.show[props.drop]" class="list__drop">
         <li
           @click="changeSelected(d)"
