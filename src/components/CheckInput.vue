@@ -5,11 +5,11 @@ const props = defineProps({
     type: [Array, Object],
     required: false,
   },
-  noPadding: Boolean,
   id: String,
   name: String,
-  class: String,
+  type: String,
   regex: RegExp,
+  style: Object,
 });
 
 onMounted(() => {
@@ -21,7 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <template v-if="props.class === 'textarea'">
+  <template v-if="props.type === 'textarea'">
     <label :for="props.id" class="form-label">{{ props.name }}</label>
     <textarea
       class="mb-3"
@@ -32,7 +32,7 @@ onMounted(() => {
       rows="4"
     ></textarea>
   </template>
-  <template v-if="props.class === 'input'">
+  <template v-if="props.type === 'input'">
     <label :for="props.id" class="form-label">{{ props.name }}</label>
     <input
       class="mb-3"
@@ -43,11 +43,7 @@ onMounted(() => {
     />
   </template>
   <!-- 多選及單選 -->
-  <div
-    :class="{ 'no-padding': noPadding }"
-    class="popup__text-option"
-    v-if="props.class === 'select'"
-  >
+  <div :style="style" class="popup__text-option" v-if="props.type === 'select'">
     <ul v-for="o in option" :key="o.id">
       <div>
         <h3>{{ o.name }}選項</h3>
@@ -95,9 +91,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
-.no-padding {
-  padding: 0;
-}
 .form-label {
   font-weight: 700;
 }

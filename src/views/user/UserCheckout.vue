@@ -1,7 +1,7 @@
 <script setup>
-import { homeItem, homeMenu, payOption } from "@/json/UserHome";
-const alertStore = useAlertStore();
+import { payOption } from "@/json/UserHome";
 const formStore = userFormStore();
+const showStore = useShowStore();
 const router = useRouter();
 // 菜單顯示的選項
 const selectedOptions = ref([...payOption]);
@@ -107,32 +107,40 @@ const menu = ref([
   },
 ]);
 
+//取消訂單
 const sendBack = () => {
   router.push({ name: "UserHome" });
 };
 
+//送出訂單
 const sendOrder = () => {
   formStore.clearError();
   const validate = [
     {
       id: "tableNumber",
       name: "桌號",
-      message: "請輸入桌號，請勿輸入英文字母",
+      message: "請輸入正確桌號，請勿輸入英文字母",
     },
   ];
 
-  const isValid = validate.every((field) =>
+  const inputValid = validate.every((field) =>
     formStore.validateInput(field.id, field.name, field.message)
   );
+  const optionsValid =
+    Array.isArray(selectedOptions.value) &&
+    formStore.validateOption(selectedOptions.value);
 
-  if (
-    (Array.isArray(selectedOptions.value) &&
-      !formStore.validateOption(selectedOptions.value)) ||
-    !isValid
-  ) {
-    return;
-  }
+  if (!inputValid || !optionsValid) return;
+  showStore.togglePopupShow("check", true);
+};
+
+const confirmPopup = () => {
+  showStore.togglePopupShow("check", false);
   router.push({ name: "UserHome" });
+};
+
+const closeShow = (val) => {
+  showStore.togglePopupShow("check", val);
 };
 </script>
 
@@ -144,18 +152,18 @@ const sendOrder = () => {
           <div class="col-md-6 col-12">
             <CheckInput
               :regex="/^[0-9]{1,2}$/"
-              class="input"
+              type="input"
               id="tableNumber"
               name="桌號"
             />
           </div>
           <hr class="mb-3" />
           <CheckInput
-            :noPadding="true"
+            :style="{ padding: '0' }"
             :option="selectedOptions"
-            class="select"
+            type="select"
           />
-          <CheckInput class="textarea" id="remark" name="備註" />
+          <CheckInput type="textarea" id="remark" name="備註" />
           <hr class="mb-3" />
         </div>
       </div>
@@ -197,6 +205,20 @@ const sendOrder = () => {
       </div>
     </div>
   </section>
+  <UserPopup
+    :show="showStore.popupShow.check"
+    title="送出訂單"
+    button="確認"
+    @close-show="closeShow"
+    @confirm-Popup="confirmPopup"
+    :style="{ width: '30rem', height: '15rem' }"
+  >
+    <template #main>
+      <div class="popup__text-content">
+        <p>是否確定送出？</p>
+      </div>
+    </template>
+  </UserPopup>
 </template>
 
 <style lang="scss" scoped>
@@ -228,5 +250,9 @@ const sendOrder = () => {
   }
   &__floor {
   }
+}
+.popup__text-content {
+  display: flex;
+  align-content: center;
 }
 </style>

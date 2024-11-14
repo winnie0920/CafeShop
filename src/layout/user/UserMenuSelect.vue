@@ -225,15 +225,16 @@ onUnmounted(() => {
 
   <UserPopup
     button="放入購物車"
+    v-if="showStore.popupShow.menu"
     :show="showStore.popupShow.menu"
     @close-show="closeShow"
     @confirm-Popup="confirmPopup"
     :style="{ width: '60rem', height: '80vh' }"
-    isFull="true"
+    :isFull="true"
   >
-    <template #main="{ title }">
+    <template #main>
       <img
-        :class="['popup__img', { 'popup__img-rounded': !title }]"
+        class="popup__img"
         :src="menuStore.getImageUrl(selectedMenu.image)"
       />
       <div class="popup__text-content">
@@ -242,7 +243,7 @@ onUnmounted(() => {
         <span>{{ selectedMenu.description }}</span>
         <hr />
       </div>
-      <CheckInput :option="selectedOptions" class="select" />
+      <CheckInput :option="selectedOptions" type="select" />
     </template>
     <template #footer>
       <div class="d-flex gap-4 align-items-center">
@@ -273,6 +274,11 @@ onUnmounted(() => {
     &:hover {
       color: inherit;
     }
+  }
+}
+.popup__text-content {
+  h3 {
+    margin-top: var(--cafe--padding-lg);
   }
 }
 </style>

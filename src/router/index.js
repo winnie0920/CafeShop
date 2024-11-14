@@ -1,3 +1,4 @@
+import { userFormStore } from "@/stores/formStore";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 export const routes = [
@@ -42,6 +43,12 @@ export const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const formStore = userFormStore();
+  formStore.clearState();
+  next();
 });
 
 export default router;

@@ -48,7 +48,7 @@ const confirmPopup = () => {
           ></SvgIcon>
         </header>
         <div class="popup__content">
-          <slot name="main" :title="title"></slot>
+          <slot name="main"></slot>
         </div>
         <footer class="popup__footer" :class="{ 'none-radius ': isFull }">
           <slot name="footer"></slot>
@@ -68,7 +68,7 @@ const confirmPopup = () => {
   @media (max-width: 400px) {
     width: 100% !important;
     height: 100% !important;
-    overflow: auto !important;
+    overflow: visible !important;
   }
 }
 .none-radius {

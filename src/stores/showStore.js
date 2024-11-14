@@ -10,7 +10,7 @@ export const useShowStore = defineStore("web", {
       },
     ],
     //popup
-    popupShow: { menu: false },
+    popupShow: { menu: false, check: false },
     //shopping
     shoppingShow: false,
   }),

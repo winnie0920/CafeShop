@@ -589,7 +589,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 .popup__close {
   position: absolute;
-  right: 1.5rem;
+  right: 2rem;
   top: 1.5rem;
   cursor: pointer;
   transform: rotate(45deg);
@@ -615,7 +615,8 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 .popup__header {
   justify-content: space-between;
-  padding: 1rem;
+  padding: var(--cafe--padding-lg);
+  color: var(--cafe-color-brown);
   z-index: 2;
 }
 .popup__header h2 {
@@ -664,13 +665,9 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   -o-object-fit: cover;
      object-fit: cover;
 }
-.popup__img-rounded {
-  border-top-right-radius: var(--cafe-radius-sm);
-  border-top-left-radius: var(--cafe-radius-sm);
-}
 .popup__text-content {
   display: grid;
-  padding: 2rem 2rem 0rem 2rem;
+  padding: 0 var(--cafe--padding-lg);
   gap: 0.5rem;
   color: var(--cafe-color-brown);
 }
@@ -758,15 +755,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 @media (max-width: 768px) {
   .popup__container {
     max-width: 400px;
-  }
-}
-@media (max-width: 400px) {
-  .popup__wrapper {
-    position: fixed;
-    display: block;
-  }
-  .popup__header, .popup__footer {
-    border-radius: 0px;
   }
 }
 .new__container {
