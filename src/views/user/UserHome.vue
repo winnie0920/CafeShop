@@ -95,6 +95,7 @@ onBeforeUnmount(() => {
     <TitleBar class="sticky-top">
       <div class="col-12 col-sm-7 col-md-6 col-lg-4 me-auto d-flex">
         <SearchBar
+          class="mb-4 mb-sm-0"
           v-if="!checkoutView"
           :value="queryParams.search"
           @send-search="sendSearch"
@@ -102,9 +103,13 @@ onBeforeUnmount(() => {
       </div>
     </TitleBar>
     <router-view v-if="checkoutView"></router-view>
-    <section v-else class="row g-5">
+    <section
+      v-else
+      class="row g-5 User__side-row"
+      style="margin-top: 0 !important"
+    >
       <!-- 左側 2/3 區塊 -->
-      <div class="col-12 col-lg-8">
+      <div class="col-12 col-lg-8 User__side-col">
         <div class="User__side">
           <button
             v-if="showArrow"
@@ -146,7 +151,7 @@ onBeforeUnmount(() => {
         />
       </div>
 
-      <div class="col-12 col-lg-4 d-lg-block d-none">
+      <div class="col-12 col-lg-4 d-lg-block d-none mt-0">
         <div class="User__side sticky-top">
           <UserSopping :option="option"></UserSopping>
         </div>

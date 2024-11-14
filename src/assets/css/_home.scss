@@ -12,10 +12,23 @@
     position: relative;
     background-color: var(--cafe-color-bisque);
     z-index: 1;
+    &-row {
+      margin-top: 0!important;
+      margin-bottom: 0 !important;
+      flex-grow: 1;
+      overflow: hidden;
+    }
+    &-col {
+      margin-top: 0 !important;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
     &-label {
       display: flex;
       gap: 1rem;
-      padding: 0rem 0rem 1rem 0;
+      padding-bottom: 1rem;
       overflow-x: auto;
       scrollbar-width: none;
       li {
@@ -272,6 +285,9 @@
 
 @media (max-width: 575.98px) {
   .menu__content {
-    max-height: calc(100dvh - 24rem);
+    flex-grow: 1;
+  }
+  .User__side-row {
+    margin-bottom: 2rem !important;
   }
 }

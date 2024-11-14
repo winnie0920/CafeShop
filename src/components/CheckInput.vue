@@ -82,7 +82,7 @@ onMounted(() => {
           {{ c.name }}
         </label>
         <p v-if="c.price">${{ c.price }}</p>
-        <p v-else>免費</p>
+        <p v-else-if="c.price === 0">免費</p>
       </li>
       <hr class="mb-4" />
     </ul>

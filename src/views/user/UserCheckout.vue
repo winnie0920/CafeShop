@@ -195,8 +195,9 @@ const closeShow = (val) => {
           <h2>$110</h2>
         </div>
       </div>
-      <div class="new__container flex-row mb-5 mb-lg-0">
+      <div class="new__container flex-row mb-4 mb-lg-0">
         <ConfirmBtn
+          color="brown"
           class="ms-auto me-3"
           title="送出訂單"
           @click="sendOrder()"
@@ -227,12 +228,12 @@ const closeShow = (val) => {
   &__scrollbar {
     overflow-y: auto;
     height: 100%;
-    max-height: calc(100vh - 11rem);
+    max-height: calc(100vh - 11.5rem);
     scrollbar-width: none;
   }
   &__width {
     max-width: 100%;
-    max-height: calc(100vh - 18.5rem);
+    max-height: calc(100vh - 19rem);
     scrollbar-width: none;
     overflow-y: auto;
   }

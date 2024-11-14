@@ -487,7 +487,7 @@ export const option = [
     name: "份量",
     isSingleChoice: false,
     children: [
-      { id: 1, name: "小", selected: true },
+      { id: 1, name: "小", price: 0, selected: true },
       { id: 2, name: "中", price: 10 },
       { id: 3, name: "大", price: 15 },
     ],
@@ -497,7 +497,7 @@ export const option = [
     name: "麵體",
     isSingleChoice: true,
     children: [
-      { id: 1, name: "細麵" },
+      { id: 1, name: "細麵", price: 0 },
       { id: 2, name: "筆管麵", price: 10 },
       { id: 3, name: "螺旋麵", price: 10 },
     ],
@@ -507,9 +507,9 @@ export const option = [
     name: "辣度",
     isSingleChoice: true,
     children: [
-      { id: 1, name: "小辣" },
-      { id: 2, name: "中辣" },
-      { id: 3, name: "大辣" },
+      { id: 1, name: "小辣", price: 0 },
+      { id: 2, name: "中辣", price: 0 },
+      { id: 3, name: "大辣", price: 0 },
     ],
   },
 ];

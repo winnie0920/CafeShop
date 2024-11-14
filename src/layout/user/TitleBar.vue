@@ -5,7 +5,7 @@ const showStore = useShowStore();
 </script>
 
 <template>
-  <header class="row justify-content-end d-flex gap-4">
+  <header class="row justify-content-end d-flex">
     <slot />
     <div class="col-auto d-flex">
       <DropDown
