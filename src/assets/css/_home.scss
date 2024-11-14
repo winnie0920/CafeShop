@@ -272,6 +272,6 @@
 
 @media (max-width: 575.98px) {
   .menu__content {
-      max-height:58vh
+    max-height: calc(100vh - 26rem);
   }
 }

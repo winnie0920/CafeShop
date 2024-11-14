@@ -570,7 +570,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 
 @media (max-width: 575.98px) {
   .menu__content {
-    max-height: 58vh;
+    max-height: calc(100vh - 26rem);
   }
 }
 .popup__wrapper {
