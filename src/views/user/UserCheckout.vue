@@ -151,6 +151,7 @@ const closeShow = (val) => {
         <div class="mb-3 new__menu-content check__inputBox">
           <div class="col-md-6 col-12">
             <CheckInput
+              :style="{ fontSize: '2rem' }"
               :regex="/^[0-9]{1,2}$/"
               type="input"
               id="tableNumber"

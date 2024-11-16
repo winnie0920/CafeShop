@@ -22,7 +22,9 @@ onMounted(() => {
 
 <template>
   <template v-if="props.type === 'textarea'">
-    <label :for="props.id" class="form-label">{{ props.name }}</label>
+    <label :style="props.style" :for="props.id" class="form-label">{{
+      props.name
+    }}</label>
     <textarea
       class="mb-3"
       type="text"
@@ -33,7 +35,9 @@ onMounted(() => {
     ></textarea>
   </template>
   <template v-if="props.type === 'input'">
-    <label :for="props.id" class="form-label">{{ props.name }}</label>
+    <label :style="props.style" :for="props.id" class="form-label">{{
+      props.name
+    }}</label>
     <input
       class="mb-3"
       type="text"
@@ -43,7 +47,11 @@ onMounted(() => {
     />
   </template>
   <!-- 多選及單選 -->
-  <div :style="style" class="popup__text-option" v-if="props.type === 'select'">
+  <div
+    :style="props.style"
+    class="popup__text-option"
+    v-if="props.type === 'select'"
+  >
     <ul v-for="o in option" :key="o.id">
       <div>
         <h3>{{ o.name }}選項</h3>

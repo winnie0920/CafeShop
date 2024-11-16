@@ -4,15 +4,12 @@ export const useShowStore = defineStore("web", {
   state: () => ({
     sLanguage: { id: -1, name: "請選擇" },
     //dropdown
-    show: [
+    dropdownShow: [
       {
         language: false,
       },
     ],
-    //popup
-    popupShow: { menu: false, check: false },
-    //shopping
-    shoppingShow: false,
+    popupShow: { menu: false, check: false, shopping: false },
   }),
 
   // 定義 getters
@@ -22,7 +19,7 @@ export const useShowStore = defineStore("web", {
   actions: {
     toggleShow(params) {
       if (params) {
-        this.show[params] = !this.show[params];
+        this.dropdownShow[params] = !this.dropdownShow[params];
       }
     },
     togglePopupShow(type, val) {

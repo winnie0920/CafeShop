@@ -4,12 +4,12 @@ import { homeItem, homeMenu, option } from "@/json/UserHome";
 const menuStore = userMenuStore();
 const queryParams = reactive({ search: "" });
 const chooseRef = ref(null);
+const labelRef = ref(null);
 const router = useRouter();
 
 // 當前選擇的 ID
 const chooseId = ref(1);
 const showArrow = ref(false);
-const labelRef = ref(null);
 const maxScroll = ref(0);
 
 // 更新搜尋
@@ -58,10 +58,6 @@ const clickScroll = (id) => {
 // 當前選擇的 ID
 const currentChoose = (id) => {
   chooseId.value = id;
-};
-
-const goBack = () => {
-  router.push({ name: "UserHome" });
 };
 
 //監聽所在頁面

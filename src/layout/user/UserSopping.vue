@@ -7,17 +7,6 @@ const props = defineProps({
 });
 const router = useRouter();
 const menuStore = userMenuStore();
-const checkOrder = () => {
-  if (menuStore.menuSelect.length > 0) {
-    router.push("/home/checkout");
-  }
-};
-
-const calculateTotal = () => {
-  return menuStore.menuSelect.reduce((total, i) => {
-    return total + i.price;
-  }, 0);
-};
 
 const findSelectOption = (selected) => {
   return props.option.reduce((result, o) => {
@@ -107,18 +96,18 @@ const findSelectOption = (selected) => {
     </div>
     <div class="d-flex justify-content-between mb-2">
       <h5>小計</h5>
-      <h5>${{ calculateTotal() }}</h5>
+      <h5>${{ menuStore.calculateTotal() }}</h5>
     </div>
     <div class="d-flex justify-content-between">
       <h5>服務費</h5>
-      <h5>${{ Math.ceil(calculateTotal() * 0.1) }}</h5>
+      <h5>${{ Math.ceil(menuStore.calculateTotal() * 0.1) }}</h5>
     </div>
     <hr />
     <div class="d-flex align-items-center">
       <button
         class="User__shop-btn"
         :class="{ 'disabled-button': menuStore.menuSelect.length <= 0 }"
-        @click="checkOrder()"
+        @click="menuStore.checkOrder(router)"
       >
         查看訂單
       </button>
@@ -134,10 +123,5 @@ const findSelectOption = (selected) => {
 .menu__btn-content {
   border: solid 0.1rem var(--cafe-color-brown);
   border-radius: 2rem;
-}
-.disabled-button {
-  cursor: not-allowed;
-  background-color: var(--cafe-color-gray);
-  color: var(--cafe-color-brown);
 }
 </style>

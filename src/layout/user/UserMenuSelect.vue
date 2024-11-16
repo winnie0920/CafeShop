@@ -248,12 +248,13 @@ onUnmounted(() => {
       <div class="d-flex gap-4 align-items-center">
         <button
           @click="decreaseCount()"
+          class="background-button"
           :class="{ 'disabled-button': occupy.count <= 1 }"
         >
           <SvgIcon class="popup__minus" icon-name="Common-Minus"></SvgIcon>
         </button>
-        <p class="">{{ occupy.count }}</p>
-        <button @click="increaseCount()">
+        <p>{{ occupy.count }}</p>
+        <button class="background-button" @click="increaseCount()">
           <SvgIcon icon-name="Common-Add"></SvgIcon>
         </button>
       </div>
@@ -263,21 +264,12 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
-.disabled-button {
-  cursor: not-allowed;
-  &:hover {
-    background-color: inherit;
-  }
-  svg {
-    background-color: var(--cafe-color-gray);
-    &:hover {
-      color: inherit;
-    }
-  }
-}
 .popup__text-content {
   h3 {
     margin-top: var(--cafe--padding-lg);
   }
+}
+.background-button {
+  background-color: var(--cafe-color-white);
 }
 </style>

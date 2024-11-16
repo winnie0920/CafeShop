@@ -1,7 +1,43 @@
 <script setup>
-import { homeLanguage } from "@/json/UserHome";
+import { homeLanguage, option } from "@/json/UserHome";
 
 const showStore = useShowStore();
+const router = useRouter();
+const menuStore = userMenuStore();
+
+// 用來監控視口大小
+const isMobile = ref(false);
+
+// 更新視口寬度的函數
+const updateWindowWidth = () => {
+  isMobile.value = window.innerWidth <= 991;
+};
+
+const clickShopping = () => {
+  if (isMobile.value) {
+    showStore.togglePopupShow("shopping", true);
+  } else {
+    router.push({ name: "UserHome" });
+  }
+};
+
+const closeShow = (val) => {
+  showStore.togglePopupShow("shopping", val);
+};
+
+const confirmPopup = () => {
+  closeShow(false);
+  menuStore.checkOrder(router);
+};
+
+onMounted(() => {
+  updateWindowWidth();
+  window.addEventListener("resize", updateWindowWidth);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateWindowWidth);
+});
 </script>
 
 <template>
@@ -17,8 +53,40 @@ const showStore = useShowStore();
       />
     </div>
     <div class="col-auto d-flex">
-      <ConfirmBtn iconName="Common-Shopping" />
+      <ConfirmBtn iconName="Common-Shopping" @click="clickShopping" />
     </div>
+
+    <UserPopup
+      class="popup__none"
+      :show="showStore.popupShow.shopping"
+      title="購物車"
+      @close-show="closeShow"
+      :style="{ width: '60rem', height: '80vh' }"
+      :isFull="true"
+    >
+      <template #main>
+        <UserSopping :option="option"></UserSopping>
+      </template>
+      <template #footer>
+        <div class="w-100">
+          <div class="d-flex justify-content-between mb-2">
+            <h5>小計</h5>
+            <h5>${{ menuStore.calculateTotal() }}</h5>
+          </div>
+          <div class="d-flex justify-content-between">
+            <h5>服務費</h5>
+            <h5>${{ Math.ceil(menuStore.calculateTotal() * 0.1) }}</h5>
+          </div>
+          <button
+            @click="confirmPopup"
+            class="User__shop-btn"
+            :class="{ 'disabled-button': menuStore.menuSelect.length <= 0 }"
+          >
+            查看訂單
+          </button>
+        </div>
+      </template>
+    </UserPopup>
   </header>
 </template>
 

@@ -11,12 +11,15 @@ const props = defineProps({
     type: String,
   },
 });
+
+const emit = defineEmits(["click"]);
 </script>
 
 <template>
   <button
     class="drop__btn"
     :class="{ gray: props.color === 'gray', brown: props.color === 'brown' }"
+    @click="$emit('click')"
   >
     <SvgIcon
       v-show="props.iconName"
@@ -59,16 +62,18 @@ const props = defineProps({
     }
   }
 }
+
 .gray {
   border: 0.1rem solid var(--cafe-color-gray-darken) !important;
-  color: var(--cafe-color-gray-darken) !important;
+  color: var(--cafe-color-white) !important;
+  background-color: var(--cafe-color-gray-darken) !important;
   svg {
     color: var(--cafe-color-gray-darken) !important;
   }
   &:active {
-    color: var(--cafe-color-white) !important;
+    color: var(--cafe-color-gray-darken) !important;
     border: 0.1rem solid var(--cafe-color-gray-darken) !important;
-    background-color: var(--cafe-color-gray-darken) !important;
+    background-color: var(--cafe-color-white) !important;
   }
 }
 .brown {

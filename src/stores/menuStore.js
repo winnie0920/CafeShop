@@ -95,6 +95,20 @@ export const userMenuStore = defineStore("menu", {
       return existingMenu ? totalCount : 0;
     },
 
+    //計算菜單品項總價
+    calculateTotal() {
+      return this.menuSelect.reduce((total, i) => {
+        return total + i.price;
+      }, 0);
+    },
+
+    //跳轉至訂單明細
+    checkOrder(router) {
+      if (this.menuSelect.length > 0) {
+        router.push("/home/checkout");
+      }
+    },
+
     //取得正確路徑圖片
     getImageUrl(id) {
       return new URL(`../assets/image/${id}`, import.meta.url).href;

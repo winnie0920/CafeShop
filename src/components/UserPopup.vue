@@ -39,10 +39,14 @@ const confirmPopup = () => {
           icon-name="Common-Add"
           @click="closePopup"
         ></SvgIcon>
-        <header v-if="props.title" class="popup__header">
+        <header
+          v-if="props.title"
+          class="popup__header"
+          :class="{ 'none-radius ': isFull }"
+        >
           <h2>{{ props.title }}</h2>
           <SvgIcon
-            class="popup__close"
+            class="popup__close popup__svg"
             icon-name="Common-Add"
             @click="closePopup"
           ></SvgIcon>
@@ -52,7 +56,11 @@ const confirmPopup = () => {
         </div>
         <footer class="popup__footer" :class="{ 'none-radius ': isFull }">
           <slot name="footer"></slot>
-          <button class="ms-auto popup__footer-button" @click="confirmPopup">
+          <button
+            v-if="props.button"
+            class="ms-auto popup__footer-button"
+            @click="confirmPopup()"
+          >
             {{ props.button }}
           </button>
         </footer>

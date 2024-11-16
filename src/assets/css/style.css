@@ -273,7 +273,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 
 .check__inputBox label {
-  font-size: var(--cafe--font-xxxl);
   padding-left: var(--cafe--padding-xxs);
 }
 .check__inputBox input {
@@ -319,6 +318,21 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
     opacity: 0;
   }
 }
+.disabled-button {
+  cursor: not-allowed !important;
+  background-color: var(--cafe-color-gray);
+  color: var(--cafe-color-brown);
+}
+.disabled-button:hover {
+  background-color: var(var(--cafe-color-gray));
+}
+.disabled-button svg {
+  background-color: var(--cafe-color-gray);
+}
+.disabled-button svg:hover {
+  color: inherit;
+}
+
 .User__container {
   display: flex;
   flex-direction: column;
@@ -347,7 +361,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .User__side-label {
   display: flex;
   gap: 1rem;
-  padding-bottom: 1rem;
+  padding: var(--cafe--padding-xs) 0;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -441,8 +455,9 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   height: 100%;
 }
 .User__shop-clear svg {
-  width: 8rem;
-  height: 8rem;
+  color: var(--cafe-color-brown-lighter) !important;
+  width: 8rem !important;
+  height: 8rem !important;
   color: inherit;
   margin-bottom: var(--cafe--margin-xs);
 }
@@ -461,7 +476,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .menu__content {
   color: var(--cafe-color-brown);
   max-width: 100%;
-  max-height: calc(100vh - 20rem);
+  max-height: calc(100vh - 21rem);
   scrollbar-width: none;
   overflow-y: auto;
 }
@@ -560,7 +575,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   font-size: 1.5rem;
 }
 .menu__btn-trash {
-  padding-top: 0.1rem;
   text-align: center;
 }
 .menu__btn-trash svg {
@@ -581,6 +595,36 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   right: -60%;
 }
 
+@media (max-width: 991px) {
+  .User__shop-container {
+    margin: 0;
+    border: none;
+    padding: 0 var(--cafe--padding-sm);
+  }
+  .User__shop-container h3 {
+    display: none;
+  }
+  .User__shop-container .d-flex > .User__shop-btn {
+    display: none;
+  }
+  .User__shop-container hr,
+  .User__shop-container .d-flex.justify-content-between.mb-2,
+  .User__shop-container .d-flex.justify-content-between {
+    display: none !important;
+  }
+  .User__shop-content {
+    height: 100%;
+  }
+  .User__shop-clear {
+    margin-top: 20vh;
+  }
+  .User__shop-icon {
+    border: none !important;
+  }
+  .menu__image {
+    border: none;
+  }
+}
 @media (max-width: 575.98px) {
   .menu__content {
     flex-grow: 1;
@@ -590,6 +634,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   }
 }
 .popup__wrapper {
+  padding: 0;
   position: fixed;
   display: flex;
   justify-content: center;
@@ -603,6 +648,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   right: 2rem;
   top: 1.5rem;
   cursor: pointer;
+  border: 0.1rem solid var(--cafe-color-brown-lighter) !important;
   transform: rotate(45deg);
 }
 .popup__minus {
@@ -618,6 +664,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   height: 2.5rem;
   color: var(--cafe-color-brown);
   background: var(--cafe-color-white);
+  border: none;
   z-index: 1;
 }
 .popup__container svg:disabled {
@@ -634,6 +681,9 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   font-size: var(--cafe--font-xl);
   color: var(--eip-color-gray);
   margin: 0;
+}
+.popup__header svg {
+  border: 0.1rem solid var(--cafe-color-brown-lighter);
 }
 .popup__content {
   flex: 1;
@@ -653,8 +703,8 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   text-align: center;
   width: 2rem;
 }
-.popup__footer button {
-  background-color: var(--cafe-color-white);
+.popup__footer svg {
+  border: 0.1rem solid var(--cafe-color-brown-lighter);
 }
 .popup__footer-button {
   padding: var(--cafe--padding-xxs) var(--cafe--padding-xs);
@@ -757,6 +807,11 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   background-color: var(--cafe-color-red) !important;
 }
 
+@media (min-width: 991px) {
+  .popup__none {
+    display: none !important;
+  }
+}
 @media (min-width: 768px) {
   .popup__img {
     height: 317px;

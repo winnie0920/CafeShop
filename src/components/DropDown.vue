@@ -36,7 +36,8 @@ const data = computed({
 });
 
 const closeShow = () => {
-  if (showStore.show[props.drop]) showStore.show[props.drop] = false;
+  if (showStore.dropdownShow[props.drop])
+    showStore.dropdownShow[props.drop] = false;
 };
 onMounted(() => {
   changeSelected({ id: -1, name: "請選擇" });
@@ -69,7 +70,7 @@ onBeforeUnmount(() => {
     <SvgIcon class="list__svg-end" iconName="Common-Arrow-Circle"></SvgIcon>
 
     <transition name="move-up">
-      <ul v-if="showStore.show[props.drop]" class="list__drop">
+      <ul v-if="showStore.dropdownShow[props.drop]" class="list__drop">
         <li
           @click="changeSelected(d)"
           v-for="d in data"

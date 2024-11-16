@@ -1,7 +1,7 @@
-@use "mixin" as *;
-
+@use "../mixin" as *;
 .popup {
   &__wrapper {
+    padding: 0;
     position: fixed;
     display: flex;
     justify-content: center;
@@ -15,6 +15,7 @@
     right: 2rem;
     top: 1.5rem;
     cursor: pointer;
+    border: 0.1rem solid var(--cafe-color-brown-lighter) !important;
     transform: rotate(45deg);
   }
   &__minus {
@@ -31,6 +32,7 @@
       height: 2.5rem;
       color: var(--cafe-color-brown);
       background: var(--cafe-color-white);
+      border: none;
       z-index: 1;
       &:hover {
         @extend %base-btn-hover;
@@ -54,6 +56,9 @@
       color: var(--eip-color-gray);
       margin: 0;
     }
+    svg {
+      border: 0.1rem solid var(--cafe-color-brown-lighter);
+    }
   }
 
   &__content {
@@ -75,8 +80,8 @@
       text-align: center;
       width: 2rem;
     }
-    button {
-      background-color: var(--cafe-color-white);
+    svg {
+      border: 0.1rem solid var(--cafe-color-brown-lighter);
     }
     &-button {
       padding: var(--cafe--padding-xxs) var(--cafe--padding-xs);
@@ -184,6 +189,14 @@
     &-error {
       color: var(--cafe-color-red-darken) !important;
       background-color: var(--cafe-color-red) !important;
+    }
+  }
+}
+
+@media (min-width: 991px) {
+  .popup {
+    &__none {
+      display: none !important;
     }
   }
 }

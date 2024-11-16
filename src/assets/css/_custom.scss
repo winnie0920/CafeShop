@@ -54,7 +54,6 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
 .check {
   &__inputBox {
     label {
-      font-size: var(--cafe--font-xxxl);
       padding-left: var(--cafe--padding-xxs);
     }
     input {
@@ -103,5 +102,20 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
   100% {
     transform: translate(-50%, -50%) scale(0) rotate(45deg);
     opacity: 0;
+  }
+}
+
+.disabled-button {
+  cursor: not-allowed !important;
+  background-color: var(--cafe-color-gray);
+  color: var(--cafe-color-brown);
+  &:hover {
+    background-color: var(var(--cafe-color-gray));
+  }
+  svg {
+    background-color: var(--cafe-color-gray);
+    &:hover {
+      color: inherit;
+    }
   }
 }
