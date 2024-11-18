@@ -36,7 +36,7 @@ watch(
     <div
       v-for="(item, index) in alertStore.messages"
       :key="index"
-      class="msg__card"
+      :class="['msg__card', `msg__card--${item.type}`]"
     >
       <SvgIcon :icon-name="item.icon" />
       <p>{{ item.msg }}</p>
@@ -75,6 +75,13 @@ watch(
       letter-spacing: 0.05em;
       word-break: break-word;
       white-space: pre-line;
+    }
+  }
+
+  &__card--brown {
+    border: 1px solid var(--cafe-color-brown);
+    svg {
+      color: var(--cafe-color-brown);
     }
   }
 }

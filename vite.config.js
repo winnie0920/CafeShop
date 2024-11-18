@@ -12,7 +12,6 @@ export default defineConfig({
   base: process.env.NODE_ENV === "production" ? "/CafeShop/" : "./",
   plugins: [
     vue(),
-    vueDevTools(),
     AutoImport({
       imports: ["vue", "vue-router", "pinia"],
       include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],

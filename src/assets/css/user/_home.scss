@@ -152,6 +152,15 @@
       color: var(--cafe-color-brown-lighter);
     }
   }
+
+  &__footer {
+    background-color: var(--cafe-color-white);
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    padding: var(--cafe--padding-xs) var(--cafe--padding-lg);
+    z-index: 500;
+  }
 }
 .menu {
   &__content {
@@ -310,6 +319,9 @@
       &-icon {
         border: none !important;
       }
+    }
+    &__footer{
+      display: none;
     }
   }
   .menu__image {

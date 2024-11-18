@@ -2,6 +2,7 @@
 import { payOption } from "@/json/UserHome";
 const formStore = userFormStore();
 const showStore = useShowStore();
+const alertStore = useAlertStore();
 const router = useRouter();
 // 菜單顯示的選項
 const selectedOptions = ref([...payOption]);
@@ -136,6 +137,7 @@ const sendOrder = () => {
 
 const confirmPopup = () => {
   showStore.togglePopupShow("check", false);
+  alertStore.pushMsg("Common-Error", "成功送出", "brown");
   router.push({ name: "UserHome" });
 };
 
@@ -151,7 +153,7 @@ const closeShow = (val) => {
         <div class="mb-3 new__menu-content check__inputBox">
           <div class="col-md-6 col-12">
             <CheckInput
-              :style="{ fontSize: '2rem' }"
+              :style="{ fontSize: '1.7rem' }"
               :regex="/^[0-9]{1,2}$/"
               type="input"
               id="tableNumber"
@@ -160,11 +162,17 @@ const closeShow = (val) => {
           </div>
           <hr class="mb-3" />
           <CheckInput
+            :regex="/^[0-9]{1,2}$/"
             :style="{ padding: '0' }"
             :option="selectedOptions"
             type="select"
           />
-          <CheckInput type="textarea" id="remark" name="備註" />
+          <CheckInput
+            :style="{ fontSize: '1.7rem' }"
+            type="textarea"
+            id="remark"
+            name="備註"
+          />
           <hr class="mb-3" />
         </div>
       </div>
@@ -256,5 +264,18 @@ const closeShow = (val) => {
 .popup__text-content {
   display: flex;
   align-content: center;
+}
+
+@media (max-width: 991px) {
+  .new {
+    &__width,
+    &__scrollbar {
+      max-height: 100%;
+    }
+    &__content {
+      overflow-y: visible;
+      height: 100%;
+    }
+  }
 }
 </style>

@@ -53,9 +53,7 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
 
 .check {
   &__inputBox {
-    label {
-      padding-left: var(--cafe--padding-xxs);
-    }
+
     input {
       @extend %base-btn-setting;
       width: 100%;

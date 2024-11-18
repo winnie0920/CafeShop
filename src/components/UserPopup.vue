@@ -10,7 +10,7 @@ const props = defineProps({
   },
   title: String,
   button: String,
-  isFull: Boolean,
+  isFull: String,
 });
 
 const emit = defineEmits(["closeShow", "confirmPopup"]);
@@ -31,7 +31,10 @@ const confirmPopup = () => {
         ref="containerDOM"
         class="popup__container"
         :style="style"
-        :class="{ 'full-size': isFull }"
+        :class="{
+          'full-ipad-size ': isFull === 'large',
+          'full-phone-size ': isFull !== 'large',
+        }"
         @click.stop
       >
         <SvgIcon
@@ -72,8 +75,15 @@ const confirmPopup = () => {
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
 
-.full-size {
-  @media (max-width: 400px) {
+.full-phone-size {
+  @media (max-width: 425px) {
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+  }
+}
+.full-ipad-size {
+  @media (max-width: 991px) {
     width: 100% !important;
     height: 100% !important;
     overflow: visible !important;

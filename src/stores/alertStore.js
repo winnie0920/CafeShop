@@ -30,10 +30,10 @@ export const useAlertStore = defineStore("alert", {
       };
     },
     //如果相同訊息的資料已存在，則不新增
-    pushMsg(icon, msg, time = 2) {
+    pushMsg(icon, msg, type, time = 2) {
       const existed = this.messages.find((item) => msg === item.msg);
       if (!existed) {
-        this.messages.push({ icon, msg, time });
+        this.messages.push({ icon, msg, type, time });
       }
     },
   },

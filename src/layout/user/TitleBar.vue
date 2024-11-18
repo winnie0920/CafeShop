@@ -1,6 +1,5 @@
 <script setup>
 import { homeLanguage, option } from "@/json/UserHome";
-
 const showStore = useShowStore();
 const router = useRouter();
 const menuStore = userMenuStore();
@@ -13,7 +12,11 @@ const updateWindowWidth = () => {
   isMobile.value = window.innerWidth <= 991;
 };
 
-const clickShopping = () => {
+//打開側邊欄
+const clickMenu = () => {};
+
+//打開購物車
+const clickShow = () => {
   if (isMobile.value) {
     showStore.togglePopupShow("shopping", true);
   } else {
@@ -21,10 +24,12 @@ const clickShopping = () => {
   }
 };
 
+//關閉購物車
 const closeShow = (val) => {
   showStore.togglePopupShow("shopping", val);
 };
 
+//確認訂單
 const confirmPopup = () => {
   closeShow(false);
   menuStore.checkOrder(router);
@@ -53,7 +58,10 @@ onUnmounted(() => {
       />
     </div>
     <div class="col-auto d-flex">
-      <ConfirmBtn iconName="Common-Shopping" @click="clickShopping" />
+      <ConfirmBtn iconName="Common-Shopping" @click="clickShow" />
+    </div>
+    <div class="col-auto d-flex">
+      <ConfirmBtn iconName="Common-Menu" @click="clickMenu" />
     </div>
 
     <UserPopup
@@ -61,8 +69,7 @@ onUnmounted(() => {
       :show="showStore.popupShow.shopping"
       title="購物車"
       @close-show="closeShow"
-      :style="{ width: '60rem', height: '80vh' }"
-      :isFull="true"
+      isFull="large"
     >
       <template #main>
         <UserSopping :option="option"></UserSopping>

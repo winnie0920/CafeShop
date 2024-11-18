@@ -228,8 +228,8 @@ onUnmounted(() => {
     :show="showStore.popupShow.menu"
     @close-show="closeShow"
     @confirm-Popup="confirmPopup"
-    :style="{ width: '60rem', height: '80vh' }"
-    :isFull="true"
+    :style="{ width: '50rem', height: '80vh' }"
+    isFull="middle"
   >
     <template #main>
       <img

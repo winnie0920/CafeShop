@@ -2,6 +2,7 @@
 import { homeItem, homeMenu, option } from "@/json/UserHome";
 
 const menuStore = userMenuStore();
+const showStore = useShowStore();
 const queryParams = reactive({ search: "" });
 const chooseRef = ref(null);
 const labelRef = ref(null);
@@ -58,6 +59,11 @@ const clickScroll = (id) => {
 // 當前選擇的 ID
 const currentChoose = (id) => {
   chooseId.value = id;
+};
+
+//打開購物車
+const clickShow = () => {
+  showStore.togglePopupShow("shopping", true);
 };
 
 //監聽所在頁面
@@ -152,6 +158,16 @@ onBeforeUnmount(() => {
           <UserSopping :option="option"></UserSopping>
         </div>
       </div>
+      <div class="User__footer d-block d-lg-none">
+        <button
+          @click="clickShow"
+          class="User__shop-btn d-flex"
+          :class="{ 'disabled-button': menuStore.menuSelect.length <= 0 }"
+        >
+          <span class="mx-auto">查看購物車</span>
+          <span>$ {{ menuStore.calculateTotal() }}</span>
+        </button>
+      </div>
     </section>
   </div>
 </template>
@@ -163,5 +179,12 @@ onBeforeUnmount(() => {
   color: var(--cafe-color-brown);
   border: 0.1rem solid var(--cafe-color-brown);
   background-color: var(--cafe-color-white);
+}
+
+.fixed-button {
+}
+
+.fixed-button:hover {
+  background-color: #0056b3;
 }
 </style>
