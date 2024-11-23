@@ -1,5 +1,5 @@
 <script setup>
-import { homeItem, homeMenu, option } from "@/json/UserHome";
+import { homeItem, homeMenu, option } from "@/json/User";
 
 const menuStore = userMenuStore();
 const showStore = useShowStore();

@@ -1,5 +1,5 @@
 <script setup>
-import { homeLanguage, option } from "@/json/UserHome";
+import { homeLanguage, option } from "@/json/User";
 const showStore = useShowStore();
 const router = useRouter();
 const menuStore = userMenuStore();

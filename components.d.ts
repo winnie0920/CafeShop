@@ -7,13 +7,19 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AdminAdapt: typeof import('./src/views/admin/AdminAlter.vue')['default']
+    AdminAlter: typeof import('./src/views/admin/AdminAlter.vue')['default']
+    AdminLayout: typeof import('./src/layout/admin/AdminLayout.vue')['default']
+    AdminMeal: typeof import('./src/views/admin/AdminMeal.vue')['default']
+    AdminMenu: typeof import('./src/views/admin/AdminMenu.vue')['default']
+    AdminSide: typeof import('./src/layout/admin/AdminSide.vue')['default']
+    AdminTheme: typeof import('./src/views/admin/AdminTheme.vue')['default']
+    AdminTitleBar: typeof import('./src/layout/admin/AdminTitleBar.vue')['default']
     AlertMsg: typeof import('./src/components/AlertMsg.vue')['default']
     CheckInput: typeof import('./src/components/CheckInput.vue')['default']
     ConfirmBtn: typeof import('./src/components/ConfirmBtn.vue')['default']
-    copy: typeof import('./src/components/AlertMsg copy.vue')['default']
     DropDown: typeof import('./src/components/DropDown.vue')['default']
     LoginView: typeof import('./src/views/LoginView.vue')['default']
-    NormalMsg: typeof import('./src/components/NormalMsg.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchBar: typeof import('./src/components/SearchBar.vue')['default']

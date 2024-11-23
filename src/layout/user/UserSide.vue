@@ -1,18 +1,22 @@
 <script setup>
-import { homeSide } from "@/json/UserHome";
+import { homeSide } from "@/json/User";
 </script>
 
 <template>
   <nav class="sidebar__container d-lg-block d-none">
     <div class="sidebar__head">
       <router-link :to="{ name: 'UserHome' }">
-        <img src="@/assets/icons/Logo-coffee.png" alt="" />
+        <div class="sidebar__title">
+          <img src="@/assets/icons/Logo-coffee.png" alt="" />
+        </div>
       </router-link>
       <ul>
         <li v-for="(item, index) in homeSide" :key="index">
           <router-link :to="item.to" class="sidebar__item">
-            <SvgIcon :icon-name="item.iconName" />
-            <h3>{{ item.label }}</h3>
+            <div>
+              <SvgIcon :icon-name="item.iconName" />
+              <h3>{{ item.label }}</h3>
+            </div>
           </router-link>
         </li>
       </ul>
@@ -24,55 +28,13 @@ import { homeSide } from "@/json/UserHome";
 @use "@/assets/css/mixin" as *;
 .sidebar {
   &__container {
-    flex-shrink: 0;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 12rem;
-    padding: 3rem;
-    border-top-right-radius: 3rem;
-    border-bottom-right-radius: 3rem;
     background-color: var(--cafe-color-white);
-    ul {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3rem;
-    }
-  }
-  &__head {
-    img {
-      display: block;
-      height: 6rem;
-      width: 6rem;
-      margin-bottom: 3rem;
-    }
   }
   &__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.75rem var(--cafe--padding-xs);
-    border-radius: var(--cafe-radius-md);
     background-color: var(--cafe--color-white);
-    transition: all 0.35s ease-in-out;
-    cursor: pointer;
-
     svg,
     h3 {
       color: var(--cafe-color-brown);
-      transition: all 0.35s ease-in-out;
-    }
-    svg {
-      flex: 0 0 2.8rem;
-      width: 2.8rem;
-      object-fit: contain;
-    }
-    h3 {
-      font-size: var(--cafe--font-xs);
-      font-weight: 400;
-      letter-spacing: 0.2rem;
     }
     &:hover {
       svg,
@@ -84,6 +46,7 @@ import { homeSide } from "@/json/UserHome";
     }
   }
 }
+
 .router-link-active {
   background-color: var(--cafe-color-brown);
   svg,

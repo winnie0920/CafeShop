@@ -1,5 +1,5 @@
 <script setup>
-import { payOption } from "@/json/UserHome";
+import { payOption } from "@/json/User";
 const formStore = userFormStore();
 const showStore = useShowStore();
 const alertStore = useAlertStore();

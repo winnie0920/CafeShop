@@ -6,7 +6,7 @@
 }
 
 %base-btn-hover {
-  color: var(--cafe-color-white) ;
+  color: var(--cafe-color-white);
   background-color: var(--cafe-color-brown);
   transition: all 0.1s ease-in-out;
 }
@@ -23,24 +23,13 @@
   color: var(--cafe-color-white);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
   transition: all 0.1s ease-in-out;
-  &:hover{
+  &:hover {
     background: var(--cafe-color-white);
     color: var(--cafe-color-brown);
   }
 }
 
-%check-and-setting {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-}
-
-
-%center-setting{
+%center-setting {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,4 +41,56 @@
   opacity: 100;
   background: var(--cafe-color-brown);
   border-top: 0.2rem dashed var(--cafe-color-white);
+}
+
+%text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin flex-center($direction: column, $align: center, $justify: center) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin style-color(
+  $text-color: var(--cafe-color-white),
+  $bg-color: var(--cafe-color-brown)
+) {
+  color: $text-color;
+  background: $bg-color;
+}
+
+@mixin border(
+  $border-color: var(--cafe-color-brown),
+  $border-width: 0.1rem,
+  $border-radius: var(--cafe-radius-md)
+) {
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+}
+
+@mixin absolute-setting(
+  $top: 50%,
+  $left: 50%,
+  $right: auto,
+  $bottom: auto,
+  $transform: translate(-50%, -50%)
+) {
+  content: "";
+  display: block;
+  position: absolute;
+  top: $top;
+  left: $left;
+  right: $right;
+  bottom: $bottom;
+  transform: $transform;
 }

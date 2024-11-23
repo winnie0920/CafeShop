@@ -28,9 +28,10 @@
   --cafe--padding-xs: 1rem;
   --cafe--padding-sm: 1.5rem;
   --cafe--padding-lg: 2rem;
+  --cafe--padding-xxl: 3rem;
   --cafe--margin-xxs: 0.5rem;
   --cafe--margin-xs: 1rem;
-  --cafe--margin-sm:1.5rem;
+  --cafe--margin-sm: 1.5rem;
 }
 
 .opacity-enter-from,
@@ -173,7 +174,7 @@ hr {
   height: 0.5px !important;
 }
 
-.popup__container svg, .popup__text-option textarea, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li, .check__inputBox input, .check__inputBox textarea {
+.popup__container svg, .popup__text-option textarea, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
@@ -205,16 +206,6 @@ hr {
   color: var(--cafe-color-brown);
 }
 
-.check__and-radio::after, .check__and-mark::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-}
-
 .User__shop-clear, .menu__btn-content div {
   display: flex;
   flex-direction: column;
@@ -229,15 +220,25 @@ hr {
   border-top: 0.2rem dashed var(--cafe-color-white);
 }
 
+.sidebar__title h4,
+.sidebar__title p, .sidebar__item h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .check__and-radio, .check__and-mark {
-  height: 1.7rem;
   width: 1.7rem;
+  height: 1.7rem;
   border: 0.15rem solid var(--cafe-color-brown);
   border-radius: 50%;
-  display: inline-block;
+  content: "";
+  display: block;
   position: absolute;
-  left: 0;
   top: 50%;
+  left: 0;
+  right: auto;
+  bottom: auto;
   transform: translateY(-50%);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -245,18 +246,29 @@ hr {
   box-shadow: inset 0 0 0 0.1rem var(--cafe-color-brown);
 }
 .check__and-radio::after, .check__and-mark::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  opacity: 0;
   height: 0.7rem;
 }
 .check__and-radio::after {
+  color: none;
+  background: var(--cafe-color-brown);
   width: 0.7rem;
   border-radius: 50%;
-  background-color: var(--cafe-color-brown);
 }
 .check__and-mark {
   border-radius: 10%;
 }
 .check__and-mark::after {
   width: 0.3rem;
+  height: 50%;
   border: solid var(--cafe-color-brown);
   border-width: 0 0.15rem 0.15rem 0;
 }
@@ -272,27 +284,174 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   opacity: 0;
 }
 
-.check__inputBox input {
-  width: 100%;
-  font-size: var(--cafe--font-sm);
-  border-color: var(--cafe-color-brown-lighter);
-  padding: var(--cafe--padding-xs);
-  color: var(--cafe-color-brown);
-  resize: none;
-}
-.check__inputBox input:focus {
-  outline: none;
-  border-color: var(--cafe-color-brown);
-}
+.check__inputBox input,
 .check__inputBox textarea {
-  border-color: var(--cafe-color-brown-lighter);
-  padding: var(--cafe--padding-xs);
+  border: 0.1rem solid var(--cafe-color-brown-lighter);
+  border-radius: var(--cafe-radius-md);
   color: var(--cafe-color-brown);
+  background: none;
+  width: 100%;
+  display: flex;
+  font-size: var(--cafe--font-sm);
+  padding: var(--cafe--padding-xs);
+  transition: all 0.35s ease-in-out;
   resize: none;
 }
+.check__inputBox input:focus,
 .check__inputBox textarea:focus {
+  border: 0.1rem solid var(--cafe-color-brown);
+  border-radius: var(--cafe-radius-md);
   outline: none;
-  border-color: var(--cafe-color-brown); /* 聚焦時的邊框顏色 */
+}
+
+.sidebar__menu-icon {
+  display: none;
+}
+.sidebar__menu-icon ~ label {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 3.5rem;
+  left: auto;
+  right: 0;
+  bottom: auto;
+  transform: translate(50%, 50%);
+  border: 0.2rem solid var(--cafe-color-brown);
+  border-radius: 50%;
+  color: none;
+  background: var(--cafe-color-white);
+  padding: var(--cafe--padding-xxs);
+  transition: all 0.35s ease-in-out;
+  cursor: pointer;
+  z-index: 50;
+}
+.sidebar__menu-icon ~ label svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--cafe-color-brown);
+  background: none;
+  transform: rotate(180deg);
+  transition: all 0.35s ease-in-out;
+}
+.sidebar__menu-icon:checked ~ .sidebar__head .sidebar__title {
+  width: 100%;
+  height: auto;
+}
+.sidebar__menu-icon:checked ~ label svg {
+  transform: rotate(0deg);
+}
+.sidebar__menu-icon:checked ~ .sidebar__head .sidebar__item {
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.sidebar__menu-icon:checked ~ .sidebar__head .sidebar__item h2 {
+  width: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+}
+.sidebar__menu-icon:checked ~ .sidebar__head .sidebar__item h3 {
+  width: auto;
+  height: 0;
+  opacity: 0;
+}
+.sidebar__container {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: baseline;
+  width: 12rem;
+  height: 100%;
+  position: relative;
+  padding: var(--cafe--padding-xxl);
+  border-top-right-radius: 3rem;
+  border-bottom-right-radius: 3rem;
+  transition: all 0.35s ease-in-out;
+}
+.sidebar__container:has(.sidebar__menu-icon:checked) {
+  width: 23rem;
+  height: 100%;
+}
+.sidebar__container ul {
+  display: grid;
+  gap: 1.5rem;
+}
+.sidebar__title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: baseline;
+  width: 6rem;
+  height: 6rem;
+  margin-bottom: 5rem;
+  gap: 1rem;
+  overflow: hidden;
+}
+.sidebar__title h4,
+.sidebar__title p {
+  color: var(--cafe-color-white);
+  background: none;
+}
+.sidebar__logo {
+  width: 5rem;
+  height: 5rem;
+  flex: 0 0 5rem;
+}
+.sidebar__head img {
+  width: 6rem;
+  height: 6rem;
+}
+.sidebar__item {
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding-left: 0.7rem;
+  border-radius: var(--cafe-radius-md);
+  transition: all 0.35s ease-in-out;
+  cursor: pointer;
+}
+.sidebar__item div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: baseline;
+}
+.sidebar__item svg,
+.sidebar__item h3 {
+  transition: all 0.35s ease-in-out;
+}
+.sidebar__item h2 {
+  font-size: var(--cafe--font-xl);
+}
+.sidebar__item h3 {
+  font-size: var(--cafe--font-xs);
+  font-weight: 400;
+  letter-spacing: 0.1rem;
+  opacity: 1;
+}
+.sidebar__item svg {
+  width: 3.5rem;
+  height: auto;
+  flex: 0 0 2.8rem;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.disabled-button {
+  cursor: not-allowed !important;
+  color: var(--cafe-color-brown);
+  background: var(--cafe-color-gray);
+}
+.disabled-button svg {
+  background-color: var(--cafe-color-gray) !important;
+}
+.disabled-button svg:hover {
+  color: var(--cafe-color-brown);
+  background: var(--cafe-color-gray) !important;
 }
 
 @keyframes pop-in {
@@ -315,21 +474,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
     opacity: 0;
   }
 }
-.disabled-button {
-  cursor: not-allowed !important;
-  background-color: var(--cafe-color-gray);
-  color: var(--cafe-color-brown);
-}
-.disabled-button:hover {
-  background-color: var(var(--cafe-color-gray));
-}
-.disabled-button svg {
-  background-color: var(--cafe-color-gray);
-}
-.disabled-button svg:hover {
-  color: inherit;
-}
-
 .User__container {
   display: flex;
   flex-direction: column;

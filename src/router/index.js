@@ -38,6 +38,34 @@ export const routes = [
       },
     ],
   },
+  {
+    path: "/admin",
+    name: "AdminLayout",
+    redirect: { name: "AdminMeal" },
+    component: () => import("@/layout/admin/AdminLayout.vue"),
+    children: [
+      {
+        path: "meal",
+        name: "AdminMeal",
+        component: () => import("@/views/admin/AdminMeal.vue"),
+      },
+      {
+        path: "theme",
+        name: "AdminTheme",
+        component: () => import("@/views/admin/AdminTheme.vue"),
+      },
+      {
+        path: "alter",
+        name: "AdminAlter",
+        component: () => import("@/views/admin/AdminAlter.vue"),
+      },
+      {
+        path: "menu",
+        name: "AdminMenu",
+        component: () => import("@/views/admin/AdminMenu.vue"),
+      },
+    ],
+  },
 ];
 
 const router = createRouter({
