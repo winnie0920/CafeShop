@@ -53,7 +53,7 @@ onMounted(() => {
     v-if="props.type === 'select'"
   >
     <ul v-for="o in option" :key="o.id">
-      <div>
+      <div v-if="o.name">
         <h3>{{ o.name }}選項</h3>
         <div
           :class="{
@@ -63,8 +63,7 @@ onMounted(() => {
           必填
         </div>
       </div>
-      <h5 v-if="o.isSingleChoice">請擇一選擇</h5>
-      <h5 v-else>可多選擇</h5>
+      <h5 v-if="o.name">{{ o.isSingleChoice ? "請擇一選擇" : "可多選擇" }}</h5>
       <li v-for="c in o.children" :key="c.id">
         <input
           v-if="o.isSingleChoice"
@@ -92,7 +91,7 @@ onMounted(() => {
         <p v-if="c.price">${{ c.price }}</p>
         <p v-else-if="c.price === 0">免費</p>
       </li>
-      <hr class="mb-4" />
+      <hr v-if="o.name" class="mb-4" />
     </ul>
   </div>
 </template>

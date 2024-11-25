@@ -1,4 +1,13 @@
-<script></script>
+<script setup>
+import { loginOption } from "@/json/UserHome";
+const formStore = userFormStore();
+// 菜單顯示的選項
+const selectedOptions = ref([...loginOption]);
+
+const login = () => {
+  console.log(formStore.choice);
+};
+</script>
 
 <template>
   <div class="login__container">
@@ -7,18 +16,32 @@
     <div class="new__container">
       <div class="check__inputBox">
         <CheckInput
-          :regex="/^[0-9]{1,2}$/"
+          :regex="/^[a-zA-Z0-9]+$/"
           type="input"
           id="account"
           name="帳號"
         />
         <CheckInput
           :style="{ marginTop: '1rem' }"
-          :regex="/^[0-9]{1,2}$/"
+          :regex="/^[a-zA-Z0-9]+$/"
           type="input"
           id="password"
           name="密碼"
         />
+        <CheckInput
+          :regex="/^[a-zA-Z0-9]+$/"
+          :style="{ padding: '0', fontSize: '1.7rem' }"
+          :option="selectedOptions"
+          type="select"
+        />
+        <div class="mt-4">
+          <ConfirmBtn
+            color="brown"
+            class="justify-content-center w-100"
+            title="登入"
+            @click="login()"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -34,13 +57,13 @@
     background: var(--cafe-color-bisque);
     gap: 2rem;
     img {
-      width: 13rem;
+      width: 10rem;
     }
   }
 }
 
 .new__container {
-  max-width: 40rem;
+  max-width: 35rem;
   width: calc(100% - var(--cafe--padding-lg) * 2);
   margin: 0 var(--cafe--padding-lg);
 }
