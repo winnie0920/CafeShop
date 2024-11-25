@@ -1,5 +1,12 @@
 <script setup>
-import { homeLanguage, option } from "@/json/User";
+import { homeLanguage } from "@/json/User";
+
+const dropdown = ref({
+  drop: "language",
+  width: "5rem",
+  iconName: "Common-Earth",
+});
+
 const showStore = useShowStore();
 </script>
 
@@ -9,9 +16,7 @@ const showStore = useShowStore();
       <DropDown
         v-model="showStore.sLanguage"
         :data="homeLanguage"
-        drop="language"
-        width="5rem"
-        iconName="Common-Earth"
+        :dropdown="dropdown"
       />
     </div>
   </header>

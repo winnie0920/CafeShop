@@ -242,7 +242,12 @@ onUnmounted(() => {
         <span>{{ selectedMenu.description }}</span>
         <hr />
       </div>
-      <CheckInput :option="selectedOptions" type="select" />
+      <CheckInput
+        :option="selectedOptions"
+        :basic="{
+          type: 'select',
+        }"
+      />
     </template>
     <template #footer>
       <div class="d-flex gap-4 align-items-center">

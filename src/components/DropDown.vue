@@ -1,43 +1,39 @@
 <script setup>
 const showStore = useShowStore();
 const props = defineProps({
-  title: {
-    type: String,
-  },
-  iconName: {
-    type: String,
-  },
   data: {
     type: Array,
   },
-  drop: {
-    type: String,
-  },
-  width: {
-    type: String,
-    default: "10rem",
+  dropdown: {
+    type: Object,
+    required: true,
   },
 });
+const { drop, width, iconName } = props.dropdown;
 
-const toggleShow = () => {
-  showStore.toggleShow(props.drop);
-};
-
+// 初始下拉式選單
 const model = defineModel({ default: { id: -1, name: "請選擇" } });
 
+//切換下拉式選單
+const toggleShow = () => {
+  showStore.toggleShow(drop);
+};
+
+// 選擇下拉式選單
 const changeSelected = (item) => {
   model.value = item;
 };
 
+// 下拉式選單初始化
 const data = computed({
   get() {
     return [{ id: -1, name: "請選擇" }, ...props.data];
   },
 });
 
+//關閉下拉式選單
 const closeShow = () => {
-  if (showStore.dropdownShow[props.drop])
-    showStore.dropdownShow[props.drop] = false;
+  showStore.dropdownShow[drop] = false;
 };
 onMounted(() => {
   changeSelected({ id: -1, name: "請選擇" });
@@ -50,19 +46,19 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    :class="{ empty: !props.title, isSvgC: props.iconName }"
+    :class="{ empty: !props.title, isSvgC: iconName }"
     class="list__container"
     @click.stop="toggleShow"
   >
     <p class="list__title">{{ props.title }}</p>
     <SvgIcon
-      v-show="props.iconName"
-      :iconName="props.iconName"
+      v-show="iconName"
+      :iconName="iconName"
       class="list__svg-first"
     ></SvgIcon>
     <h5
-      :class="{ isSvg: props.iconName }"
-      :style="{ width: props.width }"
+      :class="{ isSvg: iconName }"
+      :style="{ width: width }"
       class="list__text"
     >
       {{ showStore.sLanguage.name }}
@@ -70,7 +66,7 @@ onBeforeUnmount(() => {
     <SvgIcon class="list__svg-end" iconName="Common-Arrow-Circle"></SvgIcon>
 
     <transition name="move-up">
-      <ul v-if="showStore.dropdownShow[props.drop]" class="list__drop">
+      <ul v-if="showStore.dropdownShow[drop]" class="list__drop">
         <li
           @click="changeSelected(d)"
           v-for="d in data"

@@ -1,4 +1,4 @@
-export const UserSide = [
+export const adminSide = [
   {
     to: { name: "AdminMeal" },
     iconName: "User-Meal",
@@ -22,5 +22,28 @@ export const UserSide = [
     iconName: "User-Menu",
     label: "MENU",
     name: "訂單管理",
+  },
+];
+
+export const loginOption = [
+  {
+    type: "remember",
+    isSingleChoice: true,
+    children: [{ id: 1, name: "記住帳號？" }],
+  },
+];
+
+export const adminLogin = [
+  {
+    account: "admin",
+    password: "password",
+  },
+  {
+    account: "winnie0920",
+    password: "h5693123",
+  },
+  {
+    account: "manager",
+    password: "manage",
   },
 ];

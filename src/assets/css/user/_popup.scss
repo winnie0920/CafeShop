@@ -124,6 +124,7 @@
   }
   &__text {
     &-option {
+
       padding: 0 var(--cafe--padding-lg);
       color: var(--cafe-color-brown);
       line-height: 1.7;
@@ -166,10 +167,12 @@
         visibility: hidden;
       }
       label {
-        font-size: var(--cafe--font-lg);
+        display: flex;
+        align-items: center;
+        font-size: var(--cafe--font-md);
         cursor: pointer;
         position: relative;
-        padding-left: 3rem;
+        padding-left: 2rem;
       }
       textarea {
         @extend %base-btn-setting;

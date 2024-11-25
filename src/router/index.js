@@ -7,7 +7,7 @@ export const routes = [
     children: [
       {
         path: "login",
-        name: "Login",
+        name: "LoginView",
         component: () => import("@/views/LoginView.vue"),
       },
     ],

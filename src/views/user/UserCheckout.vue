@@ -113,18 +113,17 @@ const sendBack = () => {
   router.push({ name: "UserHome" });
 };
 
+const validate = [
+  {
+    id: "tableNumber",
+    message: "請輸入正確桌號，請勿輸入英文字母",
+  },
+];
+
 //送出訂單
 const sendOrder = () => {
   formStore.clearError();
-  const validate = [
-    {
-      id: "tableNumber",
-      name: "桌號",
-      message: "請輸入正確桌號，請勿輸入英文字母",
-    },
-  ];
-
-  const inputValid = validate.every((field) =>
+  const inputValid = validate.find((field) =>
     formStore.validateInput(field.id, field.name, field.message)
   );
   const optionsValid =
@@ -137,7 +136,7 @@ const sendOrder = () => {
 
 const confirmPopup = () => {
   showStore.togglePopupShow("check", false);
-  alertStore.pushMsg("Common-Error", "成功送出", "brown");
+  alertStore.pushMsg("Common-Ok", "成功送出", "brown");
   router.push({ name: "UserHome" });
 };
 
@@ -155,9 +154,11 @@ const closeShow = (val) => {
             <CheckInput
               :style="{ fontSize: '1.7rem' }"
               :regex="/^[0-9]{1,2}$/"
-              type="input"
-              id="tableNumber"
-              name="桌號"
+              :basic="{
+                type: 'input',
+                id: 'tableNumber',
+                name: '桌號',
+              }"
             />
           </div>
           <hr class="mb-3" />
@@ -165,13 +166,17 @@ const closeShow = (val) => {
             :regex="/^[0-9]{1,2}$/"
             :style="{ padding: '0' }"
             :option="selectedOptions"
-            type="select"
+            :basic="{
+              type: 'select',
+            }"
           />
           <CheckInput
             :style="{ fontSize: '1.7rem' }"
-            type="textarea"
-            id="remark"
-            name="備註"
+            :basic="{
+              type: 'textarea',
+              id: 'remark',
+              name: '備註',
+            }"
           />
           <hr class="mb-3" />
         </div>

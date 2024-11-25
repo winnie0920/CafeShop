@@ -36,7 +36,7 @@ export const userFormStore = defineStore("select", {
     },
 
     //驗證必填
-    validateInput(id, name, string) {
+    validateInput(id, name = "", string) {
       const alertStore = useAlertStore();
       if (this.choice[id] !== undefined && this.regex[id]) {
         if (!this.regex[id].test(this.choice[id])) {

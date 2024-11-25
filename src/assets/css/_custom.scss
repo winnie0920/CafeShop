@@ -4,7 +4,7 @@
 .check {
   &__and-radio,
   &__and-mark {
-    @include size(1.7rem);
+    @include size(1.5rem);
     @include border(var(--cafe-color-brown), 0.15rem, 50%);
     @include absolute-setting(50%, 0, auto, auto, translateY(-50%));
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -120,7 +120,7 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
     border-bottom-right-radius: 3rem;
     transition: all 0.35s ease-in-out;
     &:has(.sidebar__menu-icon:checked) {
-      @include size(23rem, 100%);
+      @include size(26rem, 100%);
     }
     ul {
       display: grid;

@@ -4,6 +4,12 @@ const showStore = useShowStore();
 const router = useRouter();
 const menuStore = userMenuStore();
 
+const dropdown = ref({
+  drop: "language",
+  width: "5rem",
+  iconName: "Common-Earth",
+});
+
 // 用來監控視口大小
 const isMobile = ref(false);
 
@@ -52,9 +58,7 @@ onUnmounted(() => {
       <DropDown
         v-model="showStore.sLanguage"
         :data="homeLanguage"
-        drop="language"
-        width="5rem"
-        iconName="Common-Earth"
+        :dropdown="dropdown"
       />
     </div>
     <div class="col-auto d-flex">

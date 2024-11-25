@@ -83,7 +83,8 @@ html {
   width: 100vw;
   overflow: hidden;
   line-height: 1.5;
-  font-family: "Poppins", "Noto Sans TC", Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Poppins", "Noto Sans TC", Inter, Avenir, Helvetica, Arial,
+    sans-serif;
   font-weight: 500;
   font-synthesis: none;
   font-optical-sizing: auto;
@@ -174,26 +175,37 @@ hr {
   height: 0.5px !important;
 }
 
-.popup__container svg, .popup__text-option textarea, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li {
+.popup__container svg,
+.popup__text-option textarea,
+.User__side-label li,
+.User__side-left,
+.User__side-right,
+.User__shop-container,
+.menu__content li {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
   transition: all 0.35s ease-in-out;
 }
 
-.popup__container svg:hover, .menu__image button:hover {
+.popup__container svg:hover,
+.menu__image button:hover {
   color: var(--cafe-color-white);
   background-color: var(--cafe-color-brown);
   transition: all 0.1s ease-in-out;
 }
 
-.new__container, .popup__container, .popup__header, .popup__footer {
+.new__container,
+.popup__container,
+.popup__header,
+.popup__footer {
   display: flex;
   border-radius: var(--cafe-radius-sm);
   background: var(--cafe-color-white);
 }
 
-.popup__footer-button, .User__shop-btn {
+.popup__footer-button,
+.User__shop-btn {
   display: flex;
   border-radius: var(--cafe-radius-sm);
   background: var(--cafe-color-brown);
@@ -201,19 +213,22 @@ hr {
   border: 0.1rem solid var(--cafe-color-brown-lighter);
   transition: all 0.1s ease-in-out;
 }
-.popup__footer-button:hover, .User__shop-btn:hover {
+.popup__footer-button:hover,
+.User__shop-btn:hover {
   background: var(--cafe-color-white);
   color: var(--cafe-color-brown);
 }
 
-.User__shop-clear, .menu__btn-content div {
+.User__shop-clear,
+.menu__btn-content div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.new__hr, .User__shop-container hr {
+.new__hr,
+.User__shop-container hr {
   border: 0;
   opacity: 100;
   background: var(--cafe-color-brown);
@@ -221,15 +236,17 @@ hr {
 }
 
 .sidebar__title h4,
-.sidebar__title p, .sidebar__item h2 {
+.sidebar__title p,
+.sidebar__item h2 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.check__and-radio, .check__and-mark {
-  width: 1.7rem;
-  height: 1.7rem;
+.check__and-radio,
+.check__and-mark {
+  width: 1.5rem;
+  height: 1.5rem;
   border: 0.15rem solid var(--cafe-color-brown);
   border-radius: 50%;
   content: "";
@@ -242,10 +259,12 @@ hr {
   transform: translateY(-50%);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.check__and-radio:hover, .check__and-mark:hover {
+.check__and-radio:hover,
+.check__and-mark:hover {
   box-shadow: inset 0 0 0 0.1rem var(--cafe-color-brown);
 }
-.check__and-radio::after, .check__and-mark::after {
+.check__and-radio::after,
+.check__and-mark::after {
   content: "";
   display: block;
   position: absolute;
@@ -273,13 +292,13 @@ hr {
   border-width: 0 0.15rem 0.15rem 0;
 }
 
-input[type=radio]:checked + label .check__and-radio::after,
-input[type=checkbox]:checked + label .check__and-mark::after {
+input[type="radio"]:checked + label .check__and-radio::after,
+input[type="checkbox"]:checked + label .check__and-mark::after {
   animation: pop-in 0.2s ease-out forwards;
   opacity: 1;
 }
 
-input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
+input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
   animation: pop-out 0.2s ease-out forwards;
   opacity: 0;
 }
@@ -371,7 +390,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   transition: all 0.35s ease-in-out;
 }
 .sidebar__container:has(.sidebar__menu-icon:checked) {
-  width: 23rem;
+  width: 26rem;
   height: 100%;
 }
 .sidebar__container ul {
@@ -438,7 +457,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   height: auto;
   flex: 0 0 2.8rem;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 
 .disabled-button {
@@ -525,7 +544,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   width: 5rem;
   margin-bottom: 0.5rem;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .User__side-label li h5 {
   font-size: var(--cafe--font-xs);
@@ -537,7 +556,8 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .User__side-label-margin {
   margin: 0 3rem;
 }
-.User__side-left, .User__side-right {
+.User__side-left,
+.User__side-right {
   position: absolute;
   top: 50%;
   padding: 0.7rem;
@@ -547,11 +567,13 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   transform: translateY(-50%);
   cursor: pointer;
 }
-.User__side-left:hover, .User__side-right:hover {
+.User__side-left:hover,
+.User__side-right:hover {
   color: var(--cafe-color-white);
   background-color: var(--cafe-color-brown);
 }
-.User__side-left svg, .User__side-right svg {
+.User__side-left svg,
+.User__side-right svg {
   width: 1rem;
   height: 1rem;
 }
@@ -588,7 +610,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   width: 10rem;
   height: 10rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: var(--cafe-radius-sm);
 }
 .User__shop-clear {
@@ -677,7 +699,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   height: 10rem;
   width: 10rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .menu__image svg {
   position: relative;
@@ -876,7 +898,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   height: 205px;
   width: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .popup__text-content {
   display: grid;
@@ -938,10 +960,12 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   visibility: hidden;
 }
 .popup__text-option label {
-  font-size: var(--cafe--font-lg);
+  display: flex;
+  align-items: center;
+  font-size: var(--cafe--font-md);
   cursor: pointer;
   position: relative;
-  padding-left: 3rem;
+  padding-left: 2rem;
 }
 .popup__text-option textarea {
   border-color: var(--cafe-color-brown-lighter);
@@ -990,4 +1014,4 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 .new__strong-text {
   font-weight: 600;
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */

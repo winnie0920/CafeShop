@@ -7,7 +7,6 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    AdminAdapt: typeof import('./src/views/admin/AdminAlter.vue')['default']
     AdminAlter: typeof import('./src/views/admin/AdminAlter.vue')['default']
     AdminLayout: typeof import('./src/layout/admin/AdminLayout.vue')['default']
     AdminMeal: typeof import('./src/views/admin/AdminMeal.vue')['default']

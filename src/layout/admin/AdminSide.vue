@@ -1,5 +1,5 @@
 <script setup>
-import { UserSide } from "@/json/Admin";
+import { adminSide } from "@/json/Admin";
 </script>
 
 <template>
@@ -29,7 +29,7 @@ import { UserSide } from "@/json/Admin";
         </div>
       </router-link>
       <ul>
-        <li v-for="(item, index) in UserSide" :key="index">
+        <li v-for="(item, index) in adminSide" :key="index">
           <router-link :to="item.to" class="sidebar__item">
             <div>
               <SvgIcon :icon-name="item.iconName" />
