@@ -74,7 +74,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const tokenStore = useTokenStore();
   const formStore = userFormStore();
+  if (to.path.startsWith("/admin")) {
+    if (!tokenStore.verifyToken()) {
+      return next({ name: "LoginView" });
+    }
+  }
   formStore.clearState();
   next();
 });

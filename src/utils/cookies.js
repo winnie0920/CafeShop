@@ -1,35 +1,33 @@
-const { CAFE_TOKEN_KEY, CAFE_REFRESH_TOKEN_KEY } = import.meta.env;
+const { VITE_CAFE_TOKEN_KEY, VITE_CAFE_REFRESH_TOKEN_KEY } = import.meta.env;
 
 function getToken() {
   const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${CAFE_TOKEN_KEY}=`);
+  const parts = value.split(`; ${VITE_CAFE_TOKEN_KEY}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 function getRefreshToken() {
   const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${CAFE_REFRESH_TOKEN_KEY}=`);
+  const parts = value.split(`; ${VITE_CAFE_REFRESH_TOKEN_KEY}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
-function saveToken(token, expired) {
-  document.cookie = `${CAFE_TOKEN_KEY}=${token}; expires=${new Date(
-    expired
-  )}; path=/`;
+function saveToken(token, exp) {
+  const expiredDate = new Date(exp * 1000);
+  document.cookie = `${VITE_CAFE_TOKEN_KEY}=${token}; expires=${expiredDate.toUTCString()}; path=/`;
 }
-function saveRefreshToken(token, expired) {
-  document.cookie = `${CAFE_REFRESH_TOKEN_KEY}=${token}; expires=${new Date(
-    expired
-  )}; path=/`;
+function saveRefreshToken(token, exp) {
+  const expiredDate = new Date(exp * 1000);
+  document.cookie = `${VITE_CAFE_REFRESH_TOKEN_KEY}=${token}; expires=${expiredDate.toUTCString()}; path=/`;
 }
 function saveAllToken(res) {
-  const { token, refreshToken, expireTime, expireTimeR } = res;
-  saveToken(token, expireTime);
-  saveRefreshToken(refreshToken, expireTimeR);
+  const { token, expiredDate, refreshToken, expiredDateR } = res;
+  saveToken(token, expiredDate);
+  saveRefreshToken(refreshToken, expiredDateR);
 }
 function removeToken() {
-  document.cookie = `${CAFE_TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+  document.cookie = `${VITE_CAFE_TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
 }
 function removeRefreshToken() {
-  document.cookie = `${CAFE_REFRESH_TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+  document.cookie = `${VITE_CAFE_REFRESH_TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
 }
 function removeAllToken() {
   removeToken();
@@ -37,9 +35,8 @@ function removeAllToken() {
 }
 
 function setCookie(name, value, days) {
-  const date = new Date();
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000); // 有效天數
-  document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/;`;
+  const expiredDate = new Date(Date.now() + days * 86400000 + 8 * 3600000);
+  document.cookie = `${name}=${value}; expires=${expiredDate.toUTCString()}; path=/;`;
 }
 
 function getCookie(name) {

@@ -79,6 +79,7 @@ declare global {
   const useShowStore: typeof import('./src/stores/showStore.js')['useShowStore']
   const useSlots: typeof import('vue')['useSlots']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
+  const useTokenStore: typeof import('./src/stores/tokenStore.js')['useTokenStore']
   const userFormStore: typeof import('./src/stores/formStore.js')['userFormStore']
   const userMenuStore: typeof import('./src/stores/menuStore.js')['userMenuStore']
   const watch: typeof import('vue')['watch']

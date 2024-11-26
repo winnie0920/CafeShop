@@ -4,6 +4,7 @@ import { loginOption, adminLogin } from "@/json/Admin";
 
 const formStore = userFormStore();
 const alertStore = useAlertStore();
+const tokenStore = useTokenStore();
 // 菜單顯示的選項
 const selectedOptions = ref([...loginOption]);
 
@@ -23,6 +24,11 @@ const login = () => {
   if (!validateAdmin()) return;
   rememberAccount();
   alertStore.pushMsg("Common-Ok", "登入成功", "brown");
+  tokenStore.saveToken({
+    name: formStore.choice.account,
+    role: "admin",
+  });
+  if (!tokenStore.verifyToken()) return;
   router.push({ name: "AdminLayout" });
 };
 
@@ -37,7 +43,7 @@ const getAdmin = () => {
 // 記住帳號，儲存到 Cookie
 const rememberAccount = () => {
   if (formStore.choice.remember) {
-    cookie.setCookie("account", formStore.choice.account, 7);
+    cookie.setCookie("account", formStore.choice.account, 1);
   }
 };
 
