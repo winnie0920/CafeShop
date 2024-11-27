@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 
 export const useShowStore = defineStore("web", {
   state: () => ({
-    sLanguage: { id: -1, name: "請選擇" },
+    language: { id: -1, name: "請選擇" },
+    meal: { id: -1, name: "請選擇" },
     //dropdown
     dropdownShow: [
       {

@@ -1,11 +1,13 @@
 <script setup>
-import { homeLanguage } from "@/json/User";
+import { homeMenu } from "@/json/User";
 
 const dropdown = ref({
-  drop: "language",
-  width: "5rem",
-  iconName: "Common-Earth",
+  title: "餐點分類",
+  drop: "meal",
+  width: "10rem",
 });
+
+const addMeal = () => {};
 
 const showStore = useShowStore();
 </script>
@@ -14,10 +16,16 @@ const showStore = useShowStore();
   <header class="row justify-content-end d-flex">
     <div class="col-auto d-flex">
       <DropDown
-        v-model="showStore.sLanguage"
-        :data="homeLanguage"
+        v-model="showStore.meal"
+        :data="homeMenu"
         :dropdown="dropdown"
       />
+    </div>
+    <div class="col-auto d-flex">
+      <ConfirmBtn title="新增餐點" iconName="User-Add" @click="addMeal" />
+    </div>
+    <div class="col-auto d-flex">
+      <div class="logout__container"></div>
     </div>
   </header>
 </template>
@@ -27,5 +35,13 @@ const showStore = useShowStore();
 header {
   background-color: var(--cafe-color-bisque);
   padding: 3rem 0 1.5rem 0;
+}
+
+.logout {
+  &__container {
+    @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+    @include border(var(--cafe-color-brown), 0.1rem);
+    padding: var(--cafe--padding-xs);
+  }
 }
 </style>

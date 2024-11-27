@@ -9,7 +9,7 @@ const props = defineProps({
     required: true,
   },
 });
-const { drop, width, iconName } = props.dropdown;
+const { drop, width, iconName, title } = props.dropdown;
 
 // 初始下拉式選單
 const model = defineModel({ default: { id: -1, name: "請選擇" } });
@@ -46,13 +46,13 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    :class="{ empty: !props.title, isSvgC: iconName }"
+    :class="{ empty: !title, isSvgC: iconName }"
     class="list__container"
     @click.stop="toggleShow"
   >
-    <p class="list__title">{{ props.title }}</p>
+    <p v-if="title" class="list__title mb-1">{{ title }}</p>
     <SvgIcon
-      v-show="iconName"
+      v-if="iconName"
       :iconName="iconName"
       class="list__svg-first"
     ></SvgIcon>
@@ -61,7 +61,7 @@ onBeforeUnmount(() => {
       :style="{ width: width }"
       class="list__text"
     >
-      {{ showStore.sLanguage.name }}
+      {{ showStore[drop].name }}
     </h5>
     <SvgIcon class="list__svg-end" iconName="Common-Arrow-Circle"></SvgIcon>
 
@@ -85,55 +85,53 @@ onBeforeUnmount(() => {
 
 .list {
   &__container {
-    @extend %base-btn-setting;
-    height: 4rem;
+    @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+    @include border(var(--cafe-color-brown), 0.1rem);
     position: relative;
     display: grid;
     padding: var(--cafe--padding-xs);
-    color: var(--cafe-color-brown);
-    border: 0.1rem solid var(--cafe-color-brown);
-    background-color: var(--cafe-color-white);
     grid-template-rows: repeat(2, max-content);
     grid-template-columns: max-content 1rem;
     cursor: pointer;
     svg {
-      width: 100%;
+      @include size(100%);
+      @include style-color(var(--cafe-color-brown), none);
       aspect-ratio: 1 / 1;
-      color: var(--cafe-color-brown);
     }
   }
   &__svg-end {
-    color: var(--cafe-color-brown);
+    @include style-color(var(--cafe-color-brown), none);
     transform: rotate(90deg) translateX(-15%);
   }
   &__title {
+    @include style-color(var(--cafe-color-brown-lighter), none);
+
     grid-column: 1/-1;
   }
   &__drop {
-    @extend %base-btn-setting;
+    @include border(var(--cafe-color-brown), 0.1rem);
+    @include flex-center(column, none, none);
+    @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+    @include size(100%, auto);
     position: absolute;
     top: calc(100% + 0.75rem);
-    flex-direction: column;
     max-height: 22rem;
-    width: 100%;
-    padding: 0.75rem;
+    padding: var(--cafe--padding-xxs);
     gap: 0.5rem;
-    background-color: var(--cafe-color-white);
-    border-radius: inherit;
+    overflow-x: hidden;
+    scrollbar-width: none;
     z-index: 10;
   }
   &__drop-item {
-    padding: 0.5rem 0.75rem;
+    padding: var(--cafe--padding-xxxs) var(--cafe--padding-xxs);
+    border-radius: var(--cafe-radius-xs);
     font-size: var(--cafe--font-sm);
-    transition: all 0.35s ease-in-out;
-    overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    border-radius: var(--cafe-radius-xs);
+    transition: all 0.35s ease-in-out;
     &:hover,
     &-active {
-      background-color: var(--cafe-color-brown);
-      color: var(--cafe-color-white);
+      @include style-color;
     }
   }
 }

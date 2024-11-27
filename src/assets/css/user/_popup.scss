@@ -19,7 +19,7 @@
     transform: rotate(45deg);
   }
   &__minus {
-    padding: 0 var(--cafe--padding-xxs);
+    padding: 0 var(--cafe--padding-xxxs);
   }
   &__container {
     @extend %popup-base-setting;
@@ -84,7 +84,7 @@
       border: 0.1rem solid var(--cafe-color-brown-lighter);
     }
     &-button {
-      padding: var(--cafe--padding-xxs) var(--cafe--padding-xs);
+      padding: var(--cafe--padding-xxxs) var(--cafe--padding-xs);
       @extend %popup-base-setting-2;
       letter-spacing: 0.2rem;
       align-items: center;
@@ -177,7 +177,7 @@
       textarea {
         @extend %base-btn-setting;
         border-color: var(--cafe-color-brown-lighter);
-        padding: var(--cafe--padding-xxs);
+        padding: var(--cafe--padding-xxxs);
         font-size: var(--cafe--font-lg);
         color: var(--cafe-color-brown);
         resize: none;

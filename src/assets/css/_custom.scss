@@ -76,7 +76,7 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
       @include absolute-setting(3.5rem, auto, 0, auto, translate(50%, 50%));
       @include border(var(--cafe-color-brown), 0.2rem, 50%);
       @include style-color(none, var(--cafe-color-white));
-      padding: var(--cafe--padding-xxs);
+      padding: var(--cafe--padding-xxxs);
       transition: all 0.35s ease-in-out;
       cursor: pointer;
       z-index: 50;
@@ -124,6 +124,7 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
     }
     ul {
       display: grid;
+      justify-content: center;
       gap: 1.5rem;
     }
   }

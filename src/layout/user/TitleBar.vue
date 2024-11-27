@@ -56,7 +56,7 @@ onUnmounted(() => {
     <slot />
     <div class="col-auto d-flex">
       <DropDown
-        v-model="showStore.sLanguage"
+        v-model="showStore.language"
         :data="homeLanguage"
         :dropdown="dropdown"
       />
