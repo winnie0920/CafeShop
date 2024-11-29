@@ -1,31 +1,33 @@
 <script setup>
-import { homeMenu } from "@/json/User";
-
-const dropdown = ref({
-  title: "餐點分類",
-  drop: "meal",
-  width: "10rem",
+const props = defineProps({
+  dropdown: Object,
+  data: Object,
 });
-
-const addMeal = () => {};
-
+import cookie from "@/utils/cookies";
 const showStore = useShowStore();
+const alertStore = useAlertStore();
+const router = useRouter();
+
+const loginOut = () => {
+  alertStore.pushMsg("Common-Ok", "登出成功", "brown");
+  router.push({ name: "LoginView" });
+  cookie.removeAllToken();
+};
 </script>
 
 <template>
-  <header class="row justify-content-end d-flex">
-    <div class="col-auto d-flex">
+  <header class="row justify-content-end d-flex gap-3">
+    <slot name="refresh" />
+    <div class="col-auto d-flex p-0">
       <DropDown
-        v-model="showStore.meal"
-        :data="homeMenu"
-        :dropdown="dropdown"
+        v-model="showStore[props.dropdown.drop]"
+        :data="data"
+        :dropdown="props.dropdown"
       />
     </div>
-    <div class="col-auto d-flex">
-      <ConfirmBtn title="新增餐點" iconName="User-Add" @click="addMeal" />
-    </div>
-    <div class="col-auto d-flex">
-      <div class="logout__container"></div>
+    <slot name="add" />
+    <div class="col-auto d-flex p-0">
+      <ConfirmBtn title="登出" iconName="User-Logout" @click="loginOut" />
     </div>
   </header>
 </template>
@@ -33,7 +35,7 @@ const showStore = useShowStore();
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
 header {
-  background-color: var(--cafe-color-bisque);
+  @include style-color(transparent, var(--cafe-color-bisque));
   padding: 3rem 0 1.5rem 0;
 }
 
@@ -42,6 +44,17 @@ header {
     @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
     @include border(var(--cafe-color-brown), 0.1rem);
     padding: var(--cafe--padding-xs);
+  }
+  &__btn {
+    @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+    gap: 0.5rem;
+    svg {
+      @include size(1.5rem);
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        color: var(--cafe-color-brown-lighter);
+      }
+    }
   }
 }
 </style>

@@ -7,8 +7,8 @@ const props = defineProps({
   title: {
     type: String,
   },
-  color: {
-    type: String,
+  styles: {
+    type: [String, Array],
   },
 });
 
@@ -16,11 +16,7 @@ const emit = defineEmits(["click"]);
 </script>
 
 <template>
-  <button
-    class="drop__btn"
-    :class="{ gray: props.color === 'gray', brown: props.color === 'brown' }"
-    @click="$emit('click')"
-  >
+  <button class="drop__btn" :class="styles" @click="$emit('click')">
     <SvgIcon
       v-show="props.iconName"
       :iconName="props.iconName"
@@ -34,58 +30,45 @@ const emit = defineEmits(["click"]);
 @use "@/assets/css/mixin" as *;
 .drop {
   &__btn {
-    display: flex;
-    align-items: center;
+    @include border;
+    @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+    @include flex-center(row, center, baseline);
     padding: var(--cafe--padding-xs) 1.25rem;
     gap: 0.5rem;
-    color: var(--cafe-color-brown);
-    border: 0.1rem solid var(--cafe-color-brown);
-    background-color: var(--cafe-color-white);
-    border-radius: var(--cafe-radius-md);
-    transition: all 0.1s ease-in-out;
+    transition: all 0.2s ease-in-out;
     svg {
-      width: 1.5rem;
-      height: 1.5rem;
-      color: var(--cafe-color-brown);
-      transition: all 0.1s ease-in-out;
+      @include size(1.6rem, 1.5rem);
     }
     h5 {
       line-height: 1;
     }
-    &:active {
-      color: var(--cafe-color-white);
-      border: 0.1rem solid var(--cafe-color-brown);
-      background-color: var(--cafe-color-brown);
-      svg {
-        color: var(--cafe-color-white);
-      }
+    &:hover {
+      @include style-color;
+      @include border;
     }
   }
 }
 
 .gray {
-  border: 0.1rem solid var(--cafe-color-gray-darken) !important;
-  color: var(--cafe-color-white) !important;
-  background-color: var(--cafe-color-gray-darken) !important;
-  svg {
-    color: var(--cafe-color-gray-darken) !important;
-  }
-  &:active {
-    color: var(--cafe-color-gray-darken) !important;
-    border: 0.1rem solid var(--cafe-color-gray-darken) !important;
-    background-color: var(--cafe-color-white) !important;
+  @include style-color(var(--cafe-color-white), var(--cafe-color-gray-darken));
+  @include border(var(--cafe-color-gray-darken));
+  &:hover {
+    @include style-color(
+      var(--cafe-color-gray-darken),
+      var(--cafe-color-white)
+    );
+    @include border(var(--cafe-color-gray-darken));
   }
 }
 .brown {
-  color: var(--cafe-color-white) !important;
-  background-color: var(--cafe-color-brown) !important;
-  svg {
-    color: var(--cafe-color-white) !important;
+  @include style-color;
+  &:hover {
+    @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+    @include border;
   }
-  &:active {
-    color: var(--cafe-color-brown) !important;
-    border: 0.1rem solid var(--cafe-color-brown) !important;
-    background-color: var(--cafe-color-white) !important;
-  }
+}
+
+.circle {
+  padding: var(--cafe--padding-xxxs);
 }
 </style>

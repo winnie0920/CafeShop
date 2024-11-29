@@ -211,12 +211,12 @@ const closeShow = (val) => {
       </div>
       <div class="new__container flex-row mb-4 mb-lg-0">
         <ConfirmBtn
-          color="brown"
+          styles="brown"
           class="ms-auto me-3"
           title="送出訂單"
           @click="sendOrder()"
         />
-        <ConfirmBtn color="gray" title="取消" @click="sendBack()" />
+        <ConfirmBtn styles="gray" title="取消" @click="sendBack()" />
       </div>
     </div>
   </section>

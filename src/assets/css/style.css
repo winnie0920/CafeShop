@@ -185,7 +185,7 @@ hr {
 .popup__container svg:hover, .menu__image button:hover {
   color: var(--cafe-color-white);
   background-color: var(--cafe-color-brown);
-  transition: all 0.1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .new__container, .popup__container, .popup__header, .popup__footer {
@@ -200,7 +200,7 @@ hr {
   background: var(--cafe-color-brown);
   color: var(--cafe-color-white);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
-  transition: all 0.1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 .popup__footer-button:hover, .User__shop-btn:hover {
   background: var(--cafe-color-white);
@@ -359,10 +359,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   opacity: 0;
 }
 .sidebar__container {
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-  justify-content: baseline;
   width: 12rem;
   height: 100%;
   position: relative;
@@ -377,8 +373,10 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 .sidebar__container ul {
   display: grid;
-  justify-content: center;
   gap: 1.5rem;
+}
+.sidebar__container ul a {
+  margin-left: 0.5rem;
 }
 .sidebar__title {
   display: flex;
@@ -694,7 +692,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .menu__image button {
   width: 2.5rem;
   height: 2.5rem;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.2s ease-in-out;
   background-color: var(--cafe-color-white);
   border-radius: var(--cafe-radius-lg);
 }
@@ -709,7 +707,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   color: var(--cafe-color-brown);
   border-radius: var(--cafe-radius-lg);
   background-color: var(--cafe-color-white);
-  transition: all 0.1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 .menu__btn-content {
   display: flex;

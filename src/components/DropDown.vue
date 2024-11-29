@@ -95,16 +95,16 @@ onBeforeUnmount(() => {
     cursor: pointer;
     svg {
       @include size(100%);
-      @include style-color(var(--cafe-color-brown), none);
+      @include style-color(var(--cafe-color-brown), transparent);
       aspect-ratio: 1 / 1;
     }
   }
   &__svg-end {
-    @include style-color(var(--cafe-color-brown), none);
+    @include style-color(var(--cafe-color-brown), transparent);
     transform: rotate(90deg) translateX(-15%);
   }
   &__title {
-    @include style-color(var(--cafe-color-brown-lighter), none);
+    @include style-color(var(--cafe-color-brown-lighter), transparent);
 
     grid-column: 1/-1;
   }

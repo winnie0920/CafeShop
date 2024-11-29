@@ -18,7 +18,7 @@ const iconName = computed(() => {
 </script>
 
 <template>
-  <svg :style="iconStyle" aria-hidden="true">
+  <svg :style="iconStyle" fill="currentColor" aria-hidden="true">
     <use :xlink:href="iconName" />
   </svg>
 </template>

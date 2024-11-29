@@ -111,7 +111,7 @@ onMounted(() => {
         />
         <div class="mt-4">
           <ConfirmBtn
-            color="brown"
+            styles="brown"
             class="justify-content-center w-100"
             title="登入"
             @click="login()"

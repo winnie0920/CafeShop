@@ -1,17 +1,18 @@
 // 後台側邊欄
 export const adminSide = [
   {
-    to: { name: "AdminMeal" },
-    iconName: "User-Meal",
-    label: "MEAL",
-    name: "餐點分類",
-  },
-  {
     to: { name: "AdminTheme" },
     iconName: "User-Theme",
     label: "THEME",
     name: "主題分類",
   },
+  {
+    to: { name: "AdminMeal" },
+    iconName: "User-Meal",
+    label: "MEAL",
+    name: "餐點分類",
+  },
+
   {
     to: { name: "AdminAlter" },
     iconName: "User-Alter",

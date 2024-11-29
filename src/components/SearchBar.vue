@@ -43,9 +43,13 @@ const search = computed({
     width: 100%;
     padding-right: var(--cafe--padding-xs);
     background-color: var(--cafe-color-white);
+    &:hover,
+    &:focus {
+      border: 0.1rem solid var(--cafe-color-brown);
+    }
   }
   &__input {
-    padding: var(--cafe--padding-xs) 1.5rem;
+    padding: 0.8rem 1.5rem;
     flex-grow: 1;
     line-height: 1.8;
     color: var(--cafe-color-brown);
@@ -55,6 +59,7 @@ const search = computed({
       transition: all 0.35s ease-in-out;
       color: var(--cafe-color-brown-lighter);
     }
+    &:hover,
     &:focus {
       &::placeholder {
         color: var(--cafe-color-brown);

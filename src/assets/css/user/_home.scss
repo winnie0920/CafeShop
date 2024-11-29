@@ -233,7 +233,7 @@
     button {
       width: 2.5rem;
       height: 2.5rem;
-      transition: all 0.1s ease-in-out;
+        transition: all 0.2s ease-in-out;
       background-color: var(--cafe-color-white);
       border-radius: var(--cafe-radius-lg);
       &:hover {
@@ -252,7 +252,7 @@
     color: var(--cafe-color-brown);
     border-radius: var(--cafe-radius-lg);
     background-color: var(--cafe-color-white);
-    transition: all 0.1s ease-in-out;
+      transition: all 0.2s ease-in-out;
     &-content {
       display: flex;
       justify-content: end;

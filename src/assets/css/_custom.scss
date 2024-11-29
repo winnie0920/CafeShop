@@ -112,7 +112,6 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
     }
   }
   &__container {
-    @include flex-center(column, baseline, baseline);
     @include size(12rem, 100%);
     position: relative;
     padding: var(--cafe--padding-xxl);
@@ -124,8 +123,10 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
     }
     ul {
       display: grid;
-      justify-content: center;
       gap: 1.5rem;
+      a{
+        margin-left: 0.5rem;
+      }
     }
   }
   &__title {

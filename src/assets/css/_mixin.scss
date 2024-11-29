@@ -8,7 +8,7 @@
 %base-btn-hover {
   color: var(--cafe-color-white);
   background-color: var(--cafe-color-brown);
-  transition: all 0.1s ease-in-out;
+   transition: all 0.2s ease-in-out;
 }
 
 %popup-base-setting {
@@ -22,7 +22,7 @@
   background: var(--cafe-color-brown);
   color: var(--cafe-color-white);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
-  transition: all 0.1s ease-in-out;
+   transition: all 0.2s ease-in-out;
   &:hover {
     background: var(--cafe-color-white);
     color: var(--cafe-color-brown);
