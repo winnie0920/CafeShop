@@ -48,6 +48,13 @@ export const routes = [
         path: "meal",
         name: "AdminMeal",
         component: () => import("@/views/admin/AdminMeal.vue"),
+        children: [
+          {
+            path: ":checkoutId",
+            name: "AdminMealDetail",
+            component: () => import("@/views/admin/AdminMealDetail.vue"),
+          },
+        ],
       },
       {
         path: "theme",

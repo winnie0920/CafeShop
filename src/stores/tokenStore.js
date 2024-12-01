@@ -92,7 +92,6 @@ export const useTokenStore = defineStore("token", {
       } else {
         // 3.如果 Refresh Token 無效或消失
         cookies.removeAllToken();
-        alertStore.pushMsg("Common-Error", "Token都已無效，請重新登入");
         return false;
       }
     },

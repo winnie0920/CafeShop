@@ -263,8 +263,6 @@ const closeShow = (val) => {
       flex-direction: column;
     }
   }
-  &__floor {
-  }
 }
 .popup__text-content {
   display: flex;

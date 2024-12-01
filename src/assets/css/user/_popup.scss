@@ -52,8 +52,8 @@
     z-index: 2;
 
     h2 {
-      font-size: var(--cafe--font-xl);
-      color: var(--eip-color-gray);
+      font-size: var(--cafe--font-md);
+      color: var(--cafe-color-gray-darken);
       margin: 0;
     }
     svg {
@@ -124,7 +124,6 @@
   }
   &__text {
     &-option {
-
       padding: 0 var(--cafe--padding-lg);
       color: var(--cafe-color-brown);
       line-height: 1.7;

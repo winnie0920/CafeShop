@@ -830,8 +830,8 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   z-index: 2;
 }
 .popup__header h2 {
-  font-size: var(--cafe--font-xl);
-  color: var(--eip-color-gray);
+  font-size: var(--cafe--font-md);
+  color: var(--cafe-color-gray-darken);
   margin: 0;
 }
 .popup__header svg {
