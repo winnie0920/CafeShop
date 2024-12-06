@@ -993,4 +993,21 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 .new__strong-text {
   font-weight: 600;
+}
+
+.form__container {
+  color: var(--cafe-color-brown);
+  background: var(--cafe-color-white);
+  border: 0.1rem solid transparent;
+  border-radius: var(--cafe-radius-md);
+  padding: var(--cafe--padding-sm);
+  display: grid;
+  -moz-column-gap: 4rem;
+       column-gap: 4rem;
+  grid-template-rows: 25rem max-content;
+  grid-template-columns: 4fr 6fr;
+}
+.form__UploadImg {
+  width: 100%;
+  height: 100%;
 }/*# sourceMappingURL=style.css.map */

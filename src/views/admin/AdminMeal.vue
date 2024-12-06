@@ -57,7 +57,6 @@ const addMeal = () => {
         </div>
       </template>
     </AdminTitleBar>
-
     <AdminMealCard :data="homeMenu" />
   </div>
 </template>

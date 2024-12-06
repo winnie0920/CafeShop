@@ -1,1 +1,16 @@
 @use "../mixin" as *;
+
+.form {
+    &__container {
+      @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+      @include border(transparent);
+      padding: var(--cafe--padding-sm);
+      display: grid;
+      column-gap: 4rem;
+      grid-template-rows: 25rem max-content;
+      grid-template-columns: 4fr 6fr;
+    }
+    &__UploadImg {
+      @include size(100%, 100%);
+    }
+  }

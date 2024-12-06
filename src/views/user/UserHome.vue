@@ -181,9 +181,6 @@ onBeforeUnmount(() => {
   background-color: var(--cafe-color-white);
 }
 
-.fixed-button {
-}
-
 .fixed-button:hover {
   background-color: #0056b3;
 }

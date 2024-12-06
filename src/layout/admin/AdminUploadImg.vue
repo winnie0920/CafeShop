@@ -9,6 +9,7 @@ const alertStore = useAlertStore();
 const menuStore = userMenuStore();
 const imageStore = useImageStore();
 const showStore = useShowStore();
+const fileInput = ref(null);
 
 // 驗證圖片格式
 const validImg = (file) => {
@@ -23,14 +24,16 @@ const validImg = (file) => {
 // 更新圖片
 const changeImg = (event) => {
   const file = event.target.files[0];
-  if (validImg(file))
-    if (file) {
-      localUploadImg(file);
-    }
+  const input = fileInput.value;
+  if (file && validImg(file)) {
+    localUploadImg(file);
+  }
+  if (input) input.value = "";
 };
 
 // 本地新增圖片
 const localUploadImg = (file) => {
+  imageStore.clearImage();
   const reader = new FileReader();
   reader.onload = () => {
     imageStore.localUploadImg = reader.result;
@@ -41,10 +44,10 @@ const localUploadImg = (file) => {
 // 移除圖片
 const removeImg = () => {
   showStore.togglePopupShow("meal", true);
-  console.log("刪除");
 };
 
 const confirmPopup = () => {
+  imageStore.clearImage();
   showStore.togglePopupShow("meal", false);
 };
 
@@ -67,6 +70,7 @@ onMounted(() => {
     type="file"
     id="uploadImg"
     name="uploadImg"
+    ref="fileInput"
     accept=".jpg, .jpeg, .png, .gif"
     @change="changeImg"
   />
@@ -86,13 +90,12 @@ onMounted(() => {
     </label>
     <div
       v-else
-      class="h-100 d-flex gap-2 flex-column justify-content-center align-items-center"
+      class="h-100 d-flex gap-2 flex-column justify-content-center align-items-center uploadImg__tip"
     >
       <SvgIcon icon-name="User-Camera"></SvgIcon>
       <p>請選擇上傳圖片</p>
     </div>
   </label>
-  {{ showStore.popupShow.meal }}
   <UserPopup
     :show="showStore.popupShow.meal"
     title="送出訂單"
@@ -120,16 +123,6 @@ onMounted(() => {
     @include border(transparent, 0);
     overflow: hidden;
     cursor: pointer;
-    &:has(div) {
-      @include style-color(var(--cafe-color-white), var(--cafe-color-gray));
-      transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-    }
-    &:hover:has(div) {
-      @include style-color(
-        var(--cafe-color-white),
-        var(--cafe-color-gray-darken)
-      );
-    }
     label {
       @include size(100%);
       @include border(transparent, 0);
@@ -156,6 +149,16 @@ onMounted(() => {
     }
     svg {
       @include size(5rem);
+    }
+  }
+  &__tip {
+    @include style-color(var(--cafe-color-white), var(--cafe-color-gray));
+    transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+    &:hover {
+      @include style-color(
+        var(--cafe-color-white),
+        var(--cafe-color-gray-darken)
+      );
     }
   }
 }
