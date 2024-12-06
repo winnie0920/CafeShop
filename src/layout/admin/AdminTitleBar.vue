@@ -1,7 +1,10 @@
 <script setup>
 const props = defineProps({
-  dropdown: Object,
   data: Object,
+  dropdown: {
+    type: [Object, null],
+    required: false,
+  },
 });
 import cookie from "@/utils/cookies";
 const showStore = useShowStore();
@@ -20,6 +23,7 @@ const loginOut = () => {
     <slot name="refresh" />
     <div class="col-auto d-flex p-0">
       <DropDown
+        v-if="props.dropdown !== null"
         v-model="showStore[props.dropdown.drop]"
         :data="data"
         :dropdown="props.dropdown"
@@ -35,6 +39,7 @@ const loginOut = () => {
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
 header {
+  height: 9.9rem;
   @include style-color(transparent, var(--cafe-color-bisque));
   padding: 3rem 0 1.5rem 0;
 }

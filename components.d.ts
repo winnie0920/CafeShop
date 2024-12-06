@@ -16,6 +16,7 @@ declare module 'vue' {
     AdminSide: typeof import('./src/layout/admin/AdminSide.vue')['default']
     AdminTheme: typeof import('./src/views/admin/AdminTheme.vue')['default']
     AdminTitleBar: typeof import('./src/layout/admin/AdminTitleBar.vue')['default']
+    AdminUploadImg: typeof import('./src/layout/admin/AdminUploadImg.vue')['default']
     AlertMsg: typeof import('./src/components/AlertMsg.vue')['default']
     CheckInput: typeof import('./src/components/CheckInput.vue')['default']
     ConfirmBtn: typeof import('./src/components/ConfirmBtn.vue')['default']

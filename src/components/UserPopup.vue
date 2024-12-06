@@ -59,13 +59,13 @@ const confirmPopup = () => {
         </div>
         <footer class="popup__footer" :class="{ 'none-radius ': isFull }">
           <slot name="footer"></slot>
-          <button
+          <div
             v-if="props.button"
             class="ms-auto popup__footer-button"
             @click="confirmPopup()"
           >
             {{ props.button }}
-          </button>
+          </div>
         </footer>
       </div>
     </div>

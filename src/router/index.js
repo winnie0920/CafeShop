@@ -50,7 +50,7 @@ export const routes = [
         component: () => import("@/views/admin/AdminMeal.vue"),
         children: [
           {
-            path: ":checkoutId",
+            path: "detail",
             name: "AdminMealDetail",
             component: () => import("@/views/admin/AdminMealDetail.vue"),
           },

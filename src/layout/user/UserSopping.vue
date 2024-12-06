@@ -33,7 +33,7 @@ const findSelectOption = (selected) => {
           v-for="m in menuStore.menuSelect"
           :key="`${m.menuId}-${m.childId}`"
         >
-          <img :src="menuStore.getImageUrl(m.detail.image)" alt="" />
+          <img :src="menuStore.getImageUrl(m.detail.image)" alt="shopImage" />
           <div
             class="d-flex flex-column justify-content-center gap-3 ms-3 flex-grow-1"
           >

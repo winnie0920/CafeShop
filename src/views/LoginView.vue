@@ -82,7 +82,7 @@ onMounted(() => {
 <template>
   <div class="login__container">
     <!-- 這裡是視圖的內容 -->
-    <img src="../assets/icons/Logo-coffee.png" alt="" />
+    <img src="../assets/icons/Logo-coffee.png" alt="loginLogo" />
     <div class="new__container">
       <div class="check__inputBox">
         <CheckInput

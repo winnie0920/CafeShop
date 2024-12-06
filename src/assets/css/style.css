@@ -863,6 +863,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   letter-spacing: 0.2rem;
   align-items: center;
   background-color: var(--cafe-color-brown) !important;
+  cursor: pointer;
 }
 .popup__footer-button:hover {
   background-color: var(--cafe-color-white) !important;

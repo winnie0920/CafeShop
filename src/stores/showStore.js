@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useShowStore = defineStore("web", {
+export const useShowStore = defineStore("show", {
   state: () => ({
     language: { id: -1, name: "請選擇" },
     meal: { id: -1, name: "請選擇" },
@@ -10,7 +10,7 @@ export const useShowStore = defineStore("web", {
         language: false,
       },
     ],
-    popupShow: { menu: false, check: false, shopping: false },
+    popupShow: { menu: false, check: false, shopping: false, meal: false },
   }),
 
   // 定義 getters

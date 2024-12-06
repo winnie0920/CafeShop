@@ -7,7 +7,7 @@ import { homeSide } from "@/json/User";
     <div class="sidebar__head">
       <router-link :to="{ name: 'UserHome' }">
         <div class="sidebar__title">
-          <img src="@/assets/icons/Logo-coffee.png" alt="" />
+          <img src="@/assets/icons/Logo-coffee.png" alt="UserLogo" />
         </div>
       </router-link>
       <ul>

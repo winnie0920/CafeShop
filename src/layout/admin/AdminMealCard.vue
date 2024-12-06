@@ -6,9 +6,16 @@ const menuStore = userMenuStore();
 const showStore = useShowStore();
 const alertStore = useAlertStore();
 const router = useRouter();
+const route = useRoute();
 
-const popupMeal = () => {
-  router.push({ name: "AdminMealDetail" });
+const detailData = ref(null);
+
+const popupMeal = (c, d) => {
+  detailData.value = c;
+  router.push({
+    name: "AdminMealDetail",
+    query: { parent: d.id, id: c.id },
+  });
 };
 
 const alertTrash = (detail) => {
@@ -28,35 +35,40 @@ const confirmPopup = () => {
 const closeShow = (val) => {
   showStore.togglePopupShow("check", val);
 };
+
+//判斷路徑是否為餐點明細頁面
+const isMealDetail = computed(() => route.path === "/admin/meal/detail");
 </script>
 
 <template>
-  <div v-for="d in props.data" :key="d.id">
-    <h4 class="admin__title" v-if="d.children.length > 0">{{ d.name }}</h4>
-    <div class="admin__container">
-      <div v-for="c in d.children" :key="c.index" class="admin__card">
-        <img :src="menuStore.getImageUrl(c.image)" alt="" />
-        <div class="d-flex justify-content-between text-center">
-          <h5>{{ c.name }}</h5>
-          <h6>$ {{ c.price }}</h6>
-        </div>
-        <div class="d-flex justify-content-end gap-2 position-relative">
-          <div class="admin__start">
-            <p class="hover-text">已啟用</p>
-            <p v-if="false" class="hover-text">未啟用</p>
-            <SvgIcon iconName="Common-Ok"></SvgIcon>
-            <SvgIcon v-if="false" iconName="Common-No"></SvgIcon>
+  <div v-if="!isMealDetail">
+    <div v-for="d in props.data" :key="d.id">
+      <h4 class="admin__title" v-if="d.children.length > 0">{{ d.name }}</h4>
+      <div class="admin__container">
+        <div v-for="c in d.children" :key="c.index" class="admin__card">
+          <img :src="menuStore.getImageUrl(c.image)" alt="mealImage" />
+          <div class="d-flex justify-content-between text-center">
+            <h5>{{ c.name }}</h5>
+            <h6>$ {{ c.price }}</h6>
           </div>
-          <ConfirmBtn
-            :styles="['brown', 'circle']"
-            iconName="Common-Pencil"
-            @click="popupMeal"
-          />
-          <ConfirmBtn
-            :styles="['gray', 'circle']"
-            iconName="Common-Trash"
-            @click="alertTrash(c)"
-          />
+          <div class="d-flex justify-content-end gap-2 position-relative">
+            <div class="admin__start">
+              <p class="hover-text">已啟用</p>
+              <p v-if="false" class="hover-text">未啟用</p>
+              <SvgIcon iconName="Common-Ok"></SvgIcon>
+              <SvgIcon v-if="false" iconName="Common-No"></SvgIcon>
+            </div>
+            <ConfirmBtn
+              :styles="['brown', 'circle']"
+              iconName="Common-Pencil"
+              @click="popupMeal(c, d)"
+            />
+            <ConfirmBtn
+              :styles="['gray', 'circle']"
+              iconName="Common-Trash"
+              @click="alertTrash(c)"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -76,6 +88,7 @@ const closeShow = (val) => {
       </div>
     </template>
   </UserPopup>
+  <router-view v-if="isMealDetail" :data="detailData"></router-view>
 </template>
 
 <style scoped lang="scss">

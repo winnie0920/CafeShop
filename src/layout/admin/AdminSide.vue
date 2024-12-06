@@ -21,7 +21,7 @@ import { adminSide } from "@/json/Admin";
     <div class="sidebar__head">
       <router-link :to="{ name: 'AdminMeal' }">
         <div class="sidebar__title">
-          <img src="@/assets/icons/Logo.png" alt="" />
+          <img src="@/assets/icons/Logo.png" alt="adminLogo" />
           <div>
             <h4>CAFE</h4>
             <p>咖啡餐飲後台系統</p>
