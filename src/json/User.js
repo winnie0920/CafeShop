@@ -517,7 +517,7 @@ export const option = [
 export const payOption = [
   {
     type: "size",
-    name: "付款",
+    name: "付款項目",
     isSingleChoice: true,
     children: [
       { id: 1, name: "現金付款" },

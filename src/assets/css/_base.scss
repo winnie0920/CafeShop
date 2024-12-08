@@ -21,7 +21,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
 
   @media (max-width: 1366px) {
-    font-size: calc(10 / 16 * 100%);// 1rem = 10px
+    font-size: calc(10 / 16 * 100%); // 1rem = 10px
   }
   @media (max-width: 575.98px) {
     font-size: calc(8 / 16 * 100%);
@@ -29,10 +29,7 @@ html {
   @media (min-width: 1367px) {
     font-size: calc(12 / 16 * 100%);
   }
-  
 }
-
-
 
 body,
 #app {
@@ -95,8 +92,6 @@ img {
   display: block;
 }
 
-hr{
+hr {
   height: 0.5px !important;
 }
-
-

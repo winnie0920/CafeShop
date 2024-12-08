@@ -12,10 +12,7 @@ import { adminSide } from "@/json/Admin";
       name="menu"
     />
     <label for="menu">
-      <SvgIcon
-        icon-name="Common-Arrow-Circle"
-        :icon-style="{ height: '1.5rem', width: '1.5rem' }"
-      />
+      <SvgIcon icon-name="Common-Arrow-Circle-Down" />
     </label>
 
     <div class="sidebar__head">

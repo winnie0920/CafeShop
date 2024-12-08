@@ -39,8 +39,8 @@ const loginOut = () => {
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
 header {
-  height: 9.9rem;
   @include style-color(transparent, var(--cafe-color-bisque));
+  --bs-gutter-x: 0rem;
   padding: 3rem 0 1.5rem 0;
 }
 

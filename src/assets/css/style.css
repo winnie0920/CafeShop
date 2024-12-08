@@ -175,7 +175,7 @@ hr {
   height: 0.5px !important;
 }
 
-.popup__container svg, .popup__text-option textarea, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li {
+.form__text-option textarea, .popup__container svg, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
@@ -264,9 +264,6 @@ hr {
   width: 0.7rem;
   border-radius: 50%;
 }
-.check__and-mark {
-  border-radius: 10%;
-}
 .check__and-mark::after {
   width: 0.3rem;
   height: 50%;
@@ -331,7 +328,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   height: 2rem;
   color: var(--cafe-color-brown);
   background: none;
-  transform: rotate(180deg);
+  transform: rotate(270deg);
   transition: all 0.35s ease-in-out;
 }
 .sidebar__menu-icon:checked ~ .sidebar__head .sidebar__title {
@@ -339,7 +336,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   height: auto;
 }
 .sidebar__menu-icon:checked ~ label svg {
-  transform: rotate(0deg);
+  transform: rotate(90deg);
 }
 .sidebar__menu-icon:checked ~ .sidebar__head .sidebar__item {
   width: 100%;
@@ -844,6 +841,25 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .popup__content::-webkit-scrollbar {
   display: none;
 }
+.popup__img {
+  height: 205px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.popup__text-content {
+  display: grid;
+  padding: 0 var(--cafe--padding-lg);
+  gap: 0.5rem;
+  color: var(--cafe-color-brown);
+}
+.popup__text-content span {
+  font-size: var(--cafe--font-md);
+  color: var(--cafe-color-brown-lighter);
+}
+.popup__text-content p {
+  font-size: var(--cafe--font-xl);
+}
 .popup__footer {
   font-size: var(--cafe--font-lg);
   padding: var(--cafe--padding-xs) var(--cafe--padding-lg);
@@ -871,95 +887,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .popup__footer-button::after {
   content: ""; /* 移除最後一個字後的間距 */
   margin-right: -0.1em;
-}
-
-.popup__img {
-  height: 205px;
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.popup__text-content {
-  display: grid;
-  padding: 0 var(--cafe--padding-lg);
-  gap: 0.5rem;
-  color: var(--cafe-color-brown);
-}
-.popup__text-content span {
-  font-size: var(--cafe--font-md);
-  color: var(--cafe-color-brown-lighter);
-}
-.popup__text-content p {
-  font-size: var(--cafe--font-xl);
-}
-.popup__text-content h3 {
-  font-weight: 700;
-}
-.popup__text-option {
-  padding: 0 var(--cafe--padding-lg);
-  color: var(--cafe-color-brown);
-  line-height: 1.7;
-}
-.popup__text-option div {
-  display: flex;
-  justify-content: space-between;
-}
-.popup__text-option div div {
-  font: var(--cafe--font-lg);
-  background-color: var(--cafe-color-gray);
-  color: var(--cafe-color-gray-darken);
-  letter-spacing: 0.1rem;
-  height: 100%;
-  padding: 0.5rem;
-  border-radius: 1rem;
-}
-.popup__text-option h3,
-.popup__text-option h5 {
-  line-height: inherit;
-}
-.popup__text-option li {
-  display: flex;
-  font-size: var(--cafe--font-md);
-  margin-bottom: var(--cafe--margin-xs);
-}
-.popup__text-option h3 {
-  font-weight: 700;
-}
-.popup__text-option h5 {
-  font-size: var(--cafe--font-sm);
-  color: var(--cafe-color-brown-lighter);
-  margin-bottom: var(--cafe--margin-xxs);
-}
-.popup__text-option p {
-  margin-left: auto;
-  color: var(--cafe-color-gray-darken);
-}
-.popup__text-option input {
-  width: 0;
-  visibility: hidden;
-}
-.popup__text-option label {
-  display: flex;
-  align-items: center;
-  font-size: var(--cafe--font-md);
-  cursor: pointer;
-  position: relative;
-  padding-left: 2rem;
-}
-.popup__text-option textarea {
-  border-color: var(--cafe-color-brown-lighter);
-  padding: var(--cafe--padding-xxxs);
-  font-size: var(--cafe--font-lg);
-  color: var(--cafe-color-brown);
-  resize: none;
-}
-.popup__text-option textarea:focus {
-  outline: none;
-  border-color: var(--cafe-color-brown); /* 聚焦時的邊框顏色 */
-}
-.popup__message-error {
-  color: var(--cafe-color-red-darken) !important;
-  background-color: var(--cafe-color-red) !important;
 }
 
 @media (min-width: 991px) {
@@ -1004,10 +931,91 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   display: grid;
   -moz-column-gap: 4rem;
        column-gap: 4rem;
-  grid-template-rows: 25rem max-content;
+  grid-template-rows: 22rem max-content;
   grid-template-columns: 4fr 6fr;
 }
 .form__UploadImg {
   width: 100%;
   height: 100%;
+}
+
+@media (max-width: 991px) {
+  .form__container {
+    grid-template-columns: 5fr 5fr;
+  }
+}
+.form__text-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.form__text-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+.form__text-option {
+  padding: 0 var(--cafe--padding-lg);
+  color: var(--cafe-color-brown);
+  line-height: 1.7;
+}
+.form__text-option div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form__text-option div div {
+  font-size: var(--cafe--font-sm);
+  background-color: var(--cafe-color-gray);
+  color: var(--cafe-color-gray-darken);
+  letter-spacing: 0.1rem;
+  height: 100%;
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+.form__text-option h3,
+.form__text-option h5 {
+  line-height: inherit;
+}
+.form__text-option li {
+  display: flex;
+  font-size: var(--cafe--font-md);
+  margin-bottom: var(--cafe--margin-xs);
+}
+.form__text-option h3 {
+  font-weight: 700;
+}
+.form__text-option h5 {
+  font-size: var(--cafe--font-sm);
+  color: var(--cafe-color-brown-lighter);
+  margin-bottom: var(--cafe--margin-xxs);
+}
+.form__text-option p {
+  margin-left: auto;
+  color: var(--cafe-color-gray-darken);
+}
+.form__text-option input {
+  width: 0;
+  visibility: hidden;
+}
+.form__text-option label {
+  display: flex;
+  align-items: center;
+  font-size: var(--cafe--font-md);
+  cursor: pointer;
+  position: relative;
+  padding-left: 2rem;
+}
+.form__text-option textarea {
+  border-color: var(--cafe-color-brown-lighter);
+  padding: var(--cafe--padding-xxxs);
+  font-size: var(--cafe--font-lg);
+  color: var(--cafe-color-brown);
+  resize: none;
+}
+.form__text-option textarea:focus {
+  outline: none;
+  border-color: var(--cafe-color-brown);
+}
+.form__message-error {
+  color: var(--cafe-color-red-darken) !important;
+  background-color: var(--cafe-color-red) !important;
 }/*# sourceMappingURL=style.css.map */

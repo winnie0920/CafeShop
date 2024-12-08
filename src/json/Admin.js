@@ -31,8 +31,21 @@ export const adminSide = [
 export const loginOption = [
   {
     type: "remember",
-    isSingleChoice: true,
+    isSingleChoice: false,
     children: [{ id: 1, name: "記住帳號？" }],
+  },
+];
+
+// 是否販售
+export const choiceOption = [
+  {
+    name: "是否販售？",
+    type: "sale",
+    isSingleChoice: true,
+    children: [
+      { id: 1, name: "是" },
+      { id: 2, name: "否" },
+    ],
   },
 ];
 

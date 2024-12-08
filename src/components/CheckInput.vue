@@ -19,37 +19,41 @@ onMounted(() => {
 
 <template>
   <!-- input 或 password -->
-  <template v-if="type === 'input' || type === 'password'">
-    <label :style="props.style" :for="id" class="form-label">{{ name }}</label>
+  <div v-if="type === 'input' || type === 'password'" class="form__text-grid">
+    <label :style="props.style" :for="id" class="form__text-label">{{
+      name
+    }}</label>
     <input
-      class="mb-3"
       :type="type === 'input' ? 'text' : 'password'"
       :id="id"
       :placeholder="`請輸入${name}`"
       v-model="formStore.choice[id]"
     />
-  </template>
+  </div>
 
   <!-- textarea -->
-  <template v-if="type === 'textarea'">
-    <label :style="props.style" :for="id" class="form-label">{{ name }}</label>
+  <div v-if="type === 'textarea'" class="form__text-grid">
+    <label :style="props.style" :for="id" class="form__text-label">{{
+      name
+    }}</label>
     <textarea
-      class="mb-3"
       type="text"
       :id="id"
       :placeholder="`請輸入${name}`"
       v-model="formStore.choice[id]"
       rows="4"
     ></textarea>
-  </template>
+  </div>
 
   <!-- radio 或 checkbox -->
-  <div :style="props.style" class="popup__text-option" v-if="type === 'select'">
+  <div :style="props.style" class="form__text-option" v-if="type === 'select'">
     <ul v-for="o in option" :key="o.id">
       <div v-if="o.name">
-        <h3>{{ o.name }}選項</h3>
+        <h3 :style="{ fontSize: o.name.length > 2 ? '1.2rem' : '1.6rem' }">
+          {{ o.name }}
+        </h3>
         <div
-          :class="{ 'popup__message-error': formStore.errorMessages[o.type] }"
+          :class="{ 'form__message-error': formStore.errorMessages[o.type] }"
         >
           必填
         </div>
@@ -85,7 +89,4 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
-.form-label {
-  font-weight: 700;
-}
 </style>

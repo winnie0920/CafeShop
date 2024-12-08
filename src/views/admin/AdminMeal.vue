@@ -12,7 +12,6 @@ const dropdown = ref({
 
 //同步更新資料
 const refreshPage = () => {
-  window.location.reload();
   alertStore.pushMsg("Common-Ok", "同步餐點完畢", "brown");
 };
 

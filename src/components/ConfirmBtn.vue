@@ -39,9 +39,6 @@ const emit = defineEmits(["click"]);
     svg {
       @include size(1.6rem, 1.5rem);
     }
-    h5 {
-      line-height: 1;
-    }
     &:hover {
       @include style-color;
       @include border;
@@ -70,5 +67,12 @@ const emit = defineEmits(["click"]);
 
 .circle {
   padding: var(--cafe--padding-xxxs);
+}
+
+.small-button {
+  padding: var(--cafe--padding-xxs) 1rem;
+  h5 {
+    font-size: 1rem;
+  }
 }
 </style>

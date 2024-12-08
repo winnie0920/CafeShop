@@ -94,7 +94,7 @@ onMounted(() => {
           }"
         />
         <CheckInput
-          :style="{ marginTop: '1rem' }"
+          :style="{ marginTop: '0.5rem' }"
           :regex="/^[a-zA-Z0-9]{6,}$/"
           :basic="{
             type: 'password',
@@ -103,13 +103,13 @@ onMounted(() => {
           }"
         />
         <CheckInput
-          :style="{ padding: '0' }"
+          :style="{ padding: '0', marginTop: '1rem' }"
           :option="selectedOptions"
           :basic="{
             type: 'select',
           }"
         />
-        <div class="mt-4">
+        <div>
           <ConfirmBtn
             styles="brown"
             class="justify-content-center w-100"

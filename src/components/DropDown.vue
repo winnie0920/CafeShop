@@ -9,7 +9,7 @@ const props = defineProps({
     required: true,
   },
 });
-const { drop, width, iconName, title } = props.dropdown;
+const { drop, width, iconName, title, active } = props.dropdown;
 
 // 初始下拉式選單
 const model = defineModel({ default: { id: -1, name: "請選擇" } });
@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    :class="{ empty: !title, isSvgC: iconName }"
+    :class="{ empty: !title, isSvg: iconName, isActive: active }"
     class="list__container"
     @click.stop="toggleShow"
   >
@@ -56,14 +56,13 @@ onBeforeUnmount(() => {
       :iconName="iconName"
       class="list__svg-first"
     ></SvgIcon>
-    <h5
-      :class="{ isSvg: iconName }"
-      :style="{ width: width }"
-      class="list__text"
-    >
+    <h5 :style="{ width: width }">
       {{ showStore[drop].name }}
     </h5>
-    <SvgIcon class="list__svg-end" iconName="Common-Arrow-Circle"></SvgIcon>
+    <SvgIcon
+      class="list__svg-end"
+      iconName="Common-Arrow-Circle-Down"
+    ></SvgIcon>
 
     <transition name="move-up">
       <ul v-if="showStore.dropdownShow[drop]" class="list__drop">
@@ -82,7 +81,6 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 @use "@/assets/css/mixin" as *;
-
 .list {
   &__container {
     @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
@@ -91,22 +89,26 @@ onBeforeUnmount(() => {
     display: grid;
     padding: var(--cafe--padding-xs);
     grid-template-rows: repeat(2, max-content);
-    grid-template-columns: max-content 1rem;
+    grid-template-columns: max-content 1fr;
     cursor: pointer;
+    align-items: center;
+    transition: all 0.35s ease-in-out;
     svg {
-      @include size(100%);
       @include style-color(var(--cafe-color-brown), transparent);
       aspect-ratio: 1 / 1;
     }
   }
   &__svg-end {
+    @include size(2rem, 100%);
     @include style-color(var(--cafe-color-brown), transparent);
-    transform: rotate(90deg) translateX(-15%);
+    justify-self: end;
+  }
+  &__svg-first {
+    @include size(1.5rem, 100%);
   }
   &__title {
-    @include style-color(var(--cafe-color-brown-lighter), transparent);
-
     grid-column: 1/-1;
+    @include style-color(var(--cafe-color-brown-lighter), transparent);
   }
   &__drop {
     @include border(var(--cafe-color-brown), 0.1rem);
@@ -140,11 +142,13 @@ onBeforeUnmount(() => {
   grid-template-rows: auto;
   align-items: center;
 }
-
 .isSvg {
-  padding-left: 0.5rem;
+  grid-template-columns: 1fr max-content 1fr;
 }
-.isSvgC {
-  grid-template-columns: 1.5rem max-content 1rem;
+.isActive {
+  @include border(var(--cafe-color-brown-lighter), 0.1rem);
+  &:hover {
+    @include border(var(--cafe-color-brown), 0.1rem);
+  }
 }
 </style>

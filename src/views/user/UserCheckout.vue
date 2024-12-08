@@ -152,7 +152,6 @@ const closeShow = (val) => {
         <div class="mb-3 new__menu-content check__inputBox">
           <div class="col-md-6 col-12">
             <CheckInput
-              :style="{ fontSize: '1.7rem' }"
               :regex="/^[0-9]{1,2}$/"
               :basic="{
                 type: 'input',
@@ -171,7 +170,6 @@ const closeShow = (val) => {
             }"
           />
           <CheckInput
-            :style="{ fontSize: '1.7rem' }"
             :basic="{
               type: 'textarea',
               id: 'remark',
