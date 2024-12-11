@@ -11,7 +11,7 @@ const route = useRoute();
 const detailData = ref(null);
 
 const popupMeal = (c, d) => {
-  detailData.value = c;
+  detailData.value = { name: d.name, children: c };
   router.push({
     name: "AdminMealDetail",
     query: { parent: d.id, id: c.id },

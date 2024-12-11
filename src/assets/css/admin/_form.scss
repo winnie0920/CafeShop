@@ -1,17 +1,31 @@
 @use "../mixin" as *;
 
 .form {
+  &__frame{
+    display: grid;
+    overflow-y: auto; 
+    overflow-x: visible; 
+    scrollbar-width: none
+  }
   &__container {
     @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
     @include border(transparent);
     padding: var(--cafe--padding-sm);
     display: grid;
     column-gap: 4rem;
-    grid-template-rows: 22rem max-content;
+    grid-template-rows: 30rem max-content;
     grid-template-columns: 4fr 6fr;
   }
   &__UploadImg {
     @include size(100%, 100%);
+  }
+  &__add-controller{
+    @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+    @include border(transparent);
+      display: flex;
+      margin: 2rem 0;
+      padding: var(--cafe--padding-xs) var(--cafe--padding-sm);
+
   }
 }
 @media (max-width: 991px) {
@@ -24,14 +38,6 @@
 
 // input、select、textarea
 .form {
-  &__text-label {
-    font-size: 1.2rem;
-    font-weight: 700;
-  }
-  &__text-grid {
-    display: grid;
-    gap: 0.5rem;
-  }
   &__text {
     &-option {
       padding: 0 var(--cafe--padding-lg);
@@ -97,11 +103,49 @@
         }
       }
     }
+    &-label {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    &-grid {
+      display: grid;
+      gap: 0.5rem;
+    }
+    // input 自訂項目
+    &-tag {
+      @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+      @include border(var(--cafe-color-brown-lighter));
+      padding: 0.5rem;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+      &:hover {
+        @include border(var(--cafe-color-brown));
+      }
+      .content{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        div{
+          @include style-color;
+          @include border;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: var(--cafe--padding-xxxs) var(--cafe--padding-xxs);
+          font-size: var(--cafe--font-md);
+          button{
+            font-size: var(--cafe--font-sm);
+            @include size(1.6rem);
+            @include style-color(var(--cafe-color-brown),var(--cafe-color-white));
+            @include border;
+          }
+        }
+      }
+    }
   }
   &__message {
     &-error {
-      color: var(--cafe-color-red-darken) !important;
-      background-color: var(--cafe-color-red) !important;
+      @include style-color(var(--cafe-color-red-darken) !important, var(--cafe-color-red)!important);
     }
   }
 }

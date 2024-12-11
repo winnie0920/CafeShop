@@ -514,6 +514,18 @@ export const option = [
   },
 ];
 
+export const customOption = [
+  {
+    type: "custom",
+    isSingleChoice: false,
+    children: [
+      { id: 1, name: "份量" },
+      { id: 2, name: "麵體" },
+      { id: 3, name: "辣度" },
+    ],
+  },
+];
+
 export const payOption = [
   {
     type: "size",

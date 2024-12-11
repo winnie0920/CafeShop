@@ -4,6 +4,7 @@
 .check {
   &__and-radio,
   &__and-mark {
+
     @include size(1.5rem);
     @include border(var(--cafe-color-brown), 0.15rem, 50%);
     @include absolute-setting(50%, 0, auto, auto, translateY(-50%));
@@ -55,7 +56,7 @@ input[type="checkbox"]:not(:checked) + label .popup__text-selected::after {
       @include style-color(var(--cafe-color-brown), none);
       width: 100%;
       display: flex;
-      font-size: var(--cafe--font-sm);
+      font-size: var(--cafe--font-md);
       padding: var(--cafe--padding-xs);
       transition: all 0.35s ease-in-out;
       resize: none;

@@ -5,11 +5,14 @@ const props = defineProps({
     required: false,
   },
 });
-import { homeMenu } from "@/json/User";
+import { homeMenu, homeItem } from "@/json/User";
 import { choiceOption } from "@/json/Admin";
 // 菜單顯示的選項
 const selectedOptions = ref([...choiceOption]);
 const showStore = useShowStore();
+const formStore = userFormStore();
+
+const formParams = reactive({});
 
 // 當頁面加載時，data 是 null 檢查 URL
 // const isValidParams = () => {
@@ -24,17 +27,36 @@ const dropdown = ref({
   active: true,
 });
 
+//確認原本擁有的資料
+const checkData = () => {
+  if (props.data) {
+    const matchedItem = homeItem.find((h) => h.name === props.data.name);
+    showStore.meal = matchedItem;
+    const { name, price, description, count } = props.data.children;
+    Object.assign(formStore.choice, {
+      name,
+      price,
+      description,
+      count,
+      sale: 1,
+    });
+  }
+};
+
+const confirmForm = () => {};
+
 onMounted(() => {
-  //isValidParams();
+  console.log(props.data);
+  checkData();
 });
 </script>
 
 <template>
-  <div class="d-grid gap-3">
+  <div class="form__frame gap-3">
     <div class="form__container">
       <form method="post" enctype="multipart/form-data">
         <div class="form__UploadImg">
-          <AdminUploadImg :image="props.data?.image" />
+          <AdminUploadImg :image="props.data?.children.image" />
         </div>
       </form>
       <div class="check__inputBox">
@@ -42,7 +64,7 @@ onMounted(() => {
         <DropDown
           v-if="dropdown !== null"
           v-model="showStore[dropdown.drop]"
-          :data="homeMenu"
+          :data="homeItem"
           :dropdown="dropdown"
         />
         <CheckInput
@@ -59,6 +81,14 @@ onMounted(() => {
             type: 'input',
             id: 'price',
             name: '價錢',
+          }"
+        />
+        <CheckInput
+          :regex="/^[0-9]+$/"
+          :basic="{
+            type: 'input',
+            id: 'count',
+            name: '數量',
           }"
         />
       </div>
@@ -80,6 +110,14 @@ onMounted(() => {
       />
       <AddAlter />
     </div>
+  </div>
+  <div class="form__add-controller">
+    <ConfirmBtn
+      :styles="['brown']"
+      class="ms-auto"
+      title="確認"
+      @click="confirmForm()"
+    />
   </div>
 </template>
 

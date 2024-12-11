@@ -7,7 +7,7 @@ const props = defineProps({
   regex: RegExp,
 });
 
-const { type, id, name } = props.basic || {};
+const { type, id, name, noValid } = props.basic || {};
 
 onMounted(() => {
   if (id) {
@@ -53,6 +53,7 @@ onMounted(() => {
           {{ o.name }}
         </h3>
         <div
+          v-if="!noValid"
           :class="{ 'form__message-error': formStore.errorMessages[o.type] }"
         >
           必填
@@ -70,6 +71,7 @@ onMounted(() => {
               ? formStore.singleOption(o.type, c.id)
               : formStore.pluralOption(o.type, c.id)
           "
+          v-model="formStore.choice[o.type]"
         />
         <label
           :for="`${o.isSingleChoice ? 'radio' : 'checkbox'}-${o.type}-${c.id}`"

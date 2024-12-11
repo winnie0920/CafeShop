@@ -8,9 +8,16 @@ export const useShowStore = defineStore("show", {
     dropdownShow: [
       {
         language: false,
+        meal: false,
       },
     ],
-    popupShow: { menu: false, check: false, shopping: false, meal: false },
+    popupShow: {
+      menu: false,
+      check: false,
+      shopping: false,
+      meal: false,
+      option: false,
+    },
   }),
 
   // 定義 getters
