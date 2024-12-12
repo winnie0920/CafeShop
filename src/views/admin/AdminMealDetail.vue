@@ -6,13 +6,12 @@ const props = defineProps({
   },
 });
 import { homeMenu, homeItem } from "@/json/User";
-import { choiceOption } from "@/json/Admin";
+import { choiceOption, customOption } from "@/json/Admin";
 // 菜單顯示的選項
 const selectedOptions = ref([...choiceOption]);
 const showStore = useShowStore();
 const formStore = userFormStore();
-
-const formParams = reactive({});
+const route = useRoute();
 
 // 當頁面加載時，data 是 null 檢查 URL
 // const isValidParams = () => {
@@ -27,26 +26,42 @@ const dropdown = ref({
   active: true,
 });
 
+const getFormParam = () => ({
+  name: "",
+  price: "",
+  description: "",
+  count: 0,
+  sale: 1,
+  option: [],
+});
+
 //確認原本擁有的資料
 const checkData = () => {
-  if (props.data) {
+  if (route.query.id) {
     const matchedItem = homeItem.find((h) => h.name === props.data.name);
     showStore.meal = matchedItem;
-    const { name, price, description, count } = props.data.children;
+    const { name, price, description, count, option } =
+      props.data.children || getFormParam();
     Object.assign(formStore.choice, {
       name,
       price,
       description,
       count,
       sale: 1,
+      option,
     });
   }
 };
 
-const confirmForm = () => {};
+const confirmForm = () => {
+  let formParams = {
+    menuId: showStore.meal.id,
+    ...formStore.choice,
+  };
+};
 
 onMounted(() => {
-  console.log(props.data);
+  formStore.choice = getFormParam();
   checkData();
 });
 </script>
@@ -108,7 +123,7 @@ onMounted(() => {
           type: 'select',
         }"
       />
-      <AddAlter />
+      <AddAlter :allOption="customOption" />
     </div>
   </div>
   <div class="form__add-controller">

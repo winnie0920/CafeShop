@@ -99,3 +99,16 @@ export const adminMeal = [
     name: "冰沙",
   },
 ];
+
+//自訂項目
+export const customOption = [
+  {
+    type: "option",
+    isSingleChoice: false,
+    children: [
+      { id: "size", name: "份量" },
+      { id: "noddle", name: "麵體" },
+      { id: "spicy", name: "辣度" },
+    ],
+  },
+];

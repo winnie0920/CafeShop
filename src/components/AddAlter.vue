@@ -1,9 +1,14 @@
 <script setup>
-import { customOption } from "@/json/User";
+const props = defineProps({
+  allOption: {
+    type: Object,
+    required: false,
+  },
+});
 const formStore = userFormStore();
 const showStore = useShowStore();
 
-const sendOrder = () => {
+const addAlter = () => {
   showStore.togglePopupShow("option", true);
 };
 
@@ -11,11 +16,15 @@ const closeShow = () => {
   showStore.togglePopupShow("option", false);
 };
 
-const confirmPopup = () => {
-  showStore.togglePopupShow("option", false);
-};
-
 const removeOption = () => {};
+
+//檢驗自訂項目與預設項目是否相同
+const choiceAlter = () => {
+  if (!formStore.choice.option) return false;
+  return props.allOption[0].children.filter((i) => {
+    return formStore.choice.option.includes(i.id);
+  });
+};
 </script>
 
 <template>
@@ -27,13 +36,13 @@ const removeOption = () => {};
         class="ms-auto"
         iconName="Common-Add"
         title="添加自訂項目"
-        @click="sendOrder()"
+        @click="addAlter"
       />
     </div>
-    <div class="form__text-tag mb-3" @click="sendOrder">
-      <div class="content">
-        <div @click.stop>
-          <span>餐點</span>
+    <div class="form__text-tag mb-3" @click="addAlter">
+      <div class="content" v-if="choiceAlter()">
+        <div @click.stop v-for="c in choiceAlter()" :key="c.id">
+          <span>{{ c.name }}</span>
           <button class="remove-btn" @click="removeOption('food')">X</button>
         </div>
       </div>
@@ -45,14 +54,14 @@ const removeOption = () => {};
     title="添加自訂項目"
     button="確認"
     @close-show="closeShow"
-    @confirm-Popup="confirmPopup"
+    @confirm-Popup="closeShow"
     :style="{ width: '30rem', height: '30rem' }"
   >
     <template #main>
       <div class="popup__text-content">
         <CheckInput
           :style="{ padding: '0' }"
-          :option="customOption"
+          :option="allOption"
           :basic="{
             type: 'select',
             noValid: 'true',

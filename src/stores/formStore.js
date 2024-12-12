@@ -24,7 +24,7 @@ export const userFormStore = defineStore("select", {
     },
     // 更新多選
     pluralOption(type, id) {
-      if (!this.choice[type]) {
+      if (!Array.isArray(this.choice[type])) {
         this.choice[type] = [];
       }
       const index = this.choice[type].indexOf(id);

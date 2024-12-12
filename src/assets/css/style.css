@@ -1035,6 +1035,8 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   background: var(--cafe-color-white);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
   border-radius: var(--cafe-radius-md);
+  min-height: 4rem;
+  height: auto;
   padding: 0.5rem;
   transition: all 0.3s ease-in-out;
   cursor: pointer;

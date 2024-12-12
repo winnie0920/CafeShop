@@ -84,7 +84,7 @@ onMounted(() => {
     <!-- 這裡是視圖的內容 -->
     <img src="../assets/icons/Logo-coffee.png" alt="loginLogo" />
     <div class="new__container">
-      <div class="check__inputBox">
+      <form class="check__inputBox" @submit.prevent="login">
         <CheckInput
           :regex="/^[a-zA-Z0-9]{6,}$/"
           :basic="{
@@ -114,10 +114,10 @@ onMounted(() => {
             styles="brown"
             class="justify-content-center w-100"
             title="登入"
-            @click="login()"
+            type="submit"
           />
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>

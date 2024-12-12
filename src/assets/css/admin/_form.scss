@@ -115,6 +115,8 @@
     &-tag {
       @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
       @include border(var(--cafe-color-brown-lighter));
+      min-height: 4rem;
+      height: auto;
       padding: 0.5rem;
       transition: all 0.3s ease-in-out;
       cursor: pointer;

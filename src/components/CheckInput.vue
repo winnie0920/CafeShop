@@ -61,18 +61,29 @@ onMounted(() => {
       </div>
       <h5 v-if="o.name">{{ o.isSingleChoice ? "請擇一選擇" : "可多選擇" }}</h5>
       <li v-for="c in o.children" :key="c.id">
-        <input
-          :type="o.isSingleChoice ? 'radio' : 'checkbox'"
-          :id="`${o.isSingleChoice ? 'radio' : 'checkbox'}-${o.type}-${c.id}`"
-          :name="o.isSingleChoice ? o.type : undefined"
-          :value="c.id"
-          @change="
-            o.isSingleChoice
-              ? formStore.singleOption(o.type, c.id)
-              : formStore.pluralOption(o.type, c.id)
-          "
-          v-model="formStore.choice[o.type]"
-        />
+        <!-- 單選 -->
+        <template v-if="o.isSingleChoice">
+          <input
+            type="radio"
+            :id="`radio-${o.type}-${c.id}`"
+            :name="o.type"
+            :value="c.id"
+            @change="formStore.singleOption(o.type, c.id)"
+            v-model="formStore.choice[o.type]"
+          />
+        </template>
+
+        <!-- 複選 -->
+        <template v-else>
+          <input
+            type="checkbox"
+            :id="`checkbox-${o.type}-${c.id}`"
+            :value="c.id"
+            :checked="formStore.choice[o.type]?.includes(c.id)"
+            @change="formStore.pluralOption(o.type, c.id)"
+          />
+        </template>
+
         <label
           :for="`${o.isSingleChoice ? 'radio' : 'checkbox'}-${o.type}-${c.id}`"
         >

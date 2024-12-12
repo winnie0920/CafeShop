@@ -10,13 +10,22 @@ const props = defineProps({
   styles: {
     type: [String, Array],
   },
+  type: {
+    type: String,
+    required: false,
+  },
 });
 
 const emit = defineEmits(["click"]);
 </script>
 
 <template>
-  <button class="drop__btn" :class="styles" @click="$emit('click')">
+  <button
+    class="drop__btn"
+    :type="type"
+    :class="styles"
+    @click="$emit('click')"
+  >
     <SvgIcon
       v-show="props.iconName"
       :iconName="props.iconName"
