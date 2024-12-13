@@ -5,10 +5,10 @@ const props = defineProps({
     required: true,
   },
 });
-
 const menuStore = userMenuStore();
 const showStore = useShowStore();
 const formStore = userFormStore();
+const imageStore = useImageStore();
 const emit = defineEmits(["currentWatchChoose"]);
 
 // 菜單內容名稱、價錢
@@ -22,7 +22,7 @@ const closeShow = (val) => {
   showStore.togglePopupShow("menu", val);
 };
 
-//確認菜單明細
+// 確認菜單明細
 const confirmPopup = () => {
   occupy.value.option = { ...formStore.choice };
   occupy.value.detail = { ...selectedMenu.value };
@@ -80,7 +80,7 @@ const toggleMenu = (menuId, childId, price) => {
   showStore.togglePopupShow("menu", true);
 };
 
-// 點擊+號，添加 MenuSelect 數量及金額
+// 點擊 + 號，添加 menuSelect 數量及金額
 const addMenuSelect = (menuId, c) => {
   findMenu(menuId, c.id);
   if (selectedOptions.value.length > 0) {
@@ -90,7 +90,7 @@ const addMenuSelect = (menuId, c) => {
   }
 };
 
-//監聽childInformation 是否有option
+// 監聽 menuSelect 是否有自定義選項
 const checkoutOption = (m, c) => {
   return computed(() => {
     if (Array.isArray(menuStore.menuSelect)) {
@@ -107,20 +107,22 @@ const checkoutOption = (m, c) => {
   });
 };
 
+// 數量增加
 const increaseCount = () => {
   occupy.value.count += 1;
 };
 
+// 數量減少
 const decreaseCount = () => {
   if (occupy.value.count > 1) {
     occupy.value.count -= 1;
   }
 };
 
-//需監聽的整個高度
+// 需監聽的整個高度
 const scrollContainer = ref(null);
 
-//監聽目前滾動位置
+// 監聽目前滾動位置
 const watchChoose = () => {
   let selectId = null;
   let selectOffset = Infinity;
@@ -138,7 +140,7 @@ const watchChoose = () => {
   emit("currentWatchChoose", selectId);
 };
 
-//點擊滾動到指定位置
+// 點擊滾動到指定位置
 const clickChoose = (id) => {
   const targetElement = document.getElementById(id);
   if (targetElement) {
@@ -146,7 +148,7 @@ const clickChoose = (id) => {
   }
 };
 
-//暴露給父層
+// 暴露給UserHome使用
 defineExpose({ clickChoose });
 
 onMounted(() => {
@@ -175,7 +177,7 @@ onUnmounted(() => {
             <span v-if="c.description">{{ c.description }}</span>
           </div>
           <div class="menu__image">
-            <img :src="menuStore.getImageUrl(c.image)" alt="" />
+            <img :src="imageStore.getImageUrl(c.image)" alt="" />
             <transition name="opacity">
               <div
                 class="menu__btn"
@@ -234,7 +236,7 @@ onUnmounted(() => {
     <template #main>
       <img
         class="popup__img"
-        :src="menuStore.getImageUrl(selectedMenu.image)"
+        :src="imageStore.getImageUrl(selectedMenu.image)"
       />
       <div class="popup__text-content">
         <h3>{{ selectedMenu.name }}</h3>

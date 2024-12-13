@@ -11,6 +11,7 @@ const showStore = useShowStore();
 const alertStore = useAlertStore();
 const router = useRouter();
 
+//登出
 const loginOut = () => {
   alertStore.pushMsg("Common-Ok", "登出成功", "brown");
   router.push({ name: "LoginView" });

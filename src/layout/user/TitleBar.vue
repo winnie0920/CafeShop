@@ -4,6 +4,7 @@ const showStore = useShowStore();
 const router = useRouter();
 const menuStore = userMenuStore();
 
+// 下拉式選單
 const dropdown = ref({
   drop: "language",
   width: "5rem",
@@ -18,10 +19,10 @@ const updateWindowWidth = () => {
   isMobile.value = window.innerWidth <= 991;
 };
 
-//打開側邊欄
+// 打開側邊欄
 const clickMenu = () => {};
 
-//打開購物車
+// 打開購物車
 const clickShow = () => {
   if (isMobile.value) {
     showStore.togglePopupShow("shopping", true);
@@ -30,18 +31,19 @@ const clickShow = () => {
   }
 };
 
-//關閉購物車
+// 關閉購物車
 const closeShow = (val) => {
   showStore.togglePopupShow("shopping", val);
 };
 
-//確認訂單
+// 確認訂單
 const confirmPopup = () => {
   closeShow(false);
   menuStore.checkOrder(router);
 };
 
 onMounted(() => {
+  //監聽視口寬度的函數
   updateWindowWidth();
   window.addEventListener("resize", updateWindowWidth);
 });

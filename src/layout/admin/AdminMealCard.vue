@@ -2,7 +2,7 @@
 const props = defineProps({
   data: Object,
 });
-const menuStore = userMenuStore();
+const imageStore = useImageStore();
 const showStore = useShowStore();
 const alertStore = useAlertStore();
 const router = useRouter();
@@ -46,7 +46,7 @@ const isMealDetail = computed(() => route.path === "/admin/meal/detail");
       <h4 class="admin__title" v-if="d.children.length > 0">{{ d.name }}</h4>
       <div class="admin__container">
         <div v-for="c in d.children" :key="c.index" class="admin__card">
-          <img :src="menuStore.getImageUrl(c.image)" alt="mealImage" />
+          <img :src="imageStore.getImageUrl(c.image)" alt="mealImage" />
           <div class="d-flex justify-content-between text-center">
             <h5>{{ c.name }}</h5>
             <h6>$ {{ c.price }}</h6>

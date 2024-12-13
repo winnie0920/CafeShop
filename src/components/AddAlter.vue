@@ -8,17 +8,20 @@ const props = defineProps({
 const formStore = userFormStore();
 const showStore = useShowStore();
 
+// 開啟自訂項目彈窗
 const addAlter = () => {
   showStore.togglePopupShow("option", true);
 };
 
+// 關閉自訂項目彈窗
 const closeShow = () => {
   showStore.togglePopupShow("option", false);
 };
 
+// 刪除自訂項目
 const removeOption = () => {};
 
-//檢驗自訂項目與預設項目是否相同
+// 檢驗自訂項目與預設自訂項目是否相同
 const choiceAlter = () => {
   if (!formStore.choice.option) return false;
   return props.allOption[0].children.filter((i) => {

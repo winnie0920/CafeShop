@@ -7,20 +7,27 @@ const props = defineProps({
 });
 const router = useRouter();
 const menuStore = userMenuStore();
+const imageStore = useImageStore();
 
+// 將所有自定義選項中篩選出已選擇的選項
 const findSelectOption = (selected) => {
   return props.option.reduce((result, o) => {
+    // 將不是陣列的選項轉成陣列
     const selectedIds = Array.isArray(selected[o.type])
       ? selected[o.type]
       : [selected[o.type]];
-
+    // 從所有自定義選項中篩選，並且回傳已選擇的選項物件
     result[o.type] = o.children.filter((child) =>
       selectedIds.includes(child.id)
     );
-
     return result;
   }, {});
 };
+
+onMounted(() => {
+  console.log(menuStore.menuSelect);
+  sessionStorage.removeItem("selectedOptions");
+});
 </script>
 
 <template>
@@ -33,7 +40,7 @@ const findSelectOption = (selected) => {
           v-for="m in menuStore.menuSelect"
           :key="`${m.menuId}-${m.childId}`"
         >
-          <img :src="menuStore.getImageUrl(m.detail.image)" alt="shopImage" />
+          <img :src="imageStore.getImageUrl(m.detail.image)" alt="shopImage" />
           <div
             class="d-flex flex-column justify-content-center gap-3 ms-3 flex-grow-1"
           >

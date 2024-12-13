@@ -2,22 +2,22 @@ import { defineStore } from "pinia";
 
 export const userMenuStore = defineStore("menu", {
   state: () => ({
+    // 全部菜單品項
     homeMenu: [],
+    // 已選所有菜單品項
     menuSelect: [],
     debouncing: false,
   }),
   actions: {
-    setMenuSelect(newMenuSelect) {
-      this.menuSelect = newMenuSelect;
-    },
-
+    // 將已選擇自定義選項加入 menuSelect
     pushMenuSelect(item) {
       this.menuSelect.push(item);
     },
+    // 設定 homeMenu
     setHomeMenu(menu) {
       this.homeMenu = menu;
     },
-    // 找到相對應 MenuSelect 的菜單品項
+    // 找到相對應 menuSelect 的菜單品項
     findMenuItem(menuId, childId, option) {
       if (option) {
         return this.menuSelect.find((item) => {
@@ -40,7 +40,7 @@ export const userMenuStore = defineStore("menu", {
       );
     },
 
-    // 點擊+號，新增菜單品項
+    // 點擊 + 號，新增菜單品項
     makeMenuItem(menuId, childId, c) {
       let existed = this.findMenuItem(menuId, childId);
       if (!existed) {
@@ -55,13 +55,13 @@ export const userMenuStore = defineStore("menu", {
       }
       return existed;
     },
-    // 點擊+號，添加 MenuSelect 數量及金額
+    // 點擊+號，添加 menuSelect 數量及金額
     addMenuSelect(menuId, c) {
       const existingMenu = this.makeMenuItem(menuId, c.id, c);
       if (existingMenu.count < c.count) existingMenu.count++;
       existingMenu.price = existingMenu.count * c.price;
     },
-    // 點擊減少、刪除 MenuSelect 的菜單品項及數量
+    // 點擊減少、刪除 menuSelect 的菜單品項及數量
     removeMenuSelect(menuId, childId) {
       const existingMenu = this.findMenuItem(menuId, childId);
       // 減少數量
@@ -70,7 +70,7 @@ export const userMenuStore = defineStore("menu", {
         : this.menuSelect.splice(this.menuSelect.indexOf(existingMenu), 1);
     },
 
-    //計算option裡面的細項金額
+    // 計算 自定義選項 裡的細項金額
     totalOptionPrice(option, occupy) {
       const options = Array.isArray(option) ? option : [];
       return options.reduce((total, item) => {
@@ -95,26 +95,20 @@ export const userMenuStore = defineStore("menu", {
       return existingMenu ? totalCount : 0;
     },
 
-    //計算菜單品項總價
+    // 計算菜單品項總價
     calculateTotal() {
       return this.menuSelect.reduce((total, i) => {
         return total + i.price;
       }, 0);
     },
 
-    //跳轉至訂單明細
+    // 跳轉至訂單明細
     checkOrder(router) {
       if (this.menuSelect.length > 0) {
-        router.push("/home/checkout");
+        router.push({ name: "UserCheckout" });
       }
     },
-
-    //取得正確路徑圖片
-    getImageUrl(id) {
-      return new URL(`../assets/image/${id}`, import.meta.url).href;
-    },
-
-    //防抖
+    // 防抖
     async debounceAction(callback, delay = 1000) {
       if (this.debouncing) return;
       this.debouncing = true;

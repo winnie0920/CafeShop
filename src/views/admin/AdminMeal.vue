@@ -15,20 +15,13 @@ const refreshPage = () => {
   alertStore.pushMsg("Common-Ok", "同步餐點完畢", "brown");
 };
 
-const returnPage = () => {
-  router.go(-1);
-};
-
 //判斷路徑是否為餐點明細頁面
 const isMealDetail = computed(() => route.path !== "/admin/meal/detail");
-
-const addMeal = () => {
-  router.push({ name: "AdminMealDetail" });
-};
 </script>
 
 <template>
   <div class="User__container">
+    <!-- 導航欄 -->
     <AdminTitleBar
       class="sticky-top"
       :dropdown="isMealDetail ? dropdown : null"
@@ -46,16 +39,21 @@ const addMeal = () => {
             v-else
             title="返回"
             iconName="User-Return"
-            @click="returnPage"
+            @click="router.go(-1)"
           />
         </div>
       </template>
       <template #add>
         <div class="col-auto d-flex p-0" v-if="isMealDetail">
-          <ConfirmBtn title="新增餐點" iconName="User-Add" @click="addMeal" />
+          <ConfirmBtn
+            title="新增餐點"
+            iconName="User-Add"
+            @click="router.push({ name: 'AdminMealDetail' })"
+          />
         </div>
       </template>
     </AdminTitleBar>
+    <!-- 卡片 -->
     <AdminMealCard :data="homeMenu" />
   </div>
 </template>

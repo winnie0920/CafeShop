@@ -6,10 +6,19 @@ const props = defineProps({
   },
 });
 const alertStore = useAlertStore();
-const menuStore = userMenuStore();
 const imageStore = useImageStore();
 const showStore = useShowStore();
 const fileInput = ref(null);
+
+// 更新圖片
+const changeImg = (event) => {
+  const file = event.target.files[0];
+  const input = fileInput.value;
+  if (file && validImg(file)) {
+    imageStore.getImageUrl(file);
+  }
+  if (input) input.value = "";
+};
 
 // 驗證圖片格式
 const validImg = (file) => {
@@ -21,45 +30,27 @@ const validImg = (file) => {
   return true;
 };
 
-// 更新圖片
-const changeImg = (event) => {
-  const file = event.target.files[0];
-  const input = fileInput.value;
-  if (file && validImg(file)) {
-    localUploadImg(file);
-  }
-  if (input) input.value = "";
-};
-
-// 本地新增圖片
-const localUploadImg = (file) => {
-  imageStore.clearImage();
-  const reader = new FileReader();
-  reader.onload = () => {
-    imageStore.localUploadImg = reader.result;
-  };
-  reader.readAsDataURL(file);
-};
-
 // 移除圖片
 const removeImg = () => {
   showStore.togglePopupShow("meal", true);
 };
 
+// 確認移除圖片彈窗
 const confirmPopup = () => {
   imageStore.clearImage();
   showStore.togglePopupShow("meal", false);
 };
 
+// 關閉移除圖片彈窗
 const closeShow = (val) => {
   showStore.togglePopupShow("meal", false);
 };
 
 onMounted(() => {
-  //清空uploadImg 和 本地圖片
+  // 清空uploadImg 和 localUploadImg
   imageStore.clearImage();
   if (props.image) {
-    imageStore.uploadImg = props.image;
+    imageStore.localUploadImg = props.image;
   }
 });
 </script>
@@ -83,10 +74,14 @@ onMounted(() => {
     >
       <img
         v-if="!imageStore.localUploadImg"
-        :src="menuStore.getImageUrl(imageStore.uploadImg)"
+        :src="imageStore.getImageUrl(imageStore.uploadImg)"
         alt="uploaded"
       />
-      <img v-else :src="imageStore.localUploadImg" alt="uploaded" />
+      <img
+        v-else
+        :src="imageStore.getImageUrl(imageStore.localUploadImg)"
+        alt="uploaded"
+      />
     </label>
     <div
       v-else

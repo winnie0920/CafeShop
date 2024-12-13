@@ -11,22 +11,24 @@ import { choiceOption, customOption } from "@/json/Admin";
 const selectedOptions = ref([...choiceOption]);
 const showStore = useShowStore();
 const formStore = userFormStore();
+const imageStore = useImageStore();
 const route = useRoute();
 
-// 當頁面加載時，data 是 null 檢查 URL
-// const isValidParams = () => {
-//   const parent = route.query.parent;
-//   const id = route.query.id;
-//   if (parent && id && !props.data) {
-//     router.go(-1);
-//   }
-// };
+//下拉式選項
 const dropdown = ref({
   drop: "meal",
   active: true,
 });
 
-const getFormParam = () => ({
+//當頁面加載時，data 是 null 檢查 URL
+const isValidParams = () => {
+  if (route.query.id && !props.data) {
+    router.go(-1);
+  }
+};
+
+// 清空選項
+const clearFormParam = () => ({
   name: "",
   price: "",
   description: "",
@@ -35,40 +37,47 @@ const getFormParam = () => ({
   option: [],
 });
 
-//確認原本擁有的資料
+// 放入原有的選項
 const checkData = () => {
-  if (route.query.id) {
-    const matchedItem = homeItem.find((h) => h.name === props.data.name);
-    showStore.meal = matchedItem;
-    const { name, price, description, count, option } =
-      props.data.children || getFormParam();
-    Object.assign(formStore.choice, {
-      name,
-      price,
-      description,
-      count,
-      sale: 1,
-      option,
-    });
-  }
+  const matchedItem = homeItem.find((h) => h.name === props.data.name);
+  showStore.meal = matchedItem;
+  const { name, price, description, count, option } = props.data.children;
+  Object.assign(formStore.choice, {
+    name,
+    price,
+    description,
+    count,
+    sale: 1,
+    option,
+  });
 };
 
+//送出表單
 const confirmForm = () => {
   let formParams = {
     menuId: showStore.meal.id,
+    image: imageStore.localUploadImg,
     ...formStore.choice,
   };
 };
 
 onMounted(() => {
-  formStore.choice = getFormParam();
-  checkData();
+  //清空選項
+  formStore.choice = clearFormParam();
+  if (!route.query.id) {
+    //清空圖片
+    imageStore.clearImage();
+  } else if (props.data) {
+    checkData();
+  }
 });
 </script>
 
 <template>
+  <!-- 輸入資料 Start -->
   <div class="form__frame gap-3">
     <div class="form__container">
+      <!-- 上傳圖片 -->
       <form method="post" enctype="multipart/form-data">
         <div class="form__UploadImg">
           <AdminUploadImg :image="props.data?.children.image" />
@@ -126,6 +135,7 @@ onMounted(() => {
       <AddAlter :allOption="customOption" />
     </div>
   </div>
+  <!-- 輸入資料 End -->
   <div class="form__add-controller">
     <ConfirmBtn
       :styles="['brown']"

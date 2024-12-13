@@ -3,6 +3,7 @@ import { payOption } from "@/json/User";
 const formStore = userFormStore();
 const showStore = useShowStore();
 const alertStore = useAlertStore();
+const menuStore = userMenuStore();
 const router = useRouter();
 // 菜單顯示的選項
 const selectedOptions = ref([...payOption]);
@@ -108,7 +109,7 @@ const menu = ref([
   },
 ]);
 
-//取消訂單
+// 取消訂單
 const sendBack = () => {
   router.push({ name: "UserHome" });
 };
@@ -120,9 +121,10 @@ const validate = [
   },
 ];
 
-//送出訂單
+// 送出訂單按鈕
 const sendOrder = () => {
   formStore.clearError();
+  // 檢查輸入、選擇的選項
   const inputValid = validate.find((field) =>
     formStore.validateInput(field.id, field.name, field.message)
   );
@@ -131,15 +133,18 @@ const sendOrder = () => {
     formStore.validateOption(selectedOptions.value);
 
   if (!inputValid || !optionsValid) return;
+  // 開啟送出訂單彈窗
   showStore.togglePopupShow("check", true);
 };
 
+// 送出送出訂單彈窗
 const confirmPopup = () => {
   showStore.togglePopupShow("check", false);
   alertStore.pushMsg("Common-Ok", "成功送出", "brown");
   router.push({ name: "UserHome" });
 };
 
+// 關閉送出訂單彈窗
 const closeShow = (val) => {
   showStore.togglePopupShow("check", val);
 };

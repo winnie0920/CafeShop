@@ -2,6 +2,7 @@
 import { homeItem, homeMenu, option } from "@/json/User";
 
 const menuStore = userMenuStore();
+const imageStore = useImageStore();
 const showStore = useShowStore();
 const queryParams = reactive({ search: "" });
 const chooseRef = ref(null);
@@ -138,7 +139,7 @@ onBeforeUnmount(() => {
               :class="{ active: chooseId === i.id }"
               @click="clickScroll(i.id, homeItem)"
             >
-              <img :src="menuStore.getImageUrl(i.image)" alt="" />
+              <img :src="imageStore.getImageUrl(i.image)" alt="" />
               <h5>
                 {{ i.name }}<span>({{ i.count }})</span>
               </h5>
