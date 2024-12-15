@@ -1,6 +1,7 @@
 <script setup>
 import cookie from "@/utils/cookies";
 import { loginOption, adminLogin } from "@/json/Admin";
+import APICafes from "@/utils/request";
 
 const formStore = userFormStore();
 const alertStore = useAlertStore();

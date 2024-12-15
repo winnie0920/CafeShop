@@ -20,7 +20,6 @@ export const routes = [
       {
         path: "home",
         name: "UserHome",
-        meta: { icon: "Side-Bookmark", title: "點餐首頁" },
         component: () => import("@/views/user/UserHome.vue"),
         children: [
           {
@@ -33,7 +32,6 @@ export const routes = [
       {
         path: "about",
         name: "UserAbout",
-        meta: { icon: "Side-Bookmark", title: "關於" },
         component: () => import("@/views/user/UserAbout.vue"),
       },
     ],
