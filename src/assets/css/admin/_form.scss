@@ -1,11 +1,11 @@
 @use "../mixin" as *;
 
 .form {
-  &__frame{
+  &__frame {
     display: grid;
-    overflow-y: auto; 
-    overflow-x: visible; 
-    scrollbar-width: none
+    overflow-y: auto;
+    overflow-x: visible;
+    scrollbar-width: none;
   }
   &__container {
     @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
@@ -19,13 +19,12 @@
   &__UploadImg {
     @include size(100%, 100%);
   }
-  &__add-controller{
+  &__add-controller {
     @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
     @include border(transparent);
-      display: flex;
-      margin: 2rem 0;
-      padding: var(--cafe--padding-xs) var(--cafe--padding-sm);
-
+    display: flex;
+    margin: 2rem 0;
+    padding: var(--cafe--padding-xs) var(--cafe--padding-sm);
   }
 }
 @media (max-width: 991px) {
@@ -44,13 +43,13 @@
       color: var(--cafe-color-brown);
       line-height: 1.7;
       div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        @include flex-center(row, center, space-between);
         div {
+          @include style-color(
+            var(--cafe-color-gray-darken),
+            var(--cafe-color-gray)
+          );
           font-size: var(--cafe--font-sm);
-          background-color: var(--cafe-color-gray);
-          color: var(--cafe-color-gray-darken);
           letter-spacing: 0.1rem;
           height: 100%;
           padding: 0.5rem;
@@ -83,20 +82,20 @@
         visibility: hidden;
       }
       label {
-        display: flex;
-        align-items: center;
+        @include flex-center(row, center, inherit);
         font-size: var(--cafe--font-md);
-        cursor: pointer;
         position: relative;
         padding-left: 2rem;
+        cursor: pointer;
       }
       textarea {
-        @extend %base-btn-setting;
-        border-color: var(--cafe-color-brown-lighter);
-        padding: var(--cafe--padding-xxxs);
+        @include border;
+        display: flex;
         font-size: var(--cafe--font-lg);
         color: var(--cafe-color-brown);
+        padding: var(--cafe--padding-xxxs);
         resize: none;
+        transition: all 0.35s ease-in-out;
         &:focus {
           outline: none;
           border-color: var(--cafe-color-brown);
@@ -123,23 +122,32 @@
       &:hover {
         @include border(var(--cafe-color-brown));
       }
-      .content{
+      .content {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
-        div{
+        div {
           @include style-color;
           @include border;
           display: flex;
           align-items: center;
+          font-size: var(--cafe--font-md);
           gap: 0.5rem;
           padding: var(--cafe--padding-xxxs) var(--cafe--padding-xxs);
-          font-size: var(--cafe--font-md);
-          button{
-            font-size: var(--cafe--font-sm);
+
+          button {
             @include size(1.6rem);
-            @include style-color(var(--cafe-color-brown),var(--cafe-color-white));
+            @include style-color(
+              var(--cafe-color-brown),
+              var(--cafe-color-white)
+            );
             @include border;
+            font-size: var(--cafe--font-sm);
+            transition: all 0.3s ease-in-out;
+            &:hover {
+              @include style-color;
+              @include border(var(--cafe-color-white));
+            }
           }
         }
       }
@@ -147,7 +155,10 @@
   }
   &__message {
     &-error {
-      @include style-color(var(--cafe-color-red-darken) !important, var(--cafe-color-red)!important);
+      @include style-color(
+        var(--cafe-color-red-darken) !important,
+        var(--cafe-color-red) !important
+      );
     }
   }
 }

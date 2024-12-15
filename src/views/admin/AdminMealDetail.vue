@@ -12,6 +12,7 @@ const selectedOptions = ref([...choiceOption]);
 const showStore = useShowStore();
 const formStore = userFormStore();
 const imageStore = useImageStore();
+const alertStore = useAlertStore();
 const route = useRoute();
 
 //下拉式選項
@@ -19,6 +20,22 @@ const dropdown = ref({
   drop: "meal",
   active: true,
 });
+
+// 驗證選項
+const validate = [
+  {
+    id: "name",
+    message: "請輸入正確名稱。",
+  },
+  {
+    id: "price",
+    message: "請輸入正確價錢。",
+  },
+  {
+    id: "count",
+    message: "請輸入正確數量。",
+  },
+];
 
 //當頁面加載時，data 是 null 檢查 URL
 const isValidParams = () => {
@@ -28,16 +45,19 @@ const isValidParams = () => {
 };
 
 // 清空選項
-const clearFormParam = () => ({
-  name: "",
-  price: "",
-  description: "",
-  count: 0,
-  sale: 1,
-  option: [],
-});
+const clearFormParam = () => {
+  const param = {
+    name: "",
+    price: "",
+    description: "",
+    count: "",
+    status: 1,
+  };
+  delete param.option;
+  return param;
+};
 
-// 放入原有的選項
+// 放入餐點明細原有的選項
 const checkData = () => {
   const matchedItem = homeItem.find((h) => h.name === props.data.name);
   showStore.meal = matchedItem;
@@ -47,18 +67,53 @@ const checkData = () => {
     price,
     description,
     count,
-    sale: 1,
+    status: 1,
     option,
   });
 };
 
+// 驗證欄位
+const validateForm = () => {
+  formStore.clearError();
+  // 檢查輸入、選擇的選項
+  const inputValid = validate.map((v) => {
+    return formStore.validateInput(v.id, v.name, v.message);
+  });
+  // 檢查是否上傳照片
+  const imageValid = imageStore.validateImage();
+  // 檢查下拉式選單
+  const dropdownValid = showStore.validateDropdown(showStore.meal, "餐點分類");
+
+  if (inputValid.includes(false) || !imageValid || !dropdownValid) return false;
+
+  return true;
+};
+
+//post 新增餐點細項
+const postMeal = (formParams) => {
+  const menu = homeMenu.find((i) => i.id === formParams.menuId);
+  if (menu) {
+    const existingItem = menu.children.find((i) => i.name === formParams.name);
+    if (!existingItem) {
+      menu.children.push({
+        ...formParams,
+        id: menu.children.length,
+      });
+    }
+  }
+};
+
 //送出表單
 const confirmForm = () => {
+  if (!validateForm()) return;
   let formParams = {
     menuId: showStore.meal.id,
-    image: imageStore.localUploadImg,
+    image: imageStore.localUploadImg || imageStore.uploadImg,
     ...formStore.choice,
   };
+  postMeal(formParams);
+  alertStore.pushMsg("Common-Ok", "送出成功", "brown");
+  router.push({ name: "AdminMeal" });
 };
 
 onMounted(() => {
@@ -99,6 +154,7 @@ onMounted(() => {
             name: '名稱',
           }"
         />
+
         <CheckInput
           :regex="/^[0-9]+$/"
           :basic="{

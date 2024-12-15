@@ -31,21 +31,8 @@ export const adminSide = [
 export const loginOption = [
   {
     type: "remember",
-    isSingleChoice: false,
+    selected: false,
     children: [{ id: 1, name: "記住帳號？" }],
-  },
-];
-
-// 是否販售
-export const choiceOption = [
-  {
-    name: "是否販售？",
-    type: "sale",
-    isSingleChoice: true,
-    children: [
-      { id: 1, name: "是" },
-      { id: 2, name: "否" },
-    ],
   },
 ];
 
@@ -65,50 +52,29 @@ export const adminLogin = [
   },
 ];
 
-export const adminMeal = [
-  {
-    id: "0",
-    name: "輕食",
-  },
-  {
-    id: "1",
-    name: "麵包",
-  },
-  {
-    id: "2",
-    name: "炸物",
-  },
-  {
-    id: "3",
-    name: "甜點",
-  },
-  {
-    id: "4",
-    name: "純茶",
-  },
-  {
-    id: "5",
-    name: "拿鐵",
-  },
-  {
-    id: "6",
-    name: "那堤",
-  },
-  {
-    id: "7",
-    name: "冰沙",
-  },
-];
-
 //自訂項目
 export const customOption = [
   {
+    name: "自定項目",
     type: "option",
-    isSingleChoice: false,
+    selected: false,
     children: [
       { id: "size", name: "份量" },
       { id: "noddle", name: "麵體" },
       { id: "spicy", name: "辣度" },
+    ],
+  },
+];
+
+// 是否販售
+export const choiceOption = [
+  {
+    name: "是否販售？",
+    type: "status",
+    selected: true,
+    children: [
+      { id: 1, name: "是" },
+      { id: 2, name: "否" },
     ],
   },
 ];

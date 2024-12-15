@@ -50,7 +50,7 @@ onMounted(() => {
   // 清空uploadImg 和 localUploadImg
   imageStore.clearImage();
   if (props.image) {
-    imageStore.localUploadImg = props.image;
+    imageStore.uploadImg = props.image;
   }
 });
 </script>
@@ -73,13 +73,10 @@ onMounted(() => {
       @click="removeImg"
     >
       <img
-        v-if="!imageStore.localUploadImg"
-        :src="imageStore.getImageUrl(imageStore.uploadImg)"
-        alt="uploaded"
-      />
-      <img
-        v-else
-        :src="imageStore.getImageUrl(imageStore.localUploadImg)"
+        :src="
+          imageStore.localUploadImg ||
+          imageStore.getImageUrl(imageStore.uploadImg)
+        "
         alt="uploaded"
       />
     </label>

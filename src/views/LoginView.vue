@@ -22,6 +22,7 @@ const validate = [
 
 const login = () => {
   if (!validateForm()) return;
+
   if (!validateAdmin()) return;
   rememberAccount();
   alertStore.pushMsg("Common-Ok", "登入成功", "brown");
@@ -62,16 +63,14 @@ const validateAdmin = () => {
   return true;
 };
 
-// 驗證帳號密碼格式
+// 欄位驗證
 const validateForm = () => {
   formStore.clearError();
-  const inputValid = validate.reduce((isValid, field) => {
-    const valid = formStore.validateInput(field.id, field.name, field.message);
-    return isValid && valid;
-  }, true);
-
-  if (!inputValid) return false;
-
+  // 檢查輸入、選擇的選項
+  const inputValid = validate.map((v) => {
+    return formStore.validateInput(v.id, v.name, v.message);
+  });
+  if (inputValid.includes(false)) return false;
   return true;
 };
 

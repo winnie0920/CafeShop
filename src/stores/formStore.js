@@ -52,6 +52,7 @@ export const userFormStore = defineStore("select", {
       const missingOptions = option.filter((opt) => {
         const isSelected =
           this.choice && Object.keys(this.choice).includes(opt.type);
+
         if (!isSelected) {
           this.errorMessages[opt.type] = opt.type;
           alertStore.pushMsg("Common-Error", `${opt.name} 請選擇一個選項`);

@@ -19,7 +19,9 @@ const closeShow = () => {
 };
 
 // 刪除自訂項目
-const removeOption = () => {};
+const removeOption = (type) => {
+  formStore.pluralOption("option", type);
+};
 
 // 檢驗自訂項目與預設自訂項目是否相同
 const choiceAlter = () => {
@@ -46,7 +48,7 @@ const choiceAlter = () => {
       <div class="content" v-if="choiceAlter()">
         <div @click.stop v-for="c in choiceAlter()" :key="c.id">
           <span>{{ c.name }}</span>
-          <button class="remove-btn" @click="removeOption('food')">X</button>
+          <button @click="removeOption(c.id)">X</button>
         </div>
       </div>
     </div>

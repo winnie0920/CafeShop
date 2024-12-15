@@ -47,7 +47,7 @@ onMounted(() => {
 
   <!-- radio 或 checkbox -->
   <div :style="props.style" class="form__text-option" v-if="type === 'select'">
-    <ul v-for="o in option" :key="o.id">
+    <ul v-for="(o, index) in option" :key="o.id">
       <div v-if="o.name">
         <h3 :style="{ fontSize: o.name.length > 2 ? '1.2rem' : '1.6rem' }">
           {{ o.name }}
@@ -59,10 +59,10 @@ onMounted(() => {
           必填
         </div>
       </div>
-      <h5 v-if="o.name">{{ o.isSingleChoice ? "請擇一選擇" : "可多選擇" }}</h5>
+      <h5 v-if="o.name">{{ o.selected ? "請擇一選擇" : "可多選擇" }}</h5>
       <li v-for="c in o.children" :key="c.id">
         <!-- 單選 -->
-        <template v-if="o.isSingleChoice">
+        <template v-if="o.selected">
           <input
             type="radio"
             :id="`radio-${o.type}-${c.id}`"
@@ -84,18 +84,17 @@ onMounted(() => {
           />
         </template>
 
-        <label
-          :for="`${o.isSingleChoice ? 'radio' : 'checkbox'}-${o.type}-${c.id}`"
-        >
+        <label :for="`${o.selected ? 'radio' : 'checkbox'}-${o.type}-${c.id}`">
           <span
-            :class="o.isSingleChoice ? 'check__and-radio' : 'check__and-mark'"
+            :class="o.selected ? 'check__and-radio' : 'check__and-mark'"
           ></span>
           {{ c.name }}
         </label>
         <p v-if="c.price">${{ c.price }}</p>
         <p v-else-if="c.price === 0">免費</p>
       </li>
-      <hr v-if="o.name" class="mb-4" />
+
+      <hr v-if="o.name && index !== option.length - 1" class="mb-4" />
     </ul>
   </div>
 </template>

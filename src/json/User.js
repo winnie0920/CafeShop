@@ -485,7 +485,7 @@ export const option = [
   {
     type: "size",
     name: "份量",
-    isSingleChoice: false,
+    selected: false,
     children: [
       { id: 1, name: "小", price: 0, selected: true },
       { id: 2, name: "中", price: 10 },
@@ -495,7 +495,7 @@ export const option = [
   {
     type: "noddle",
     name: "麵體",
-    isSingleChoice: true,
+    selected: true,
     children: [
       { id: 1, name: "細麵", price: 0 },
       { id: 2, name: "筆管麵", price: 10 },
@@ -505,7 +505,7 @@ export const option = [
   {
     type: "spicy",
     name: "辣度",
-    isSingleChoice: true,
+    selected: true,
     children: [
       { id: 1, name: "小辣", price: 0 },
       { id: 2, name: "中辣", price: 0 },
@@ -518,7 +518,7 @@ export const payOption = [
   {
     type: "size",
     name: "付款項目",
-    isSingleChoice: true,
+    selected: true,
     children: [
       { id: 1, name: "現金付款" },
       { id: 2, name: "LINE PAY" },

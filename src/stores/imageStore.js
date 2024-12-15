@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useAlertStore } from "@/stores/alertStore";
 
 export const useImageStore = defineStore("image", {
   state: () => {
@@ -9,20 +10,30 @@ export const useImageStore = defineStore("image", {
   },
   actions: {
     getImageUrl(id) {
-      // 取得本地路徑圖片
+      //處理剛上傳本地圖片路徑
       if (id instanceof File) {
         this.clearImage();
-        const objectUrl = URL.createObjectURL(id);
-        this.localUploadImg = objectUrl;
-        return this.localUploadImg;
+        return (this.localUploadImg = URL.createObjectURL(id));
       }
-      // 取得檔案路徑圖片
-      return new URL(`../assets/image/${id}`, import.meta.url).href;
+      //處理已上傳本地圖片路徑
+      if (id.startsWith("blob")) {
+        return id;
+      }
+      // 處理靜態圖片路徑
+      return id ? new URL(`../assets/image/${id}`, import.meta.url).href : "";
     },
     //反覆更新還沒按下確認的按鈕，會清除舊照片，取得新路徑
     clearImage() {
       this.uploadImg = null;
       this.localUploadImg = null;
+    },
+    validateImage() {
+      const alertStore = useAlertStore();
+      if (this.uploadImg === null && this.localUploadImg === null) {
+        alertStore.pushMsg("Common-Error", "請上傳圖片，需JPEG、JPG格式");
+        return false;
+      }
+      return true;
     },
   },
 });

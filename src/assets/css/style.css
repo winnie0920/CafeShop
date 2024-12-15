@@ -175,7 +175,7 @@ hr {
   height: 0.5px !important;
 }
 
-.form__text-option textarea, .popup__container svg, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li {
+.popup__container svg, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li {
   display: flex;
   border-radius: var(--cafe-radius-md);
   border: 0.1rem solid var(--cafe-color-brown-lighter);
@@ -966,13 +966,14 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 .form__text-option div {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
 .form__text-option div div {
-  font-size: var(--cafe--font-sm);
-  background-color: var(--cafe-color-gray);
   color: var(--cafe-color-gray-darken);
+  background: var(--cafe-color-gray);
+  font-size: var(--cafe--font-sm);
   letter-spacing: 0.1rem;
   height: 100%;
   padding: 0.5rem;
@@ -1005,18 +1006,23 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 .form__text-option label {
   display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: inherit;
   font-size: var(--cafe--font-md);
-  cursor: pointer;
   position: relative;
   padding-left: 2rem;
+  cursor: pointer;
 }
 .form__text-option textarea {
-  border-color: var(--cafe-color-brown-lighter);
-  padding: var(--cafe--padding-xxxs);
+  border: 0.1rem solid var(--cafe-color-brown);
+  border-radius: var(--cafe-radius-md);
+  display: flex;
   font-size: var(--cafe--font-lg);
   color: var(--cafe-color-brown);
+  padding: var(--cafe--padding-xxxs);
   resize: none;
+  transition: all 0.35s ease-in-out;
 }
 .form__text-option textarea:focus {
   outline: none;
@@ -1057,17 +1063,24 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   border-radius: var(--cafe-radius-md);
   display: flex;
   align-items: center;
+  font-size: var(--cafe--font-md);
   gap: 0.5rem;
   padding: var(--cafe--padding-xxxs) var(--cafe--padding-xxs);
-  font-size: var(--cafe--font-md);
 }
 .form__text-tag .content div button {
-  font-size: var(--cafe--font-sm);
   width: 1.6rem;
   height: 1.6rem;
   color: var(--cafe-color-brown);
   background: var(--cafe-color-white);
   border: 0.1rem solid var(--cafe-color-brown);
+  border-radius: var(--cafe-radius-md);
+  font-size: var(--cafe--font-sm);
+  transition: all 0.3s ease-in-out;
+}
+.form__text-tag .content div button:hover {
+  color: var(--cafe-color-white);
+  background: var(--cafe-color-brown);
+  border: 0.1rem solid var(--cafe-color-white);
   border-radius: var(--cafe-radius-md);
 }
 .form__message-error {

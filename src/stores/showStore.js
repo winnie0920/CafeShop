@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useAlertStore } from "@/stores/alertStore";
 
 export const useShowStore = defineStore("show", {
   state: () => ({
@@ -32,6 +33,14 @@ export const useShowStore = defineStore("show", {
     },
     togglePopupShow(type, val) {
       this.popupShow[type] = val;
+    },
+    validateDropdown(drop, name) {
+      const alertStore = useAlertStore();
+      if (drop.id === -1 || drop.name === "請選擇") {
+        alertStore.pushMsg("Common-Error", `${name} 請選擇一個選項`);
+        return false;
+      }
+      return true;
     },
   },
 });

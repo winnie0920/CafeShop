@@ -124,17 +124,25 @@ const validate = [
 // 送出訂單按鈕
 const sendOrder = () => {
   formStore.clearError();
+  if (!validateForm()) return;
+  // 開啟送出訂單彈窗
+  showStore.togglePopupShow("check", true);
+};
+
+// 欄位驗證
+const validateForm = () => {
+  formStore.clearError();
   // 檢查輸入、選擇的選項
-  const inputValid = validate.find((field) =>
-    formStore.validateInput(field.id, field.name, field.message)
-  );
+  const inputValid = validate.map((v) => {
+    return formStore.validateInput(v.id, v.name, v.message);
+  });
+  // 檢查是否勾選選項
   const optionsValid =
     Array.isArray(selectedOptions.value) &&
     formStore.validateOption(selectedOptions.value);
 
-  if (!inputValid || !optionsValid) return;
-  // 開啟送出訂單彈窗
-  showStore.togglePopupShow("check", true);
+  if (inputValid.includes(false) || !optionsValid) return false;
+  return true;
 };
 
 // 送出送出訂單彈窗
