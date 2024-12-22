@@ -175,6 +175,13 @@ hr {
   height: 0.5px !important;
 }
 
+div,
+form,
+ul,
+article {
+  scrollbar-width: none;
+}
+
 .popup__container svg, .User__side-label li, .User__side-left, .User__side-right, .User__shop-container, .menu__content li {
   display: flex;
   border-radius: var(--cafe-radius-md);
@@ -477,6 +484,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   flex-grow: 1;
   padding: 0rem 3rem;
   overflow-x: hidden;
+  position: relative;
 }
 .User__side {
   position: relative;
@@ -501,7 +509,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   gap: 1rem;
   padding: var(--cafe--padding-xs) 0;
   overflow-x: auto;
-  scrollbar-width: none;
 }
 .User__side-label li {
   flex-direction: column;
@@ -575,7 +582,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   height: 100vh;
   max-height: 50%;
   overflow-y: auto;
-  scrollbar-width: none;
   margin: var(--cafe--margin-sm) 0;
 }
 .User__shop-content ::-webkit-scrollbar {
@@ -623,7 +629,6 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   color: var(--cafe-color-brown);
   max-width: 100%;
   max-height: calc(100vh - 21rem);
-  scrollbar-width: none;
   overflow-y: auto;
 }
 .menu__content::-webkit-scrollbar {
@@ -923,10 +928,11 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 }
 
 .form__frame {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: visible;
-  scrollbar-width: none;
+  margin: 2rem 0;
 }
 .form__container {
   color: var(--cafe-color-brown);
@@ -950,7 +956,7 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
   border: 0.1rem solid transparent;
   border-radius: var(--cafe-radius-md);
   display: flex;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
   padding: var(--cafe--padding-xs) var(--cafe--padding-sm);
 }
 
@@ -1086,4 +1092,59 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .form__message-error {
   color: var(--cafe-color-red-darken) !important;
   background: var(--cafe-color-red) !important;
+}
+
+.admin__title {
+  color: var(--cafe-color-brown);
+  margin-bottom: 1rem;
+}
+.admin__container {
+  display: grid;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  overflow-y: auto;
+}
+.admin__card {
+  border: 0.1rem solid var(--cafe-color-brown);
+  border-radius: var(--cafe-radius-md);
+  color: var(--cafe-color-brown);
+  background: var(--cafe-color-white);
+  gap: 1rem;
+  padding: var(--cafe--padding-sm);
+}
+.admin__start {
+  border: 0 solid transparent;
+  border-radius: var(--cafe-radius-md);
+  color: var(--cafe-color-white);
+  background: var(--cafe-color-brown);
+  content: "";
+  display: block;
+  position: absolute;
+  top: auto;
+  left: auto;
+  right: 6.6rem;
+  bottom: auto;
+  transform: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--cafe--padding-xxxs) 0.6rem;
+  cursor: pointer;
+}
+.admin__start:hover p {
+  width: 3.2rem;
+  height: 100%;
+  opacity: 1;
+}
+.admin__start p {
+  width: 0;
+  height: 100%;
+  white-space: nowrap;
+  opacity: 0;
+  transition: width 0.4s ease-out, opacity 0.2s ease-out;
+}
+.admin__start svg {
+  width: 1.5rem;
+  height: 1.6rem;
 }/*# sourceMappingURL=style.css.map */

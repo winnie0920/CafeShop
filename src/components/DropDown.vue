@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
     padding: var(--cafe--padding-xxs);
     gap: 0.5rem;
     overflow-x: hidden;
-    scrollbar-width: none;
+
     z-index: 10;
   }
   &__drop-item {

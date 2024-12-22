@@ -2,11 +2,12 @@
 const props = defineProps({
   data: Object,
 });
+const emit = defineEmits(["deleteData"]);
+
 const imageStore = useImageStore();
 const showStore = useShowStore();
 const alertStore = useAlertStore();
 const router = useRouter();
-const route = useRoute();
 
 const detailData = ref(null);
 
@@ -21,9 +22,7 @@ const popupMeal = (c, d) => {
 const alertTrash = (detail) => {
   showStore.togglePopupShow("check", true);
   nextTick(() => {
-    props.data.forEach((d) => {
-      d.children = d.children.filter((i) => i.name !== detail.name);
-    });
+    emit("deleteData", detail);
   });
 };
 
@@ -35,13 +34,10 @@ const confirmPopup = () => {
 const closeShow = (val) => {
   showStore.togglePopupShow("check", val);
 };
-
-//判斷路徑是否為餐點明細頁面
-const isMealDetail = computed(() => route.path === "/admin/meal/detail");
 </script>
 
 <template>
-  <div v-if="!isMealDetail">
+  <div v-if="$route.path !== `/admin/meal/detail`">
     <div v-for="d in props.data" :key="d.id">
       <h4 class="admin__title" v-if="d.children.length > 0">{{ d.name }}</h4>
       <div class="admin__container">
@@ -73,7 +69,7 @@ const isMealDetail = computed(() => route.path === "/admin/meal/detail");
       </div>
     </div>
   </div>
-
+  <router-view v-else></router-view>
   <UserPopup
     :show="showStore.popupShow.check"
     title="刪除餐點"
@@ -88,30 +84,22 @@ const isMealDetail = computed(() => route.path === "/admin/meal/detail");
       </div>
     </template>
   </UserPopup>
-  <router-view v-if="isMealDetail" :data="detailData"></router-view>
 </template>
 
 <style scoped lang="scss">
 @use "@/assets/css/mixin" as *;
-h4 {
-  color: var(--cafe-color-brown);
-  margin-bottom: 1rem;
+
+.popup__text-content {
+  display: flex;
+  align-content: center;
 }
+
 .admin {
   &__container {
-    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    gap: 2rem;
-    padding-bottom: 2rem;
-    overflow-y: auto;
-    scrollbar-width: none;
   }
   &__card {
-    @include border;
-    @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
     display: grid;
-    gap: 1rem;
-    padding: var(--cafe--padding-sm);
     h5 {
       @extend %text-ellipsis;
       width: 80%;
@@ -123,31 +111,5 @@ h4 {
       object-fit: cover;
     }
   }
-  &__start {
-    @include border(transparent, 0);
-    @include style-color;
-    @include absolute-setting(auto, auto, 6.6rem, auto, none);
-    @include flex-center(row, center, flex-end);
-    padding: var(--cafe--padding-xxxs) 0.6rem;
-    cursor: pointer;
-    &:hover p {
-      @include size(3.2rem, 100%);
-      opacity: 1;
-    }
-    p {
-      @include size(0, 100%);
-      white-space: nowrap;
-      opacity: 0;
-      transition: width 0.4s ease-out, opacity 0.2s ease-out;
-    }
-    svg {
-      @include size(1.5rem, 1.6rem);
-    }
-  }
-}
-
-.popup__text-content {
-  display: flex;
-  align-content: center;
 }
 </style>

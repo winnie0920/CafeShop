@@ -25,7 +25,6 @@ const findSelectOption = (selected) => {
 };
 
 onMounted(() => {
-  console.log(menuStore.menuSelect);
   sessionStorage.removeItem("selectedOptions");
 });
 </script>

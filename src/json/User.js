@@ -27,6 +27,7 @@ export const homeItem = [
     id: 1,
     name: "輕食",
     image: "food_Pescatora.png",
+    content: "肉品源產地：台灣雞肉、豬肉、牛肉",
     count: 7,
   },
   {

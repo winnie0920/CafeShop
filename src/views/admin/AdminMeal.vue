@@ -2,7 +2,6 @@
 import { homeMenu } from "@/json/User";
 const alertStore = useAlertStore();
 const router = useRouter();
-const route = useRoute();
 
 const dropdown = ref({
   title: "餐點分類",
@@ -15,8 +14,11 @@ const refreshPage = () => {
   alertStore.pushMsg("Common-Ok", "同步餐點完畢", "brown");
 };
 
-//判斷路徑是否為餐點明細頁面
-const isMealDetail = computed(() => route.path !== "/admin/meal/detail");
+const deleteData = (detail) => {
+  homeMenu.forEach((h) => {
+    h.children = h.children.filter((c) => c.name !== detail.name);
+  });
+};
 </script>
 
 <template>
@@ -24,13 +26,13 @@ const isMealDetail = computed(() => route.path !== "/admin/meal/detail");
     <!-- 導航欄 -->
     <AdminTitleBar
       class="sticky-top"
-      :dropdown="isMealDetail ? dropdown : null"
+      :dropdown="$route.path !== '/admin/meal/detail' ? dropdown : null"
       :data="homeMenu"
     >
       <template #refresh>
         <div class="col-auto d-flex me-sm-auto me-none p-0">
           <ConfirmBtn
-            v-if="isMealDetail"
+            v-if="$route.path !== `/admin/meal/detail`"
             title="同步餐點"
             iconName="Meal-Refresh"
             @click="refreshPage"
@@ -44,7 +46,10 @@ const isMealDetail = computed(() => route.path !== "/admin/meal/detail");
         </div>
       </template>
       <template #add>
-        <div class="col-auto d-flex p-0" v-if="isMealDetail">
+        <div
+          class="col-auto d-flex p-0"
+          v-if="$route.path !== `/admin/meal/detail`"
+        >
           <ConfirmBtn
             title="新增餐點"
             iconName="User-Add"
@@ -54,7 +59,7 @@ const isMealDetail = computed(() => route.path !== "/admin/meal/detail");
       </template>
     </AdminTitleBar>
     <!-- 卡片 -->
-    <AdminMealCard :data="homeMenu" />
+    <AdminMealCard :data="homeMenu" @deleteData="deleteData" />
   </div>
 </template>
 

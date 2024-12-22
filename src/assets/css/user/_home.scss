@@ -6,6 +6,7 @@
     flex-grow: 1;
     padding: 0rem 3rem;
     overflow-x: hidden;
+    position: relative;
   }
 
   &__side {
@@ -30,7 +31,6 @@
       gap: 1rem;
       padding: var(--cafe--padding-xs) 0;
       overflow-x: auto;
-      scrollbar-width: none;
       li {
         @extend %base-btn-setting;
         flex-direction: column;
@@ -115,7 +115,6 @@
       height: 100vh;
       max-height: calc(50%);
       overflow-y: auto;
-      scrollbar-width: none;
       margin: var(--cafe--margin-sm) 0;
       ::-webkit-scrollbar {
         display: none;
@@ -167,7 +166,6 @@
     color: var(--cafe-color-brown);
     max-width: 100%;
     max-height: calc(100vh - 21rem);
-    scrollbar-width: none;
     overflow-y: auto;
     &::-webkit-scrollbar {
       width: 0; /* 隱藏滾動條寬度 */
@@ -233,7 +231,7 @@
     button {
       width: 2.5rem;
       height: 2.5rem;
-        transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
       background-color: var(--cafe-color-white);
       border-radius: var(--cafe-radius-lg);
       &:hover {
@@ -252,7 +250,7 @@
     color: var(--cafe-color-brown);
     border-radius: var(--cafe-radius-lg);
     background-color: var(--cafe-color-white);
-      transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
     &-content {
       display: flex;
       justify-content: end;
@@ -320,7 +318,7 @@
         border: none !important;
       }
     }
-    &__footer{
+    &__footer {
       display: none;
     }
   }

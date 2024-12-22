@@ -58,6 +58,13 @@ export const routes = [
         path: "theme",
         name: "AdminTheme",
         component: () => import("@/views/admin/AdminTheme.vue"),
+        children: [
+          {
+            path: "detail",
+            name: "AdminThemeDetail",
+            component: () => import("@/views/admin/AdminThemeDetail.vue"),
+          },
+        ],
       },
       {
         path: "alter",

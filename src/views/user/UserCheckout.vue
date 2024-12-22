@@ -254,19 +254,16 @@ const closeShow = (val) => {
     overflow-y: auto;
     height: 100%;
     max-height: calc(100vh - 11.5rem);
-    scrollbar-width: none;
   }
   &__width {
     max-width: 100%;
     max-height: calc(100vh - 19rem);
-    scrollbar-width: none;
     overflow-y: auto;
   }
   &__content {
     height: 100vh;
     max-height: 50%;
     overflow-y: auto;
-    scrollbar-width: none;
   }
   &__menu {
     &-content {

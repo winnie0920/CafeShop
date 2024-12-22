@@ -2,10 +2,11 @@
 
 .form {
   &__frame {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
     overflow-x: visible;
-    scrollbar-width: none;
+    margin: 2rem 0;
   }
   &__container {
     @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
@@ -23,7 +24,7 @@
     @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
     @include border(transparent);
     display: flex;
-    margin: 2rem 0;
+    margin-bottom: 2rem;
     padding: var(--cafe--padding-xs) var(--cafe--padding-sm);
   }
 }

@@ -32,7 +32,12 @@ const loginOut = () => {
     </div>
     <slot name="add" />
     <div class="col-auto d-flex p-0">
-      <ConfirmBtn title="登出" iconName="User-Logout" @click="loginOut" />
+      <ConfirmBtn
+        title="登出"
+        iconName="User-Logout"
+        @click="loginOut"
+        :style="{ height: '6rem' }"
+      />
     </div>
   </header>
 </template>

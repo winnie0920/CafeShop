@@ -130,7 +130,7 @@ onMounted(() => {
 
 <template>
   <!-- 輸入資料 Start -->
-  <div class="form__frame gap-3">
+  <article class="form__frame gap-3">
     <div class="form__container">
       <!-- 上傳圖片 -->
       <form method="post" enctype="multipart/form-data">
@@ -190,7 +190,7 @@ onMounted(() => {
       />
       <AddAlter :allOption="customOption" />
     </div>
-  </div>
+  </article>
   <!-- 輸入資料 End -->
   <div class="form__add-controller">
     <ConfirmBtn

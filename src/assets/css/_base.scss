@@ -95,3 +95,10 @@ img {
 hr {
   height: 0.5px !important;
 }
+
+div,
+form,
+ul,
+article {
+  scrollbar-width: none;
+}

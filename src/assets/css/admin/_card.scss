@@ -1,0 +1,41 @@
+@use "../mixin" as *;
+
+.admin {
+  &__title {
+    color: var(--cafe-color-brown);
+    margin-bottom: 1rem;
+  }
+  &__container {
+    display: grid;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    overflow-y: auto;
+  }
+  &__card {
+    @include border;
+    @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
+    gap: 1rem;
+    padding: var(--cafe--padding-sm);
+  }
+  &__start {
+    @include border(transparent, 0);
+    @include style-color;
+    @include absolute-setting(auto, auto, 6.6rem, auto, none);
+    @include flex-center(row, center, flex-end);
+    padding: var(--cafe--padding-xxxs) 0.6rem;
+    cursor: pointer;
+    &:hover p {
+      @include size(3.2rem, 100%);
+      opacity: 1;
+    }
+    p {
+      @include size(0, 100%);
+      white-space: nowrap;
+      opacity: 0;
+      transition: width 0.4s ease-out, opacity 0.2s ease-out;
+    }
+    svg {
+      @include size(1.5rem, 1.6rem);
+    }
+  }
+}
