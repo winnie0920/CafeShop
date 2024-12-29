@@ -137,7 +137,7 @@ onMounted(() => {
     }
     img {
       @include size(100%);
-      object-fit: cover;
+      object-fit: contain;
     }
     svg {
       @include size(5rem);

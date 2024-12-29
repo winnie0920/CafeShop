@@ -69,7 +69,7 @@ const closeShow = (val) => {
       </div>
     </div>
   </div>
-  <router-view v-else></router-view>
+  <router-view v-else :data="detailData"></router-view>
   <UserPopup
     :show="showStore.popupShow.check"
     title="刪除餐點"

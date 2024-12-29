@@ -2,11 +2,9 @@ import axios from "axios";
 // 取消請求
 let cancelReq = new AbortController();
 
-const routeDispatch = (permission, url, slug, dispatch) => {
+const routeDispatch = (url, slug, dispatch) => {
   let URI = "";
-
   if (url) URI = `${url}`;
-  if (permission) URI = `${permission}${URI ? `/${URI}` : ""}`;
   if (slug) URI = `${URI}/${slug}`;
 
   // 如果传入了 dispatch 就使用它作为基础路径
@@ -29,8 +27,6 @@ const AxiosRefresh = axios.create(axiosConfig);
 // 請求攔截器
 AxiosCafe.interceptors.request.use(
   async (config) => {
-    console.log(config);
-
     return config;
   },
   (err) => {

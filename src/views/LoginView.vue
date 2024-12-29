@@ -1,7 +1,7 @@
 <script setup>
 import cookie from "@/utils/cookies";
 import { loginOption, adminLogin } from "@/json/Admin";
-import APICafes from "@/utils/request";
+//import { apiLogIn } from "@/api/login.js";
 
 const formStore = userFormStore();
 const alertStore = useAlertStore();
@@ -20,10 +20,16 @@ const validate = [
   },
 ];
 
-const login = () => {
+const login = async () => {
   if (!validateForm()) return;
 
   if (!validateAdmin()) return;
+
+  // const res = await apiLogIn({
+  //   account: formStore.choice.account,
+  //   password: formStore.choice.password,
+  // });
+
   rememberAccount();
   alertStore.pushMsg("Common-Ok", "登入成功", "brown");
   tokenStore.saveToken({
@@ -86,7 +92,7 @@ onMounted(() => {
     <div class="new__container">
       <form class="check__inputBox" @submit.prevent="login">
         <CheckInput
-          :regex="/^[a-zA-Z0-9]{6,}$/"
+          :regex="/^[a-zA-Z0-9]{4,}$/"
           :basic="{
             type: 'input',
             id: 'account',
@@ -95,7 +101,7 @@ onMounted(() => {
         />
         <CheckInput
           :style="{ marginTop: '0.5rem' }"
-          :regex="/^[a-zA-Z0-9]{6,}$/"
+          :regex="/^[a-zA-Z0-9]{4,}$/"
           :basic="{
             type: 'password',
             id: 'password',

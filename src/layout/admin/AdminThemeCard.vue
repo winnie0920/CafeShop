@@ -8,11 +8,11 @@ const imageStore = useImageStore();
 const showStore = useShowStore();
 const alertStore = useAlertStore();
 const detailData = ref(null);
-const popupMeal = (c, d) => {
-  detailData.value = { name: d.name, id: d.id, children: c };
+const popupTheme = (d) => {
+  detailData.value = { name: d.name, content: d.content, image: d.image };
   router.push({
-    name: "AdminMealDetail",
-    query: { parent: d.id, id: c.id },
+    name: "AdminThemeDetail",
+    query: { parent: d.id },
   });
 };
 
@@ -62,7 +62,7 @@ const closeShow = (val) => {
           <ConfirmBtn
             :styles="['brown', 'circle']"
             iconName="Common-Pencil"
-            @click="popupMeal(d)"
+            @click="popupTheme(d)"
           />
           <ConfirmBtn
             :styles="['gray', 'circle']"
@@ -73,6 +73,7 @@ const closeShow = (val) => {
       </div>
     </div>
   </div>
+  <router-view v-else :data="detailData"></router-view>
   <UserPopup
     :show="showStore.popupShow.check"
     title="刪除餐點"

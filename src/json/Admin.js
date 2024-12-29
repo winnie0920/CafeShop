@@ -39,6 +39,14 @@ export const loginOption = [
 // 登入帳號管理
 export const adminLogin = [
   {
+    account: "weiwei",
+    password: "1234",
+  },
+  {
+    account: "ping",
+    password: "1234",
+  },
+  {
     account: "admin",
     password: "password",
   },

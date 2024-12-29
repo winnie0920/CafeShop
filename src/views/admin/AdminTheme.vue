@@ -1,24 +1,30 @@
 <script setup>
-import { homeItem as importHomeItem } from "@/json/User";
+import { homeItem as HomeItem } from "@/json/User";
 const alertStore = useAlertStore();
 const router = useRouter();
+import { getCurrentInstance } from "vue";
 
-let homeItem = reactive([...importHomeItem]);
+// 手動觸發重新渲染
+const instance = getCurrentInstance();
 
-//同步更新資料
 const refreshPage = () => {
   alertStore.pushMsg("Common-Ok", "同步分類完畢", "brown");
 };
 
 const deleteData = (detail) => {
-  const index = homeItem.findIndex((d) => d.name === detail.name);
-  homeItem.splice(index, 1);
+  const index = HomeItem.findIndex((d) => d.name === detail.name);
+  if (index !== -1) {
+    HomeItem.splice(index, 1);
+  }
+
+  // 手動觸發重新渲染
+  instance.proxy.$forceUpdate();
 };
 </script>
 
 <template>
   <div class="User__container">
-    <AdminTitleBar class="sticky-top" :dropdown="null" :data="homeItem">
+    <AdminTitleBar class="sticky-top" :dropdown="null" :data="HomeItem">
       <template #refresh>
         <div class="col-auto d-flex me-sm-auto me-none p-0">
           <ConfirmBtn
@@ -48,7 +54,7 @@ const deleteData = (detail) => {
         </div>
       </template>
     </AdminTitleBar>
-    <AdminThemeCard :data="homeItem" @deleteData="deleteData" />
+    <AdminThemeCard @deleteData="deleteData" :data="HomeItem" />
   </div>
 </template>
 

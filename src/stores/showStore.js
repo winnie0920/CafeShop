@@ -10,6 +10,7 @@ export const useShowStore = defineStore("show", {
       {
         language: false,
         meal: false,
+        theme: false,
       },
     ],
     popupShow: {

@@ -61,6 +61,7 @@ const clearFormParam = () => {
 const checkData = () => {
   const matchedItem = homeItem.find((h) => h.name === props.data.name);
   showStore.meal = matchedItem;
+
   const { name, price, description, count, option } = props.data.children;
   Object.assign(formStore.choice, {
     name,
@@ -106,6 +107,9 @@ const postMeal = (formParams) => {
 //送出表單
 const confirmForm = () => {
   if (!validateForm()) return;
+
+  console.log(showStore.meal.id);
+
   let formParams = {
     menuId: showStore.meal.id,
     image: imageStore.localUploadImg || imageStore.uploadImg,
@@ -119,10 +123,11 @@ const confirmForm = () => {
 onMounted(() => {
   //清空選項
   formStore.choice = clearFormParam();
+  showStore.theme = "";
   if (!route.query.id) {
     //清空圖片
     imageStore.clearImage();
-  } else if (props.data) {
+  } else {
     checkData();
   }
 });

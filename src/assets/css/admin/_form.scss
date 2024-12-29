@@ -6,7 +6,6 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: visible;
-    margin: 2rem 0;
   }
   &__container {
     @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
@@ -24,7 +23,7 @@
     @include style-color(var(--cafe-color-brown), var(--cafe-color-white));
     @include border(transparent);
     display: flex;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
     padding: var(--cafe--padding-xs) var(--cafe--padding-sm);
   }
 }
