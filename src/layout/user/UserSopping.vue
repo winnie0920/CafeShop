@@ -9,21 +9,6 @@ const router = useRouter();
 const menuStore = userMenuStore();
 const imageStore = useImageStore();
 
-// 將所有自定義選項中篩選出已選擇的選項
-const findSelectOption = (selected) => {
-  return props.option.reduce((result, o) => {
-    // 將不是陣列的選項轉成陣列
-    const selectedIds = Array.isArray(selected[o.type])
-      ? selected[o.type]
-      : [selected[o.type]];
-    // 從所有自定義選項中篩選，並且回傳已選擇的選項物件
-    result[o.type] = o.children.filter((child) =>
-      selectedIds.includes(child.id)
-    );
-    return result;
-  }, {});
-};
-
 onMounted(() => {
   sessionStorage.removeItem("selectedOptions");
 });
@@ -48,7 +33,10 @@ onMounted(() => {
             <div v-if="m.option" class="d-flex gap-2">
               <div
                 class="d-flex"
-                v-for="(options, type) in findSelectOption(m.option)"
+                v-for="(options, type) in menuStore.findSelectOption(
+                  m.option,
+                  props.option
+                )"
                 :key="type"
               >
                 <div v-for="(o, index) in options" :key="o.id">

@@ -9,6 +9,9 @@ export const userMenuStore = defineStore("menu", {
     debouncing: false,
   }),
   actions: {
+    clearState() {
+      this.menuSelect = [];
+    },
     // 將已選擇自定義選項加入 menuSelect
     pushMenuSelect(item) {
       this.menuSelect.push(item);
@@ -38,6 +41,22 @@ export const userMenuStore = defineStore("menu", {
       return this.menuSelect.find(
         (item) => item.menuId === menuId && item.childId === childId
       );
+    },
+
+    // 將所有自定義數字選項，篩選出全部選項的內容及中文
+    findSelectOption(selected, option) {
+      return option.reduce((result, o) => {
+        const selectedIds = Array.isArray(selected[o.type])
+          ? selected[o.type]
+          : [selected[o.type]];
+
+        if (Array.isArray(o.children)) {
+          result[o.type] = o.children.filter((child) =>
+            selectedIds.includes(child.id)
+          );
+        }
+        return result;
+      }, {});
     },
 
     // 點擊 + 號，新增菜單品項

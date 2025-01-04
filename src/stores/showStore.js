@@ -5,7 +5,6 @@ export const useShowStore = defineStore("show", {
   state: () => ({
     language: { id: -1, name: "請選擇" },
     meal: { id: -1, name: "請選擇" },
-    //dropdown
     dropdownShow: [
       {
         language: false,
@@ -22,19 +21,20 @@ export const useShowStore = defineStore("show", {
     },
   }),
 
-  // 定義 getters
   getters: {},
 
-  // 定義 actions
   actions: {
+    // 開關下拉式選項
     toggleShow(params) {
       if (params) {
         this.dropdownShow[params] = !this.dropdownShow[params];
       }
     },
+    // 開啟視窗彈窗
     togglePopupShow(type, val) {
       this.popupShow[type] = val;
     },
+    // 驗證下拉式選項
     validateDropdown(drop, name) {
       const alertStore = useAlertStore();
       if (drop.id === -1 || drop.name === "請選擇") {

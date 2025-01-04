@@ -35,7 +35,7 @@ export const userFormStore = defineStore("select", {
       }
     },
 
-    //驗證必填
+    // 驗證必填
     validateInput(id, name = "", string) {
       const alertStore = useAlertStore();
       if (this.choice[id] !== undefined && this.regex[id]) {
@@ -46,7 +46,7 @@ export const userFormStore = defineStore("select", {
       }
       return true;
     },
-    //驗證選項必填
+    // 驗證選項必填
     validateOption(option) {
       const alertStore = useAlertStore();
       const missingOptions = option.filter((opt) => {

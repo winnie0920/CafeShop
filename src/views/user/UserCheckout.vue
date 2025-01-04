@@ -1,5 +1,5 @@
 <script setup>
-import { payOption } from "@/json/User";
+import { payOption, option } from "@/json/User";
 const formStore = userFormStore();
 const showStore = useShowStore();
 const alertStore = useAlertStore();
@@ -8,106 +8,44 @@ const router = useRouter();
 // 菜單顯示的選項
 const selectedOptions = ref([...payOption]);
 
-const menu = ref([
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-  {
-    name: "肉醬義大利麵",
-    count: 1,
-    size: "小份",
-    spicy: "小辣",
-    price: 130,
-  },
-]);
+// 計算服務費及總金額
+const calculateAmounts = () => {
+  // 計算服務費
+  const serviceAmount = Math.ceil(menuStore.calculateTotal() * 0.1);
+  return menuStore.calculateTotal() + serviceAmount;
+};
+
+// 全部訂單資料
+const orderMenu = computed(() => {
+  const totalAmount = calculateAmounts(); // 計算總金額和最終金額
+  return {
+    table: formStore.choice.tableNumber,
+    allAmount: totalAmount,
+    payMethod: formStore.choice.size || "", // 如果沒有 size 則是空字串
+    remark: formStore.choice.remark,
+    menuList: menuStore.menuSelect?.map((m) => {
+      const menuItem = {
+        id: m.detail.id,
+        menuId: m.menuId,
+        childId: m.childId,
+        name: m.detail.name,
+        price: m.price,
+        amount: m.price * m.count,
+        description: m.detail.description || "",
+        image: m.detail.image || "",
+        count: m.count,
+      };
+      // 判斷是否有option
+      if (m.option?.constructor === Object) {
+        menuItem.option = {};
+        for (const key in m.option) {
+          menuItem.option[key] = m.option[key] ?? 0;
+        }
+      }
+      return menuItem;
+    }),
+  };
+});
 
 // 取消訂單
 const sendBack = () => {
@@ -149,6 +87,10 @@ const validateForm = () => {
 const confirmPopup = () => {
   showStore.togglePopupShow("check", false);
   alertStore.pushMsg("Common-Ok", "成功送出", "brown");
+  //清空選項
+  formStore.clearState();
+  menuStore.clearState();
+
   router.push({ name: "UserHome" });
 };
 
@@ -197,27 +139,47 @@ const closeShow = (val) => {
       <div class="new__container new__width">
         <h3 class="mb-4">您的訂單</h3>
         <div class="new__content">
-          <div class="mb-3 new__menu-content" v-for="m in menu" :key="m.index">
+          <div
+            class="mb-3 new__menu-content"
+            v-for="m in orderMenu.menuList"
+            :key="m.index"
+          >
             <div>
               <p>{{ m.name }} X{{ m.count }}</p>
-              <p class="User__shop-option">{{ m.size }} {{ m.spicy }}</p>
+              <div v-if="m.option" class="d-flex gap-2">
+                <div
+                  class="d-flex"
+                  v-for="(options, type) in menuStore.findSelectOption(
+                    m.option,
+                    option
+                  )"
+                  :key="type"
+                >
+                  <div v-for="(o, index) in options" :key="o.id">
+                    <p class="User__shop-option">
+                      {{ o.name
+                      }}<span v-if="index < options.length - 1">、</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p>{{ m.price }}</p>
+            <p>${{ m.price }}</p>
           </div>
         </div>
         <hr class="new__hr" />
         <div class="new__floor"></div>
         <div class="new__gray-text new__menu-content mb-2">
           <p>小計</p>
-          <p>$100</p>
+          <p>${{ menuStore.calculateTotal() }}</p>
         </div>
         <div class="new__gray-text new__menu-content mb-2">
           <p>服務費</p>
-          <p>$10</p>
+          <p>${{ Math.ceil(menuStore.calculateTotal() * 0.1) }}</p>
         </div>
         <div class="new__strong-text new__menu-content mt-4">
           <h2>總計</h2>
-          <h2>$110</h2>
+          <h2>${{ orderMenu.allAmount }}</h2>
         </div>
       </div>
       <div class="new__container flex-row mb-4 mb-lg-0">
