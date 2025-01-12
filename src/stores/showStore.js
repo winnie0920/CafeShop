@@ -5,11 +5,13 @@ export const useShowStore = defineStore("show", {
   state: () => ({
     language: { id: -1, name: "請選擇" },
     meal: { id: -1, name: "請選擇" },
+    page: { id: -1, name: 1 },
     dropdownShow: [
       {
         language: false,
         meal: false,
         theme: false,
+        page: false,
       },
     ],
     popupShow: {

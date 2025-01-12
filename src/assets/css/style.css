@@ -1146,4 +1146,66 @@ input[type=checkbox]:not(:checked) + label .popup__text-selected::after {
 .admin__start svg {
   width: 1.5rem;
   height: 1.6rem;
+}
+
+.table__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 1.2rem;
+  background-color: var(--cafe-color-white);
+  border-radius: var(--cafe-radius-sm);
+  overflow: hidden;
+}
+.table__title {
+  padding: 1.25rem 0.5rem 1rem;
+  font-weight: 600;
+  color: var(--cafe-color-brown);
+  background-color: transparent;
+  font-size: 1.4rem;
+}
+.table__scroll {
+  width: 100%;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  white-space: nowrap;
+  border-collapse: collapse;
+}
+table thead {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: var(--cafe-color-brown);
+}
+table th,
+table td {
+  padding: 1rem 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+table th {
+  padding: 1rem 1.5rem;
+  font-weight: 500;
+  color: var(--cafe-color-white);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+table th.disabled {
+  cursor: default;
+}
+table th svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+table td {
+  transition: all 0.2s ease-in-out;
+}
+table td p {
+  color: var(--cafe-color-brown);
+}
+table tbody tr:not(:last-child) {
+  border-bottom: 0.1rem solid var(--cafe-color-brown-lighter);
 }/*# sourceMappingURL=style.css.map */

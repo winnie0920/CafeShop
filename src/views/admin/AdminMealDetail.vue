@@ -107,9 +107,6 @@ const postMeal = (formParams) => {
 //送出表單
 const confirmForm = () => {
   if (!validateForm()) return;
-
-  console.log(showStore.meal.id);
-
   let formParams = {
     menuId: showStore.meal.id,
     image: imageStore.localUploadImg || imageStore.uploadImg,

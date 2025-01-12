@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AddAlter: typeof import('./src/components/AddAlter.vue')['default']
     AdminAlter: typeof import('./src/views/admin/AdminAlter.vue')['default']
+    AdminAlterDetail: typeof import('./src/views/admin/AdminAlterDetail.vue')['default']
     AdminLayout: typeof import('./src/layout/admin/AdminLayout.vue')['default']
     AdminMeal: typeof import('./src/views/admin/AdminMeal.vue')['default']
     AdminMealCard: typeof import('./src/layout/admin/AdminMealCard.vue')['default']
@@ -38,5 +39,7 @@ declare module 'vue' {
     UserPopup: typeof import('./src/components/UserPopup.vue')['default']
     UserSide: typeof import('./src/layout/user/UserSide.vue')['default']
     UserSopping: typeof import('./src/layout/user/UserSopping.vue')['default']
+    UserTable: typeof import('./src/components/UserTable.vue')['default']
+    UserTablePage: typeof import('./src/components/UserTablePage.vue')['default']
   }
 }

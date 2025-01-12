@@ -70,6 +70,13 @@ export const routes = [
         path: "alter",
         name: "AdminAlter",
         component: () => import("@/views/admin/AdminAlter.vue"),
+        children: [
+          {
+            path: "detail",
+            name: "AdminAlterDetail",
+            component: () => import("@/views/admin/AdminAlterDetail.vue"),
+          },
+        ],
       },
       {
         path: "menu",

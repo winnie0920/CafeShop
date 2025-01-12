@@ -1,9 +1,14 @@
 <script setup>
 const props = defineProps({
-  data: Object,
-  dropdown: {
-    type: [Object, null],
+  data: {
+    type: Object,
     required: false,
+    default: null,
+  },
+  dropdown: {
+    type: Object,
+    required: false,
+    default: null,
   },
 });
 import cookie from "@/utils/cookies";

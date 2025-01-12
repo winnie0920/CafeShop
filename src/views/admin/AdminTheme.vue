@@ -24,7 +24,7 @@ const deleteData = (detail) => {
 
 <template>
   <div class="User__container">
-    <AdminTitleBar class="sticky-top" :dropdown="null" :data="HomeItem">
+    <AdminTitleBar class="sticky-top">
       <template #refresh>
         <div class="col-auto d-flex me-sm-auto me-none p-0">
           <ConfirmBtn

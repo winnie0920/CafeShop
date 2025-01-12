@@ -43,10 +43,7 @@ const search = computed({
     width: 100%;
     padding-right: var(--cafe--padding-xs);
     background-color: var(--cafe-color-white);
-    &:hover,
-    &:focus {
-      border: 0.1rem solid var(--cafe-color-brown);
-    }
+    border: 0.1rem solid var(--cafe-color-brown);
   }
   &__input {
     padding: 0.8rem 1.5rem;
