@@ -1,4 +1,5 @@
 import axios from "axios";
+
 // 取消請求
 let cancelReq = new AbortController();
 
@@ -7,11 +8,9 @@ const routeDispatch = (url, slug, dispatch) => {
   if (url) URI = `${url}`;
   if (slug) URI = `${URI}/${slug}`;
 
-  // 如果传入了 dispatch 就使用它作为基础路径
   return dispatch ? `${dispatch}/${URI}` : `${URI}`;
 };
 
-// axios實例：主要、次要（換發 Token 用）
 const axiosConfig = {
   baseURL: "http://localhost:8080",
   timeout: 15000,

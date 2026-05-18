@@ -5,7 +5,9 @@ export const userFormStore = defineStore("select", {
   state: () => ({
     // 存儲菜單明細的暫存單選、多選
     choice: {},
+    // 儲存驗證方法
     regex: {},
+    // 輸入錯誤
     errorMessages: {},
   }),
   actions: {

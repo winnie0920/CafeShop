@@ -1,7 +1,7 @@
 <script setup>
 import cookie from "@/utils/cookies";
 import { loginOption, adminLogin } from "@/json/Admin";
-//import { apiLogIn } from "@/api/login.js";
+import { apiLogIn } from "@/api/login.js";
 
 const formStore = userFormStore();
 const alertStore = useAlertStore();
@@ -9,35 +9,20 @@ const tokenStore = useTokenStore();
 // 菜單顯示的選項
 const selectedOptions = ref([...loginOption]);
 
-const validate = [
-  {
-    id: "account",
-    message: "帳號有誤，請重新輸入。",
-  },
-  {
-    id: "password",
-    message: "密碼有誤，請重新輸入。",
-  },
-];
-
 const login = async () => {
-  if (!validateForm()) return;
-
-  if (!validateAdmin()) return;
-
-  // const res = await apiLogIn({
-  //   account: formStore.choice.account,
-  //   password: formStore.choice.password,
-  // });
-
-  rememberAccount();
-  alertStore.pushMsg("Common-Ok", "登入成功", "brown");
-  tokenStore.saveToken({
-    name: formStore.choice.account,
-    role: "admin",
-  });
-  if (!tokenStore.verifyToken()) return;
-  router.push({ name: "AdminLayout" });
+  try {
+    const res = await apiLogIn({
+      account: formStore.choice.account,
+      password: formStore.choice.password,
+    });
+    if (res.code === 200) {
+      rememberAccount();
+      alertStore.pushMsg("Common-Ok", "登入成功", "brown");
+    }
+    router.push({ name: "AdminLayout" });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 取出 Cookie 存取的帳號
@@ -53,31 +38,6 @@ const rememberAccount = () => {
   if (formStore.choice.remember) {
     cookie.setCookie("account", formStore.choice.account, 1);
   }
-};
-
-// 檢查帳號密碼是否匹配
-const validateAdmin = () => {
-  const admin = adminLogin.find(
-    (admin) =>
-      admin.account === formStore.choice.account &&
-      admin.password === formStore.choice.password
-  );
-  if (!admin) {
-    alertStore.pushMsg("Common-Error", "帳號或密碼錯誤，請重新輸入。");
-    return false;
-  }
-  return true;
-};
-
-// 欄位驗證
-const validateForm = () => {
-  formStore.clearError();
-  // 檢查輸入、選擇的選項
-  const inputValid = validate.map((v) => {
-    return formStore.validateInput(v.id, v.name, v.message);
-  });
-  if (inputValid.includes(false)) return false;
-  return true;
 };
 
 onMounted(() => {
