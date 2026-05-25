@@ -1,25 +1,30 @@
 <script setup>
-import { homeItem as HomeItem } from "@/json/User";
 const alertStore = useAlertStore();
 const router = useRouter();
-import { getCurrentInstance } from "vue";
-
-// 手動觸發重新渲染
-const instance = getCurrentInstance();
+const menuStore = userMenuStore();
+import { apiDeleteTheme } from "@/api/menu";
+import { apiDelImg } from "@/api/image";
+import { PER_AUTH } from "@/utils/constants.js";
 
 const refreshPage = () => {
   alertStore.pushMsg("Common-Ok", "同步分類完畢", "brown");
 };
 
-const deleteData = (detail) => {
-  const index = HomeItem.findIndex((d) => d.name === detail.name);
-  if (index !== -1) {
-    HomeItem.splice(index, 1);
+const deleteData = async (detail) => {
+  try {
+    if (detail.imageUrl) {
+      await apiDelImg(PER_AUTH, detail.imageUrl);
+    }
+    await apiDeleteTheme({ id: detail.id });
+    menuStore.initTheme();
+  } catch (e) {
+    console.error("ERR! handlePopup", e);
   }
-
-  // 手動觸發重新渲染
-  instance.proxy.$forceUpdate();
 };
+
+onMounted(async () => {
+  await menuStore.initTheme();
+});
 </script>
 
 <template>
@@ -54,7 +59,7 @@ const deleteData = (detail) => {
         </div>
       </template>
     </AdminTitleBar>
-    <AdminThemeCard @deleteData="deleteData" :data="HomeItem" />
+    <AdminThemeCard @deleteData="deleteData" :data="menuStore.homeMenu" />
   </div>
 </template>
 

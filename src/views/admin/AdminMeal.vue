@@ -1,6 +1,8 @@
 <script setup>
 import { homeMenu } from "@/json/User";
 const alertStore = useAlertStore();
+const menuStore = userMenuStore();
+const showStore = useShowStore();
 const router = useRouter();
 
 const dropdown = ref({
@@ -19,6 +21,11 @@ const deleteData = (detail) => {
     h.children = h.children.filter((c) => c.name !== detail.name);
   });
 };
+
+onMounted(() => {
+  menuStore.initTheme();
+  showStore.initThemeDropdown();
+});
 </script>
 
 <template>
@@ -27,7 +34,7 @@ const deleteData = (detail) => {
     <AdminTitleBar
       class="sticky-top"
       :dropdown="$route.path !== '/admin/meal/detail' ? dropdown : null"
-      :data="homeMenu"
+      :data="showStore.dropdownList"
     >
       <template #refresh>
         <div class="col-auto d-flex me-sm-auto me-none p-0">
@@ -59,7 +66,7 @@ const deleteData = (detail) => {
       </template>
     </AdminTitleBar>
     <!-- 卡片 -->
-    <AdminMealCard :data="homeMenu" @deleteData="deleteData" />
+    <AdminMealCard :data="menuStore.homeMenu" @deleteData="deleteData" />
   </div>
 </template>
 

@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { apiGetTheme } from "@/api/menu";
 
 export const userMenuStore = defineStore("menu", {
   state: () => ({
@@ -6,6 +7,7 @@ export const userMenuStore = defineStore("menu", {
     homeMenu: [],
     // 已選所有菜單品項
     menuSelect: [],
+
     debouncing: false,
   }),
   actions: {
@@ -20,6 +22,14 @@ export const userMenuStore = defineStore("menu", {
     setHomeMenu(menu) {
       this.homeMenu = menu;
     },
+    async initTheme() {
+      try {
+        const res = await apiGetTheme();
+        this.homeMenu = res.data;
+      } catch (e) {
+        console.error("ERR! initTheme", e);
+      }
+    },
     // 找到相對應 menuSelect 的菜單品項
     findMenuItem(menuId, childId, option) {
       if (option) {
@@ -33,13 +43,14 @@ export const userMenuStore = defineStore("menu", {
             hasSameKeys &&
             Object.keys(option).every(
               (key) =>
-                JSON.stringify(item.option[key]) === JSON.stringify(option[key])
+                JSON.stringify(item.option[key]) ===
+                JSON.stringify(option[key]),
             )
           );
         });
       }
       return this.menuSelect.find(
-        (item) => item.menuId === menuId && item.childId === childId
+        (item) => item.menuId === menuId && item.childId === childId,
       );
     },
 
@@ -52,7 +63,7 @@ export const userMenuStore = defineStore("menu", {
 
         if (Array.isArray(o.children)) {
           result[o.type] = o.children.filter((child) =>
-            selectedIds.includes(child.id)
+            selectedIds.includes(child.id),
           );
         }
         return result;
@@ -96,7 +107,7 @@ export const userMenuStore = defineStore("menu", {
         const selectedValue = occupy[item.type];
         if (selectedValue !== undefined) {
           const selectedOption = item.children.find(
-            (child) => child.id === selectedValue
+            (child) => child.id === selectedValue,
           );
           if (selectedOption && selectedOption.price) {
             return total + selectedOption.price;

@@ -1,4 +1,5 @@
 import { userFormStore } from "@/stores/formStore";
+import { apiRefreshToken } from "@/api/login.js";
 import { createRouter, createWebHashHistory } from "vue-router";
 import JWT from "@/utils/cookies.js";
 
@@ -93,16 +94,18 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to) => {
   const formStore = userFormStore();
+  // 換發到期 Token
+  await apiRefreshToken();
+
   if (to.path.startsWith("/admin")) {
     // 阻擋未登入
-    if (to.name !== "Login" && !JWT.getToken()) return { name: "Login" };
+    if (to.name !== "Login" && !JWT.getToken()) return { name: "LoginView" };
     // 已登入自動跳轉
     if (to.name === "Login" && JWT.getToken()) return { name: "AdminMeal" };
   }
   formStore.clearState();
-  next();
 });
 
 export default router;

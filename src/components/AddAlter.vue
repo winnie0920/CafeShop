@@ -1,9 +1,7 @@
 <script setup>
 const props = defineProps({
-  allOption: {
-    type: Object,
-    required: false,
-  },
+  allOption: Object,
+  type: String,
 });
 const formStore = userFormStore();
 const showStore = useShowStore();
@@ -25,9 +23,9 @@ const removeOption = (type) => {
 
 // 檢驗自訂項目與預設自訂項目是否相同
 const choiceAlter = () => {
-  if (!formStore.choice.option) return false;
+  if (!formStore.choice[props.type]) return false;
   return props.allOption[0].children.filter((i) => {
-    return formStore.choice.option.includes(i.id);
+    return formStore.choice[props.type].includes(i.id);
   });
 };
 </script>

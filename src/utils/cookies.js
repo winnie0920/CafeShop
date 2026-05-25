@@ -11,11 +11,11 @@ function getRefreshToken() {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 function saveToken(token, exp) {
-  const expiredDate = new Date(exp * 1000);
+  const expiredDate = new Date(exp);
   document.cookie = `${VITE_CAFE_TOKEN_KEY}=${token}; expires=${expiredDate.toUTCString()}; path=/`;
 }
 function saveRefreshToken(token, exp) {
-  const expiredDate = new Date(exp * 1000);
+  const expiredDate = new Date(exp);
   document.cookie = `${VITE_CAFE_REFRESH_TOKEN_KEY}=${token}; expires=${expiredDate.toUTCString()}; path=/`;
 }
 function saveAllToken(res) {

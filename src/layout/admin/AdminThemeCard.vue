@@ -4,10 +4,10 @@ const props = defineProps({
 });
 const emit = defineEmits(["deleteData"]);
 
-const imageStore = useImageStore();
 const showStore = useShowStore();
 const alertStore = useAlertStore();
 const detailData = ref(null);
+
 const popupTheme = (d) => {
   detailData.value = { name: d.name, content: d.content, image: d.image };
   router.push({
@@ -46,7 +46,7 @@ const closeShow = (val) => {
     <div class="admin__container">
       <div v-for="d in props.data" :key="d.id" class="admin__card">
         <div class="d-flex gap-4 overflow-hidden">
-          <img :src="imageStore.getImageUrl(d.image)" alt="mealImage" />
+          <img :src="d.imageUrl" alt="mealImage" />
           <div class="d-flex flex-column justify-content-evenly">
             <h4 class="admin__title">{{ d.name }}</h4>
             <h6>{{ d.content }}</h6>

@@ -1,8 +1,11 @@
 import { defineStore } from "pinia";
 import { useAlertStore } from "@/stores/alertStore";
+import { apiGetThemeDropdown } from "@/api/menu";
 
 export const useShowStore = defineStore("show", {
   state: () => ({
+    // 全部下拉式選單選項
+    dropdownList: [],
     language: { id: -1, name: "請選擇" },
     meal: { id: -1, name: "請選擇" },
     page: { id: -1, name: 1 },
@@ -10,15 +13,14 @@ export const useShowStore = defineStore("show", {
       {
         language: false,
         meal: false,
-        theme: false,
         page: false,
       },
     ],
     popupShow: {
+      dialog: false,
       menu: false,
       check: false,
       shopping: false,
-      meal: false,
       option: false,
     },
   }),
@@ -26,6 +28,14 @@ export const useShowStore = defineStore("show", {
   getters: {},
 
   actions: {
+    async initThemeDropdown() {
+      try {
+        const res = await apiGetThemeDropdown();
+        this.dropdownList = res.data;
+      } catch (e) {
+        console.error("ERR! initTheme", e);
+      }
+    },
     // 開關下拉式選項
     toggleShow(params) {
       if (params) {

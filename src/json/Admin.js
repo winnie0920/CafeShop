@@ -64,12 +64,12 @@ export const adminLogin = [
 export const customOption = [
   {
     name: "自定項目",
-    type: "option",
+    type: "groupIds",
     selected: false,
     children: [
-      { id: "size", name: "份量" },
-      { id: "noddle", name: "麵體" },
-      { id: "spicy", name: "辣度" },
+      { id: 1, type: "size", name: "份量" },
+      { id: 2, type: "noodle", name: "麵體" },
+      { id: 3, type: "spicy", name: "辣度" },
     ],
   },
 ];
@@ -78,7 +78,7 @@ export const customOption = [
 export const choiceOption = [
   {
     name: "是否販售？",
-    type: "status",
+    type: "isSale",
     selected: true,
     children: [
       { id: 1, name: "是" },

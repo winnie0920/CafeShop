@@ -5,14 +5,17 @@ const props = defineProps({
     required: false,
   },
 });
-import { homeMenu, homeItem } from "@/json/User";
+import { apiGetMeal, apiPostMeal, apiPatchMeal } from "@/api/menu";
 import { choiceOption, customOption } from "@/json/Admin";
+import { PER_AUTH } from "@/utils/constants.js";
+
 // 菜單顯示的選項
 const selectedOptions = ref([...choiceOption]);
 const showStore = useShowStore();
 const formStore = userFormStore();
 const imageStore = useImageStore();
 const alertStore = useAlertStore();
+const menuStore = userMenuStore();
 const route = useRoute();
 
 //下拉式選項
@@ -37,13 +40,6 @@ const validate = [
   },
 ];
 
-//當頁面加載時，data 是 null 檢查 URL
-const isValidParams = () => {
-  if (route.query.id && !props.data) {
-    router.go(-1);
-  }
-};
-
 // 清空選項
 const clearFormParam = () => {
   const param = {
@@ -51,82 +47,75 @@ const clearFormParam = () => {
     price: "",
     description: "",
     count: "",
-    status: 1,
+    isSale: 1,
+    groupIds: [],
   };
   delete param.option;
   return param;
 };
 
-// 放入餐點明細原有的選項
-const checkData = () => {
-  const matchedItem = homeItem.find((h) => h.name === props.data.name);
-  showStore.meal = matchedItem;
-
-  const { name, price, description, count, option } = props.data.children;
-  Object.assign(formStore.choice, {
-    name,
-    price,
-    description,
-    count,
-    status: 1,
-    option,
-  });
+// 查詢單一菜單
+const queryData = async () => {
+  try {
+    const res = await apiGetMeal({ id: route.query.id });
+    let data = res.data;
+    showStore.meal = showStore.dropdownList.find((t) => t.id === data.themeId);
+    Object.assign(formStore.choice, {
+      id: data.id,
+      themeId: data.themeId,
+      name: data.name,
+      price: data.price,
+      count: data.count,
+      description: data.description,
+      isSale: data.isSale ?? 1,
+      imageUrl: data.imageUrl,
+      groupIds: data.groupIds ?? [],
+    });
+  } catch (e) {
+    console.error("ERR! queryData", e);
+  }
 };
-
 // 驗證欄位
 const validateForm = () => {
   formStore.clearError();
   // 檢查輸入、選擇的選項
-  const inputValid = validate.map((v) => {
+  const inputValid = validate.every((v) => {
     return formStore.validateInput(v.id, v.name, v.message);
   });
-  // 檢查是否上傳照片
-  const imageValid = imageStore.validateImage();
+  const imageValid = imageStore.validateImage(imageStore.uploadImg);
   // 檢查下拉式選單
   const dropdownValid = showStore.validateDropdown(showStore.meal, "餐點分類");
-
-  if (inputValid.includes(false) || !imageValid || !dropdownValid) return false;
-
-  return true;
+  return inputValid && imageValid && dropdownValid;
 };
 
-//post 新增餐點細項
-const postMeal = (formParams) => {
-  const menu = homeMenu.find((i) => i.id === formParams.menuId);
-  if (menu) {
-    const existingItem = menu.children.find((i) => i.name === formParams.name);
-    if (!existingItem) {
-      menu.children.push({
-        ...formParams,
-        id: menu.children.length,
-      });
-    }
-  }
-};
-
-//送出表單
-const confirmForm = () => {
+// 新增、更新餐點
+const confirmForm = async () => {
   if (!validateForm()) return;
   let formParams = {
-    menuId: showStore.meal.id,
-    image: imageStore.localUploadImg || imageStore.uploadImg,
     ...formStore.choice,
+    imageUrl: imageStore.uploadImg,
+    themeId: showStore.meal.id,
   };
-  postMeal(formParams);
-  alertStore.pushMsg("Common-Ok", "送出成功", "brown");
+  try {
+    const res = formStore.choice.id
+      ? await apiPatchMeal(formParams)
+      : await apiPostMeal(formParams);
+    alertStore.pushMsg("Common-Ok", res.msg, "brown");
+  } catch (err) {
+    console.error(err);
+  }
   router.push({ name: "AdminMeal" });
 };
 
-onMounted(() => {
+onMounted(async () => {
   //清空選項
   formStore.choice = clearFormParam();
-  showStore.theme = "";
-  if (!route.query.id) {
-    //清空圖片
-    imageStore.clearImage();
-  } else {
-    checkData();
+  //清空圖片
+  if (!route.query.parent) {
+    imageStore.setUploadImg(null);
   }
+  await queryData();
+  imageStore.setUploadImg(formStore.choice.imageUrl);
 });
 </script>
 
@@ -137,7 +126,11 @@ onMounted(() => {
       <!-- 上傳圖片 -->
       <form method="post" enctype="multipart/form-data">
         <div class="form__UploadImg">
-          <AdminUploadImg :image="props.data?.children.image" />
+          <AdminUploadImg
+            :url="PER_AUTH"
+            :uploaded-img="formStore.choice?.imageUrl"
+            slug="dialog"
+          />
         </div>
       </form>
       <div class="check__inputBox">
@@ -145,7 +138,7 @@ onMounted(() => {
         <DropDown
           v-if="dropdown !== null"
           v-model="showStore[dropdown.drop]"
-          :data="homeItem"
+          :data="showStore.dropdownList"
           :dropdown="dropdown"
         />
         <CheckInput
@@ -190,7 +183,7 @@ onMounted(() => {
           type: 'select',
         }"
       />
-      <AddAlter :allOption="customOption" />
+      <AddAlter :allOption="customOption" type="groupIds" />
     </div>
   </article>
   <!-- 輸入資料 End -->

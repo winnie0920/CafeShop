@@ -1,23 +1,28 @@
 <script setup>
-const props = defineProps({
-  image: {
-    type: String,
-    required: false,
-  },
-});
+const props = defineProps(["url", "slug", "uploadedImg"]);
 const alertStore = useAlertStore();
 const imageStore = useImageStore();
 const showStore = useShowStore();
-const fileInput = ref(null);
+import { apiPostImg } from "@/api/image";
 
 // 更新圖片
-const changeImg = (event) => {
+const changeImg = async (event) => {
   const file = event.target.files[0];
-  const input = fileInput.value;
-  if (file && validImg(file)) {
-    imageStore.getImageUrl(file);
+  event.target.value = "";
+  if (!validImg(file)) return;
+
+  if (file) {
+    try {
+      await imageStore.delUploadedImg(props.url);
+      const formData = new FormData();
+      formData.append("file", file);
+      const { data, msg } = await apiPostImg(props.url, formData);
+      alertStore.pushMsg("Common-Ok", msg, "brown");
+      imageStore.setUploadImg(data);
+    } catch (e) {
+      console.error("ERR! changeImg", e);
+    }
   }
-  if (input) input.value = "";
 };
 
 // 驗證圖片格式
@@ -30,27 +35,21 @@ const validImg = (file) => {
   return true;
 };
 
-// 移除圖片
-const removeImg = () => {
-  showStore.togglePopupShow("meal", true);
+// 開關移除圖片彈窗
+const changeShow = () => {
+  showStore.popupShow[props.slug] = !showStore.popupShow[props.slug];
 };
 
-// 確認移除圖片彈窗
+// 確認圖片彈窗
 const confirmPopup = () => {
-  imageStore.clearImage();
-  showStore.togglePopupShow("meal", false);
-};
-
-// 關閉移除圖片彈窗
-const closeShow = (val) => {
-  showStore.togglePopupShow("meal", false);
+  imageStore.setUploadImg("");
+  alertStore.clearConfirm();
+  showStore.togglePopupShow(props.slug, false);
 };
 
 onMounted(() => {
-  // 清空uploadImg 和 localUploadImg
-  imageStore.clearImage();
-  if (props.image) {
-    imageStore.uploadImg = props.image;
+  if (props.uploadedImg) {
+    imageStore.uploadImg = props.uploadedImg;
   }
 });
 </script>
@@ -68,17 +67,11 @@ onMounted(() => {
   <label class="uploadImg__container" for="uploadImg">
     <input class="d-none" type="text" name="stopPop" id="stopPop" />
     <label
-      v-if="imageStore.uploadImg || imageStore.localUploadImg"
+      v-if="imageStore.uploadImg ?? props.uploadedImg"
       for="stopPop"
-      @click="removeImg"
+      @click="changeShow"
     >
-      <img
-        :src="
-          imageStore.localUploadImg ||
-          imageStore.getImageUrl(imageStore.uploadImg)
-        "
-        alt="uploaded"
-      />
+      <img :src="imageStore.uploadImg ?? props.uploadedImg" alt="uploaded" />
     </label>
     <div
       v-else
@@ -89,16 +82,16 @@ onMounted(() => {
     </div>
   </label>
   <UserPopup
-    :show="showStore.popupShow.meal"
-    title="送出訂單"
+    :show="showStore.popupShow[props.slug]"
+    title="刪除圖片"
     button="確認"
-    @close-show="closeShow"
+    @close-show="changeShow"
     @confirm-Popup="confirmPopup"
     :style="{ width: '30rem', height: '15rem' }"
   >
     <template #main>
       <div class="popup__text-content">
-        <p>是否確定送出？</p>
+        <p>是否確定刪除圖片？</p>
       </div>
     </template>
   </UserPopup>

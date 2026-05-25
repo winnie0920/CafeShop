@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { useAlertStore } from "@/stores/alertStore";
+import { apiDelImg } from "@/api/image";
 
 export const useImageStore = defineStore("image", {
   state: () => {
@@ -12,7 +13,7 @@ export const useImageStore = defineStore("image", {
     getImageUrl(id) {
       // 處理剛上傳本地圖片路徑
       if (id instanceof File) {
-        this.clearImage();
+        this.setUploadImg("");
         return (this.localUploadImg = URL.createObjectURL(id));
       }
       // 處理已上傳本地圖片路徑
@@ -22,18 +23,39 @@ export const useImageStore = defineStore("image", {
       // 處理靜態圖片路徑
       return id ? new URL(`../assets/image/${id}`, import.meta.url).href : "";
     },
-    // 反覆更新還沒按下確認的按鈕，會清除舊照片，取得新路徑
-    clearImage() {
-      this.uploadImg = null;
-      this.localUploadImg = null;
-    },
-    validateImage() {
+    validateImage(imageUrl) {
       const alertStore = useAlertStore();
-      if (this.uploadImg === null && this.localUploadImg === null) {
+      if (!imageUrl) {
         alertStore.pushMsg("Common-Error", "請上傳圖片，需JPEG、JPG格式");
         return false;
       }
       return true;
+    },
+
+    setUploadImg(val) {
+      this.uploadImg = val;
+    },
+    // 送出更新時，如有上傳新照片或清空照片，則請求刪除舊照片、取得新照片路徑
+    async delOriginalImg(url, path) {
+      try {
+        if (this.uploadImg || this.uploadImg === "") {
+          if (path) await apiDelImg(url, path);
+          path = this.uploadImg ? this.uploadImg : null;
+        }
+        this.setUploadImg(null);
+        return path;
+      } catch (e) {
+        console.error("ERR! delOriginalImg", e);
+      }
+    },
+    // 關閉 popup 視窗、反覆上傳新照片時，刪除新上傳但沒用到的照片
+    async delUploadedImg(url) {
+      try {
+        if (this.uploadImg) await apiDelImg(url, this.uploadImg);
+        this.setUploadImg(null);
+      } catch (e) {
+        console.error("ERR! delUploadedImg", e);
+      }
     },
   },
 });

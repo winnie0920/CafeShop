@@ -15,6 +15,7 @@ const login = async () => {
       account: formStore.choice.account,
       password: formStore.choice.password,
     });
+    if (!res) return;
     if (res.code === 200) {
       rememberAccount();
       alertStore.pushMsg("Common-Ok", "登入成功", "brown");

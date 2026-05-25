@@ -5,16 +5,15 @@ const props = defineProps({
     required: false,
   },
 });
-
-const emit = defineEmits(["deleteData"]);
-import { homeMenu, homeItem } from "@/json/User";
 import { choiceOption } from "@/json/Admin";
+import { apiGetTheme, apiPostTheme, apiPatchTheme } from "@/api/menu";
+import { PER_AUTH } from "@/utils/constants.js";
 
 const selectedOptions = ref([...choiceOption]);
-const showStore = useShowStore();
 const formStore = userFormStore();
 const imageStore = useImageStore();
 const alertStore = useAlertStore();
+const menuStore = userMenuStore();
 const route = useRoute();
 
 // 驗證選項
@@ -25,30 +24,32 @@ const validate = [
   },
 ];
 
-// 放入餐點明細原有的選項
-const checkData = () => {
-  const matchedItem = homeItem.find((h) => h.name === props.data.name);
-  showStore.theme = matchedItem;
-  const { name, content } = props.data;
-  Object.assign(formStore.choice, {
-    name,
-    content,
-    status: 1,
-  });
+// 查詢單一主題
+const queryData = async () => {
+  try {
+    const res = await apiGetTheme({ id: route.query.parent });
+    let data = res.data;
+    Object.assign(formStore.choice, {
+      id: data.id,
+      name: data.name,
+      content: data.content,
+      isSale: data.isSale ?? 1,
+      imageUrl: data.imageUrl,
+    });
+  } catch (e) {
+    console.error("ERR! queryData", e);
+  }
 };
 
 // 驗證欄位
 const validateForm = () => {
   formStore.clearError();
   // 檢查輸入、選擇的選項
-  const inputValid = validate.map((v) => {
+  const inputValid = validate.every((v) => {
     return formStore.validateInput(v.id, v.name, v.message);
   });
-  // 檢查是否上傳照片
-  const imageValid = imageStore.validateImage();
-  if (inputValid.includes(false) || !imageValid) return false;
-
-  return true;
+  const imageValid = imageStore.validateImage(imageStore.uploadImg);
+  return inputValid || imageValid;
 };
 
 // 清空選項
@@ -56,46 +57,41 @@ const clearFormParam = () => {
   const param = {
     name: "",
     content: "",
-    status: 1,
+    isSale: 1,
+    imageUrl: null,
   };
   return param;
 };
 
-//post 新增餐點主題
-const postTheme = (formParams) => {
-  const menu = homeItem.find((i) => i.id === formParams.id);
-
-  if (!menu) {
-    homeItem.push({
-      ...formParams,
-    });
-  }
-};
-
-//送出表單
-const confirmForm = () => {
+//新增、更新主題
+const confirmForm = async () => {
   if (!validateForm()) return;
-  let formParams = {
-    id: showStore.theme.id ? showStore.theme.id : homeItem.length + 1,
-    image: imageStore.localUploadImg || imageStore.uploadImg,
-    ...formStore.choice,
-  };
+  try {
+    const formParams = {
+      ...formStore.choice,
+      imageUrl: imageStore.uploadImg,
+    };
 
-  postTheme(formParams);
-  alertStore.pushMsg("Common-Ok", "送出成功", "brown");
+    const res = formStore.choice.id
+      ? await apiPatchTheme(formParams)
+      : await apiPostTheme(formParams);
+
+    alertStore.pushMsg("Common-Ok", res.msg, "brown");
+    menuStore.initTheme();
+  } catch (e) {
+    console.error(e);
+  }
   router.push({ name: "AdminTheme" });
 };
-
-onMounted(() => {
+onMounted(async () => {
   //清空選項
   formStore.choice = clearFormParam();
-  showStore.theme = "";
+  //清空圖片
   if (!route.query.parent) {
-    //清空圖片
-    imageStore.clearImage();
-  } else {
-    checkData();
+    imageStore.setUploadImg(null);
   }
+  await queryData();
+  imageStore.setUploadImg(formStore.choice.imageUrl);
 });
 </script>
 
@@ -106,7 +102,11 @@ onMounted(() => {
       <!-- 上傳圖片 -->
       <form method="post" enctype="multipart/form-data">
         <div class="form__UploadImg">
-          <AdminUploadImg :image="props.data?.image" />
+          <AdminUploadImg
+            :url="PER_AUTH"
+            :uploaded-img="formStore.choice?.imageUrl"
+            slug="dialog"
+          />
         </div>
       </form>
       <div class="check__inputBox">

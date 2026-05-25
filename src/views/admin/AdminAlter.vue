@@ -18,7 +18,6 @@ const sortData = ref({
 
 // 切換排序
 const changeSort = (data) => {
-  console.log(data);
   sortData.value = { ...sortData.value, ...data };
 };
 

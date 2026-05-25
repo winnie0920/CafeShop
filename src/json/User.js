@@ -44,7 +44,7 @@ export const homeItem = [
   },
   {
     id: 4,
-    name: "甜點",
+    name: "甜食",
     image: "food_Tarte.png",
     count: 10,
   },
@@ -56,7 +56,7 @@ export const homeItem = [
   },
   {
     id: 6,
-    name: "拿鐵",
+    name: "咖啡",
     image: "food_Cafe.png",
     count: 5,
   },
@@ -87,7 +87,7 @@ export const homeMenu = [
         description: "台灣豬肉",
         image: "image-Pasta.jpg",
         count: 30,
-        option: ["size", "noddle", "spicy"],
+        groupIds: [1, 2, 3],
       },
       {
         id: 2,
@@ -96,7 +96,7 @@ export const homeMenu = [
         description: "台灣豬肉、牛肉",
         image: "image-Pasta-2.jpg",
         count: 40,
-        option: ["size", "noddle", "spicy"],
+        groupIds: [1, 2, 3],
       },
       {
         id: 3,
@@ -105,7 +105,7 @@ export const homeMenu = [
         description: "台灣豬肉、牛肉",
         image: "image-Pasta-3.jpg",
         count: 50,
-        option: ["size", "noddle"],
+        groupIds: [1, 2, 3],
       },
       {
         id: 4,
@@ -113,7 +113,7 @@ export const homeMenu = [
         price: 170,
         image: "image-Pasta-4.jpg",
         count: 50,
-        option: ["size", "noddle"],
+        groupIds: ["size", "noddle"],
       },
       {
         id: 5,
