@@ -1,9 +1,11 @@
 <script setup>
-import { homeMenu } from "@/json/User";
 const alertStore = useAlertStore();
 const menuStore = userMenuStore();
 const showStore = useShowStore();
 const router = useRouter();
+import { apiDeleteMeal } from "@/api/menu";
+import { apiDelImg } from "@/api/image";
+import { PER_AUTH } from "@/utils/constants.js";
 
 const dropdown = ref({
   title: "餐點分類",
@@ -16,16 +18,29 @@ const refreshPage = () => {
   alertStore.pushMsg("Common-Ok", "同步餐點完畢", "brown");
 };
 
-const deleteData = (detail) => {
-  homeMenu.forEach((h) => {
-    h.children = h.children.filter((c) => c.name !== detail.name);
-  });
+const deleteData = async (detail) => {
+  try {
+    if (detail.imageUrl) {
+      await apiDelImg(PER_AUTH, detail.imageUrl);
+    }
+    await apiDeleteMeal({ id: detail.id });
+    menuStore.initTheme();
+  } catch (e) {
+    console.error("ERR! handlePopup", e);
+  }
 };
 
 onMounted(() => {
   menuStore.initTheme();
   showStore.initThemeDropdown();
 });
+
+watch(
+  () => showStore[dropdown.value.drop].id,
+  async (newValue) => {
+    await menuStore.initTheme({ id: showStore[dropdown.value.drop].id });
+  },
+);
 </script>
 
 <template>
@@ -66,7 +81,7 @@ onMounted(() => {
       </template>
     </AdminTitleBar>
     <!-- 卡片 -->
-    <AdminMealCard :data="menuStore.homeMenu" @deleteData="deleteData" />
+    <AdminMealCard @deleteData="deleteData" :data="menuStore.homeMenu" />
   </div>
 </template>
 

@@ -87,6 +87,7 @@ export const homeMenu = [
         description: "台灣豬肉",
         image: "image-Pasta.jpg",
         count: 30,
+        option: ["size", "noddle", "spicy"],
         groupIds: [1, 2, 3],
       },
       {
@@ -96,6 +97,7 @@ export const homeMenu = [
         description: "台灣豬肉、牛肉",
         image: "image-Pasta-2.jpg",
         count: 40,
+        option: ["size", "noddle", "spicy"],
         groupIds: [1, 2, 3],
       },
       {
@@ -105,6 +107,7 @@ export const homeMenu = [
         description: "台灣豬肉、牛肉",
         image: "image-Pasta-3.jpg",
         count: 50,
+        option: ["size", "noddle", "spicy"],
         groupIds: [1, 2, 3],
       },
       {
@@ -113,6 +116,7 @@ export const homeMenu = [
         price: 170,
         image: "image-Pasta-4.jpg",
         count: 50,
+        option: ["size", "noddle", "spicy"],
         groupIds: ["size", "noddle"],
       },
       {
@@ -122,6 +126,7 @@ export const homeMenu = [
         description: "台灣雞肉",
         image: "image-Pasta-5.jpg",
         count: 40,
+        option: ["size", "noddle", "spicy"],
       },
       {
         id: 6,
@@ -130,6 +135,7 @@ export const homeMenu = [
         description: "台灣豬肉",
         image: "image-Pasta-6.jpg",
         count: 50,
+        option: ["size", "noddle", "spicy"],
       },
       {
         id: 7,
@@ -137,6 +143,7 @@ export const homeMenu = [
         price: 150,
         image: "image-Pasta-7.jpg",
         count: 20,
+        option: ["size", "noddle", "spicy"],
       },
     ],
   },

@@ -13,6 +13,6 @@ export const apiPostMeal = (body) =>
   APICafes.postBody(PER_AUTH, URL_MEAL, body);
 export const apiPatchMeal = (body) =>
   APICafes.patchBody(PER_AUTH, URL_MEAL, body);
-
+export const apiDeleteMeal = (id) => APICafes.delete(PER_AUTH, URL_MEAL, id);
 export const apiGetThemeDropdown = () =>
   APICafes.getParams(PER_AUTH, URL_THEME + "/dropdown");

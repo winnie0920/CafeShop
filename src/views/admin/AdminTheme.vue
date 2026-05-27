@@ -22,8 +22,8 @@ const deleteData = async (detail) => {
   }
 };
 
-onMounted(async () => {
-  await menuStore.initTheme();
+onMounted(() => {
+  menuStore.initTheme();
 });
 </script>
 

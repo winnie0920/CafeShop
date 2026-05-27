@@ -8,20 +8,20 @@ export const useShowStore = defineStore("show", {
     dropdownList: [],
     language: { id: -1, name: "請選擇" },
     meal: { id: -1, name: "請選擇" },
-    page: { id: -1, name: 1 },
+    // 下拉式選項
     dropdownShow: [
       {
         language: false,
         meal: false,
-        page: false,
       },
     ],
+    // 視窗彈窗
     popupShow: {
       dialog: false,
       menu: false,
       check: false,
       shopping: false,
-      option: false,
+      options: false,
     },
   }),
 
@@ -43,8 +43,8 @@ export const useShowStore = defineStore("show", {
       }
     },
     // 開啟視窗彈窗
-    togglePopupShow(type, val) {
-      this.popupShow[type] = val;
+    togglePopupShow(type) {
+      this.popupShow[type] = !this.popupShow[type];
     },
     // 驗證下拉式選項
     validateDropdown(drop, name) {

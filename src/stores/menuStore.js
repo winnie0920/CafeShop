@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
-import { apiGetTheme } from "@/api/menu";
+import { apiGetTheme, apiGetMeal } from "@/api/menu";
+const showStore = useShowStore();
+const formStore = userFormStore();
+const imageStore = useImageStore();
 
 export const userMenuStore = defineStore("menu", {
   state: () => ({
@@ -22,12 +25,40 @@ export const userMenuStore = defineStore("menu", {
     setHomeMenu(menu) {
       this.homeMenu = menu;
     },
-    async initTheme() {
+    // 查詢主題
+    async initTheme(id) {
       try {
-        const res = await apiGetTheme();
+        const res = await apiGetTheme(id);
         this.homeMenu = res.data;
       } catch (e) {
         console.error("ERR! initTheme", e);
+      }
+    },
+    // 查詢菜單
+    async initMeal(id) {
+      try {
+        const res = await apiGetMeal({ id: id });
+        let data = res.data;
+        if (data.themeId) {
+          showStore.meal = showStore.dropdownList.find(
+            (t) => t.id == data.themeId,
+          );
+        }
+        if (id) imageStore.uploadImg = data.imageUrl;
+        Object.assign(formStore.choice, {
+          id: data.id,
+          themeId: data.themeId,
+          name: data.name,
+          price: data.price,
+          count: data.count,
+          description: data.description,
+          isSale: data.isSale ?? 1,
+          imageUrl: data.imageUrl,
+          groupIds: data.options?.map((i) => i.id),
+          options: data.options ?? [],
+        });
+      } catch (e) {
+        console.error("ERR! queryData", e);
       }
     },
     // 找到相對應 menuSelect 的菜單品項
@@ -56,13 +87,15 @@ export const userMenuStore = defineStore("menu", {
 
     // 將所有自定義數字選項，篩選出全部選項的內容及中文
     findSelectOption(selected, option) {
+      console.log(selected, option);
+
       return option.reduce((result, o) => {
-        const selectedIds = Array.isArray(selected[o.type])
-          ? selected[o.type]
-          : [selected[o.type]];
+        const selectedIds = Array.isArray(selected[o.id])
+          ? selected[o.id]
+          : [selected[o.id]];
 
         if (Array.isArray(o.children)) {
-          result[o.type] = o.children.filter((child) =>
+          result[o.id] = o.children.filter((child) =>
             selectedIds.includes(child.id),
           );
         }
@@ -83,28 +116,32 @@ export const userMenuStore = defineStore("menu", {
         });
         existed = this.findMenuItem(menuId, childId);
       }
+
       return existed;
     },
     // 點擊+號，添加 menuSelect 數量及金額
     addMenuSelect(menuId, c) {
-      const existingMenu = this.makeMenuItem(menuId, c.id, c);
+      const existingMenu = this.makeMenuItem(menuId, c.themeId, c);
       if (existingMenu.count < c.count) existingMenu.count++;
       existingMenu.price = existingMenu.count * c.price;
     },
     // 點擊減少、刪除 menuSelect 的菜單品項及數量
     removeMenuSelect(menuId, childId) {
       const existingMenu = this.findMenuItem(menuId, childId);
-      // 減少數量
-      existingMenu.count > 1
-        ? existingMenu.count--
-        : this.menuSelect.splice(this.menuSelect.indexOf(existingMenu), 1);
+      // 減少數量及金額
+      if (existingMenu.count > 1) {
+        existingMenu.count--;
+        existingMenu.price = existingMenu.count * existingMenu.detail.price;
+      } else {
+        this.menuSelect.splice(this.menuSelect.indexOf(existingMenu), 1);
+      }
     },
 
     // 計算 自定義選項 裡的細項金額
     totalOptionPrice(option, occupy) {
       const options = Array.isArray(option) ? option : [];
       return options.reduce((total, item) => {
-        const selectedValue = occupy[item.type];
+        const selectedValue = occupy[item.id];
         if (selectedValue !== undefined) {
           const selectedOption = item.children.find(
             (child) => child.id === selectedValue,

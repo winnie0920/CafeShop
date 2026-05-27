@@ -5,7 +5,7 @@ const props = defineProps({
     required: false,
   },
 });
-import { apiGetMeal, apiPostMeal, apiPatchMeal } from "@/api/menu";
+import { apiPostMeal, apiPatchMeal } from "@/api/menu";
 import { choiceOption, customOption } from "@/json/Admin";
 import { PER_AUTH } from "@/utils/constants.js";
 
@@ -48,32 +48,15 @@ const clearFormParam = () => {
     description: "",
     count: "",
     isSale: 1,
-    groupIds: [],
+    options: [],
   };
-  delete param.option;
+  delete param.options;
   return param;
 };
 
 // 查詢單一菜單
 const queryData = async () => {
-  try {
-    const res = await apiGetMeal({ id: route.query.id });
-    let data = res.data;
-    showStore.meal = showStore.dropdownList.find((t) => t.id === data.themeId);
-    Object.assign(formStore.choice, {
-      id: data.id,
-      themeId: data.themeId,
-      name: data.name,
-      price: data.price,
-      count: data.count,
-      description: data.description,
-      isSale: data.isSale ?? 1,
-      imageUrl: data.imageUrl,
-      groupIds: data.groupIds ?? [],
-    });
-  } catch (e) {
-    console.error("ERR! queryData", e);
-  }
+  menuStore.initMeal(route.query.id);
 };
 // 驗證欄位
 const validateForm = () => {
@@ -101,6 +84,7 @@ const confirmForm = async () => {
       ? await apiPatchMeal(formParams)
       : await apiPostMeal(formParams);
     alertStore.pushMsg("Common-Ok", res.msg, "brown");
+    menuStore.initTheme();
   } catch (err) {
     console.error(err);
   }
@@ -115,6 +99,7 @@ onMounted(async () => {
     imageStore.setUploadImg(null);
   }
   await queryData();
+
   imageStore.setUploadImg(formStore.choice.imageUrl);
 });
 </script>

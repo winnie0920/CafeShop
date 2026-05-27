@@ -6,9 +6,8 @@ const emit = defineEmits(["deleteData"]);
 
 const showStore = useShowStore();
 const alertStore = useAlertStore();
-const router = useRouter();
-
 const detailData = ref(null);
+const route = useRoute();
 
 const popupMeal = (c, d) => {
   detailData.value = { name: d.name, id: d.id, children: c };
@@ -18,16 +17,20 @@ const popupMeal = (c, d) => {
   });
 };
 
-const alertTrash = (detail) => {
+// 刪除分類的資料
+const params = ref(null);
+
+const alertTrash = (d) => {
   showStore.togglePopupShow("check", true);
-  nextTick(() => {
-    emit("deleteData", detail);
-  });
+  params.value = d;
 };
 
 const confirmPopup = () => {
   showStore.togglePopupShow("check", false);
   alertStore.pushMsg("Common-Ok", "成功刪除", "brown");
+  nextTick(() => {
+    emit("deleteData", params.value);
+  });
 };
 
 const closeShow = (val) => {
@@ -36,28 +39,34 @@ const closeShow = (val) => {
 </script>
 
 <template>
-  <div v-if="$route.path !== `/admin/meal/detail`">
-    <div v-for="d in props.data" :key="d.id">
-      <h4 class="admin__title" v-if="d.children.length > 0">{{ d.name }}</h4>
+  <div v-if="$route.path !== '/admin/meal/detail'">
+    <div
+      v-for="d in Array.isArray(props.data) ? props.data : [props.data]"
+      :key="d.id"
+    >
+      <h4 class="admin__title">{{ d.name }}</h4>
+
       <div class="admin__container">
-        <div v-for="c in d.children" :key="c.index" class="admin__card">
+        <div v-for="c in d.children || []" :key="c.id" class="admin__card">
           <img :src="c.imageUrl" alt="mealImage" />
+
           <div class="d-flex justify-content-between text-center">
             <h5>{{ c.name }}</h5>
             <h6>$ {{ c.price }}</h6>
           </div>
+
           <div class="d-flex justify-content-end gap-2 position-relative">
             <div class="admin__start">
               <p class="hover-text">已啟用</p>
-              <p v-if="false" class="hover-text">未啟用</p>
-              <SvgIcon iconName="Common-Ok"></SvgIcon>
-              <SvgIcon v-if="false" iconName="Common-No"></SvgIcon>
+              <SvgIcon iconName="Common-Ok" />
             </div>
+
             <ConfirmBtn
               :styles="['brown', 'circle']"
               iconName="Common-Pencil"
               @click="popupMeal(c, d)"
             />
+
             <ConfirmBtn
               :styles="['gray', 'circle']"
               iconName="Common-Trash"

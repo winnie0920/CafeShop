@@ -68,6 +68,7 @@ onBeforeUnmount(() => {
       <ul v-if="showStore.dropdownShow[drop]" class="list__drop">
         <li
           @click="changeSelected(d)"
+          :class="{ 'list__drop-item-active': model.id === d.id }"
           v-for="d in data"
           :key="d.id"
           class="list__drop-item"
