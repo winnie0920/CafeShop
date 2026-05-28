@@ -36,11 +36,11 @@ const confirmPopup = () => {
   let existingMenu = menuStore.findMenuItem(
     occupy.value.menuId,
     occupy.value.childId,
-    occupy.value.option
+    occupy.value.option,
   );
   occupy.value.price += menuStore.totalOptionPrice(
     selectedOptions.value,
-    occupy.value.option
+    occupy.value.option,
   );
 
   //如果這裡快速點擊，就做防抖防止
@@ -67,7 +67,7 @@ const findMenu = (menuId, childId) => {
   // 菜單顯示的選項
   if (selectedMenu.value.option && selectedMenu.value.option.length > 0) {
     selectedOptions.value = props.option.filter((o) =>
-      selectedMenu.value.option.includes(o.type)
+      selectedMenu.value.option.includes(o.type),
     );
   }
 };

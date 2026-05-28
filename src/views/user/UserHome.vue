@@ -37,8 +37,8 @@ const scrollArrow = (direction) => {
     typeof direction === "number"
       ? Math.max(0, Math.min(direction, maxScroll.value))
       : direction === "left"
-      ? Math.max(0, currentScroll - scrollAmount)
-      : Math.min(maxScroll.value, currentScroll + scrollAmount);
+        ? Math.max(0, currentScroll - scrollAmount)
+        : Math.min(maxScroll.value, currentScroll + scrollAmount);
 
   scrollContainer.scrollTo({ left: scroll, behavior: "smooth" });
 };
@@ -79,7 +79,7 @@ watch(
       checkoutView.value = false;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 onMounted(() => {

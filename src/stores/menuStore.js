@@ -19,6 +19,8 @@ export const userMenuStore = defineStore("menu", {
     },
     // 將已選擇自定義選項加入 menuSelect
     pushMenuSelect(item) {
+      console.log(item);
+
       this.menuSelect.push(item);
     },
     // 設定 homeMenu
@@ -90,12 +92,11 @@ export const userMenuStore = defineStore("menu", {
       console.log(selected, option);
 
       return option.reduce((result, o) => {
-        const selectedIds = Array.isArray(selected[o.id])
-          ? selected[o.id]
-          : [selected[o.id]];
-
+        const selectedIds = Array.isArray(selected[o.type])
+          ? selected[o.type]
+          : [selected[o.type]];
         if (Array.isArray(o.children)) {
-          result[o.id] = o.children.filter((child) =>
+          result[o.type] = o.children.filter((child) =>
             selectedIds.includes(child.id),
           );
         }
@@ -121,27 +122,24 @@ export const userMenuStore = defineStore("menu", {
     },
     // 點擊+號，添加 menuSelect 數量及金額
     addMenuSelect(menuId, c) {
-      const existingMenu = this.makeMenuItem(menuId, c.themeId, c);
+      const existingMenu = this.makeMenuItem(menuId, c.id, c);
       if (existingMenu.count < c.count) existingMenu.count++;
       existingMenu.price = existingMenu.count * c.price;
     },
     // 點擊減少、刪除 menuSelect 的菜單品項及數量
     removeMenuSelect(menuId, childId) {
       const existingMenu = this.findMenuItem(menuId, childId);
-      // 減少數量及金額
-      if (existingMenu.count > 1) {
-        existingMenu.count--;
-        existingMenu.price = existingMenu.count * existingMenu.detail.price;
-      } else {
-        this.menuSelect.splice(this.menuSelect.indexOf(existingMenu), 1);
-      }
+      // 減少數量
+      existingMenu.count > 1
+        ? existingMenu.count--
+        : this.menuSelect.splice(this.menuSelect.indexOf(existingMenu), 1);
     },
 
     // 計算 自定義選項 裡的細項金額
     totalOptionPrice(option, occupy) {
       const options = Array.isArray(option) ? option : [];
       return options.reduce((total, item) => {
-        const selectedValue = occupy[item.id];
+        const selectedValue = occupy[item.type];
         if (selectedValue !== undefined) {
           const selectedOption = item.children.find(
             (child) => child.id === selectedValue,

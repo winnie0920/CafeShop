@@ -151,7 +151,7 @@ const closeShow = (val) => {
                   class="d-flex"
                   v-for="(options, type) in menuStore.findSelectOption(
                     m.option,
-                    option
+                    option,
                   )"
                   :key="type"
                 >

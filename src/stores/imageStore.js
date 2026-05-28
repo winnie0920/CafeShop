@@ -16,10 +16,10 @@ export const useImageStore = defineStore("image", {
         this.setUploadImg("");
         return (this.localUploadImg = URL.createObjectURL(id));
       }
-      // // 處理已上傳本地圖片路徑
-      // if (id.startsWith("blob")) {
-      //   return id;
-      // }
+      // 處理已上傳本地圖片路徑
+      if (id.startsWith("blob")) {
+        return id;
+      }
       // 處理靜態圖片路徑
       return id ? new URL(`../assets/image/${id}`, import.meta.url).href : "";
     },

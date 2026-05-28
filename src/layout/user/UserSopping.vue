@@ -35,7 +35,7 @@ onMounted(() => {
                 class="d-flex"
                 v-for="(options, type) in menuStore.findSelectOption(
                   m.option,
-                  props.option
+                  props.option,
                 )"
                 :key="type"
               >
